@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -16,7 +20,11 @@ import { UserService } from '../services/user.service';
         CommonModule, 
         ReactiveFormsModule, 
         MatDialogModule, 
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatFormFieldModule,
+        MatCardModule,
+        MatInputModule,
+        MatButtonModule
     ],
 
 })

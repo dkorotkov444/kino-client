@@ -24,20 +24,52 @@ KinoAngularClient is a movie browsing and management application that connects t
 ```
 src/
 ├── app/
-│   ├── services/              # Core application services
-│   │   ├── auth.service.ts    # Authentication and login
-│   │   ├── movie.service.ts   # Movie data management
-│   │   ├── user.service.ts    # User profile management
-│   │   └── api-base.service.ts # Base API service with common functionality
-│   ├── app.ts                 # Root component
-│   ├── app.routes.ts          # Route definitions
-│   ├── app.html               # Root template
-│   └── app.scss               # Root styles
-├── environments/              # Environment-specific configuration
-│   ├── environment.ts         # Development environment
-│   └── environment.prod.ts    # Production environment
-└── index.html                 # Main HTML entry point
+│   ├── services/                           # Core application services
+│   │   ├── api-base.service.ts            # Base API service with common functionality
+│   │   ├── api-base.service.spec.ts       # API base service tests
+│   │   ├── auth.service.ts                # Authentication and JWT token management
+│   │   ├── auth.service.spec.ts           # Auth service tests
+│   │   ├── movie.service.ts               # Movie data retrieval and management
+│   │   ├── movie.service.spec.ts          # Movie service tests
+│   │   ├── user.service.ts                # User profile and favorites management
+│   │   └── user.service.spec.ts           # User service tests
+│   │
+│   ├── user-registration-form/            # User registration component (Material dialog)
+│   │   ├── user-registration-form.ts      # Registration form component with reactive forms
+│   │   ├── user-registration-form.html    # Registration form template
+│   │   ├── user-registration-form.scss    # Component styles
+│   │   └── user-registration-form.spec.ts # Component tests
+│   │
+│   ├── app.ts                             # Root component (standalone)
+│   ├── app.html                           # Root template with router outlet
+│   ├── app.scss                           # Global component styles
+│   ├── app.spec.ts                        # Root component tests
+│   ├── app.routes.ts                      # Application routing configuration
+│   ├── app.routes.server.ts               # Server-side routing for SSR
+│   ├── app.config.ts                      # Application providers configuration
+│   └── app.config.server.ts               # Server-side application configuration
+│
+├── environments/                           # Environment-specific configuration
+│   ├── environment.ts                     # Development environment settings
+│   └── environment.prod.ts                # Production environment settings
+│
+├── main.ts                                # Application bootstrap entry point
+├── main.server.ts                         # Server-side bootstrap for SSR
+├── server.ts                              # Express server configuration for SSR
+├── styles.scss                            # Global application styles
+└── index.html                             # Main HTML entry point
 ```
+
+### Component Architecture
+
+The application uses **standalone components** (Angular 21):
+
+- **App (Root Component):** Entry point with router outlet for lazy-loaded routes
+- **UserRegistrationFormComponent:** Material dialog component for user registration with:
+  - Reactive forms with validation
+  - Material Dialog integration
+  - Snackbar notifications for success/error
+  - Service integration with UserService
 
 ## Services
 
@@ -101,6 +133,60 @@ Manages user profiles, registration, and user favorites. Handles user lifecycle 
   - Returns: updated user object with favorites array
 - `removeFavoriteMovie(username, movieTitle)` - DELETE `/users/:username/:movieTitle` - Removes movie from favorites
   - Returns: updated user object with favorites array
+
+## Components
+
+### App (Root Component)
+
+The main application component that bootstraps the Angular application. Uses standalone component architecture.
+
+**Features:**
+- Router outlet for page navigation
+- Application title signal
+- Global layout and styling
+
+**Location:** `src/app/app.ts`
+
+### UserRegistrationFormComponent
+
+A Material dialog component for user registration with reactive form validation.
+
+**Features:**
+- Standalone component with Material dependencies
+- Reactive form with validation:
+  - Username: required
+  - Password: required
+  - Email: required, valid email format
+  - Birthdate: optional
+- Form submission to `UserService.userRegistration()`
+- Material Dialog integration for modal presentation
+- Snackbar notifications for success/error feedback
+
+**Dependencies:**
+- `@angular/material/dialog` - MatDialog integration
+- `@angular/material/snack-bar` - Toast notifications
+- `@angular/forms` - Reactive forms
+- `UserService` - User registration API calls
+
+**Location:** `src/app/user-registration-form/user-registration-form.ts`
+
+**Usage:**
+```typescript
+// To open the dialog in a component:
+import { MatDialog } from '@angular/material/dialog';
+import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form';
+
+export class AppComponent {
+  constructor(private dialog: MatDialog) {}
+
+  openRegistrationDialog() {
+    this.dialog.open(UserRegistrationFormComponent, {
+      width: '400px',
+      disableClose: false
+    });
+  }
+}
+```
 
 ## Quick Start
 
