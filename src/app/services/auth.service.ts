@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { ApiBaseService } from './api-base.service';
 
 @Injectable({
@@ -11,18 +12,39 @@ export class AuthService extends ApiBaseService {
         super();
     }
 
-
     /**
-     * Login user and store JWT token
-     * POST to /auth/login
+     * Login user and return JWT token + user profile
+     * POST to /login
+     * @param credentials - { username: string, password: string }
+     * @returns Observable with { user: object, token: string }
      */
-    // TODO: Implement login method
+    public login(credentials: { username: string; password: string }): Observable<any> {
+        return this.http.post(this.apiUrl + 'login', credentials).pipe(
+            tap((response: any) => {
+                // Automatically store token and user data after successful login
+                if (response.token) {
+                    this.setToken(response.token);
+                }
+                if (response.user) {
+                    this.setUser(response.user);
+                }
+            }),
+            catchError(this.handleError)
+        );
+    }
 
     /**
      * Store JWT token in localStorage
      */
     setToken(token: string): void {
         localStorage.setItem('token', token);
+    }
+
+    /**
+     * Store user data in localStorage
+     */
+    setUser(user: any): void {
+        localStorage.setItem('user', JSON.stringify(user));
     }
 
     /**
@@ -33,6 +55,14 @@ export class AuthService extends ApiBaseService {
     }
 
     /**
+     * Get user data from localStorage
+     */
+    getUser(): any {
+        const user = localStorage.getItem('user');
+        return user ? JSON.parse(user) : null;
+    }
+
+    /**
      * Check if user is authenticated
      */
     isAuthenticated(): boolean {
@@ -40,10 +70,10 @@ export class AuthService extends ApiBaseService {
     }
 
     /**
-     * Logout user by clearing token
+     * Logout user by clearing token and user data
      */
     logout(): void {
         localStorage.removeItem('token');
-        localStorage.removeItem('user'); // If you store user data
+        localStorage.removeItem('user');
     }
 }

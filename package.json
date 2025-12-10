@@ -1,5 +1,5 @@
 {
-  "name": "kino-angular-client",
+  "name": "kino-client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:kino-Angular-client": "node dist/kino-Angular-client/server/server.mjs"
+    "serve:ssr:kino-client": "node dist/kino-client/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,

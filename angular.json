@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "kino-Angular-client": {
+    "kino-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -66,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "kino-Angular-client:build:production"
+              "buildTarget": "kino-client:build:production"
             },
             "development": {
-              "buildTarget": "kino-Angular-client:build:development"
+              "buildTarget": "kino-client:build:development"
             }
           },
           "defaultConfiguration": "development"

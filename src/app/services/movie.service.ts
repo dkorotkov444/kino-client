@@ -14,8 +14,22 @@ export class MovieService extends ApiBaseService {
 
 
     /**
-     * Get all movies (Protected Route)
+     * Get all movie titles only
+     * GET to /movies/list
+     * @returns Observable with array of movie title strings
+     */
+    public getMovieList(): Observable<any> {
+        return this.http.get(this.apiUrl + 'movies/list', {
+            headers: this.getAuthHeaders(),
+        }).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    /**
+     * Get all movies with full details
      * GET to /movies
+     * @returns Observable with array of complete movie objects
      */
     public getAllMovies(): Observable<any> { // Note: Use a specific type instead of 'any' later!
         return this.http.get(this.apiUrl + 'movies', {
@@ -26,38 +40,72 @@ export class MovieService extends ApiBaseService {
     }
 
     /**
-     * Get all movies with complete details
-     * GET to /movies/complete
-     */
-    // TODO: Implement getCompleteMovies method
-
-    /**
      * Get single movie by title
-     * GET to /movies/{title}
+     * GET to /movies/:title
+     * @param title - Movie title
+     * @returns Observable with single movie object
      */
-    // TODO: Implement getMovieByTitle method
+    public getMovieByTitle(title: string): Observable<any> {
+        return this.http.get(this.apiUrl + 'movies/' + title, {
+            headers: this.getAuthHeaders(),
+        }).pipe(
+            catchError(this.handleError)
+        );
+    }
 
     /**
-     * Get genre information
-     * GET to /movies/genres/{genreName}
+     * Get genre information by name
+     * GET to /movies/genres/:genreName
+     * @param genreName - Genre name (e.g., 'Sci-Fi', 'Crime')
+     * @returns Observable with genre object { name, description }
      */
-    // TODO: Implement getGenre method
+    public getGenre(genreName: string): Observable<any> {
+        return this.http.get(this.apiUrl + 'movies/genres/' + genreName, {
+            headers: this.getAuthHeaders(),
+        }).pipe(
+            catchError(this.handleError)
+        );
+    }
 
     /**
-     * Get director information
-     * GET to /movies/directors/{directorName}
+     * Get director information by name
+     * GET to /movies/directors/:directorName
+     * @param directorName - Director name (e.g., 'Quentin Tarantino')
+     * @returns Observable with director object { name, bio, birth_date }
      */
-    // TODO: Implement getDirector method
+    public getDirector(directorName: string): Observable<any> {
+        return this.http.get(this.apiUrl + 'movies/directors/' + directorName, {
+            headers: this.getAuthHeaders(),
+        }).pipe(
+            catchError(this.handleError)
+        );
+    }
 
     /**
      * Get actors starring in a movie
-     * GET to /movies/{title}/starring
+     * GET to /movies/:title/starring
+     * @param title - Movie title
+     * @returns Observable with array of actor name strings
      */
-    // TODO: Implement getMovieActors method
+    public getMovieActors(title: string): Observable<any> {
+        return this.http.get(this.apiUrl + 'movies/' + title + '/starring', {
+            headers: this.getAuthHeaders(),
+        }).pipe(
+            catchError(this.handleError)
+        );
+    }
 
     /**
-     * Get actor information
-     * GET to /movies/actors/{actorName}
+     * Get actor information by name
+     * GET to /movies/actors/:actorName
+     * @param actorName - Actor name
+     * @returns Observable with actor information
      */
-    // TODO: Implement getActor method
+    public getActor(actorName: string): Observable<any> {
+        return this.http.get(this.apiUrl + 'movies/actors/' + actorName, {
+            headers: this.getAuthHeaders(),
+        }).pipe(
+            catchError(this.handleError)
+        );
+    }
 }
