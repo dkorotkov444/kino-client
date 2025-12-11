@@ -1,0 +1,4 @@
+{
+    "chat.viewSessions.enabled": false,
+    "chat.useNestedAgentsMdFiles": true
+}

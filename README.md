@@ -10,54 +10,66 @@ KinoAngularClient is a movie browsing and management application that connects t
 
 ## Features
 
-- **User Authentication:** JWT-based login with automatic token management
-- **Movie Browsing:** View all movies or search by title
-- **User Management:** User profile management with favorites tracking
-- **Service Architecture:** Modular services for authentication, movies, users, and API communication
+- **User Authentication:** JWT-based login with automatic token management and localStorage persistence
+- **User Registration:** Full registration form with validation (username, password, email, birthdate)
+- **Material Design UI:** Professional Material Design components for forms and dialogs
+- **Movie Browsing:** Service layer ready for fetching and searching movies by title
+- **User Management:** Service layer for user profile management and favorites tracking
+- **Reactive Forms:** TypeScript-first reactive form validation with strong typing
+- **Service Architecture:** Modular, injectable services for authentication, movies, users, and API communication
 - **Error Handling:** Centralized HTTP error handling with proper error propagation
-- **Type Safety:** TypeScript with strict configuration
-- **Standalone Components:** Modern Angular standalone components architecture
+- **Type Safety:** TypeScript with strict configuration and full type checking
+- **Standalone Components:** Modern Angular 21 standalone components architecture (no NgModules)
 - **Server-Side Rendering:** Built-in Angular SSR support with Express integration
+- **Material Dialogs:** Modal dialogs for user interactions
+- **Snackbar Notifications:** Toast notifications for user feedback
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── services/                           # Core application services
-│   │   ├── api-base.service.ts            # Base API service with common functionality
-│   │   ├── api-base.service.spec.ts       # API base service tests
-│   │   ├── auth.service.ts                # Authentication and JWT token management
-│   │   ├── auth.service.spec.ts           # Auth service tests
-│   │   ├── movie.service.ts               # Movie data retrieval and management
-│   │   ├── movie.service.spec.ts          # Movie service tests
-│   │   ├── user.service.ts                # User profile and favorites management
-│   │   └── user.service.spec.ts           # User service tests
+│   ├── components/                                      # Shared UI components
+│   │   ├── user-registration-form/                    # User registration component (Material dialog)
+│   │   │   ├── user-registration-form.ts              # Registration form component with reactive forms
+│   │   │   ├── user-registration-form.html            # Registration form template
+│   │   │   ├── user-registration-form.scss            # Component styles
+│   │   │   └── user-registration-form.spec.ts         # Component tests
+│   │   │
+│   │   └── user-login-form/                           # User login component (Material dialog)
+│   │       ├── user-login-form.ts                     # Login form component with reactive forms
+│   │       ├── user-login-form.html                   # Login form template
+│   │       ├── user-login-form.scss                   # Component styles
+│   │       └── user-login-form.spec.ts                # Component tests
 │   │
-│   ├── user-registration-form/            # User registration component (Material dialog)
-│   │   ├── user-registration-form.ts      # Registration form component with reactive forms
-│   │   ├── user-registration-form.html    # Registration form template
-│   │   ├── user-registration-form.scss    # Component styles
-│   │   └── user-registration-form.spec.ts # Component tests
+│   ├── services/                                       # Core application services
+│   │   ├── api-base.service.ts                        # Base API service with common functionality
+│   │   ├── api-base.service.spec.ts                   # API base service tests
+│   │   ├── auth.service.ts                            # Authentication and JWT token management
+│   │   ├── auth.service.spec.ts                       # Auth service tests
+│   │   ├── movie.service.ts                           # Movie data retrieval and management
+│   │   ├── movie.service.spec.ts                      # Movie service tests
+│   │   ├── user.service.ts                            # User profile and favorites management
+│   │   └── user.service.spec.ts                       # User service tests
 │   │
-│   ├── app.ts                             # Root component (standalone)
-│   ├── app.html                           # Root template with router outlet
-│   ├── app.scss                           # Global component styles
-│   ├── app.spec.ts                        # Root component tests
-│   ├── app.routes.ts                      # Application routing configuration
-│   ├── app.routes.server.ts               # Server-side routing for SSR
-│   ├── app.config.ts                      # Application providers configuration
-│   └── app.config.server.ts               # Server-side application configuration
+│   ├── app.ts                                         # Root component (standalone, 'app-root' selector)
+│   ├── app.html                                       # Root template with router outlet and buttons
+│   ├── app.scss                                       # Global component styles
+│   ├── app.spec.ts                                    # Root component tests
+│   ├── app.routes.ts                                  # Application routing configuration
+│   ├── app.routes.server.ts                           # Server-side routing for SSR
+│   ├── app.config.ts                                  # Application providers configuration
+│   └── app.config.server.ts                           # Server-side application configuration
 │
-├── environments/                           # Environment-specific configuration
-│   ├── environment.ts                     # Development environment settings
-│   └── environment.prod.ts                # Production environment settings
+├── environments/                                       # Environment-specific configuration
+│   ├── environment.ts                                 # Development environment (localhost:8080)
+│   └── environment.prod.ts                            # Production environment (Heroku API)
 │
-├── main.ts                                # Application bootstrap entry point
-├── main.server.ts                         # Server-side bootstrap for SSR
-├── server.ts                              # Express server configuration for SSR
-├── styles.scss                            # Global application styles
-└── index.html                             # Main HTML entry point
+├── main.ts                                            # Application bootstrap entry point
+├── main.server.ts                                     # Server-side bootstrap for SSR
+├── server.ts                                          # Express server configuration for SSR
+├── styles.scss                                        # Global application styles
+└── index.html                                         # Main HTML entry point
 ```
 
 ### Component Architecture
@@ -143,7 +155,13 @@ The main application component that bootstraps the Angular application. Uses sta
 **Features:**
 - Router outlet for page navigation
 - Application title signal
+- Sign Up and Login buttons that open Material dialogs
 - Global layout and styling
+- Material button integration
+
+**Dialogs:**
+- `openUserRegistrationDialog()` - Opens UserRegistrationFormComponent in 280px wide dialog
+- `openUserLoginDialog()` - Opens UserLoginFormComponent in 280px wide dialog
 
 **Location:** `src/app/app.ts`
 
@@ -157,36 +175,136 @@ A Material dialog component for user registration with reactive form validation.
   - Username: required
   - Password: required
   - Email: required, valid email format
-  - Birthdate: optional
+  - Birthdate: optional (date format)
 - Form submission to `UserService.userRegistration()`
 - Material Dialog integration for modal presentation
 - Snackbar notifications for success/error feedback
+- Automatic dialog closing on successful registration
 
 **Dependencies:**
 - `@angular/material/dialog` - MatDialog integration
 - `@angular/material/snack-bar` - Toast notifications
+- `@angular/material/card` - Card container styling
+- `@angular/material/form-field` - Form field styling
+- `@angular/material/input` - Input field styling
 - `@angular/forms` - Reactive forms
 - `UserService` - User registration API calls
 
-**Location:** `src/app/user-registration-form/user-registration-form.ts`
+**Location:** `src/app/components/user-registration-form/`
 
-**Usage:**
+### UserLoginFormComponent
+
+A Material dialog component for user login with reactive form validation.
+
+**Features:**
+- Standalone component with Material dependencies
+- Reactive form with validation:
+  - Username: required
+  - Password: required
+- Form submission to `AuthService.login()`
+- Material Dialog integration for modal presentation
+- Snackbar notifications for success/error feedback
+- Automatic dialog closing on successful login
+- Console logging of login response for debugging
+
+**Dependencies:**
+- `@angular/material/dialog` - MatDialog integration
+- `@angular/material/snack-bar` - Toast notifications
+- `@angular/material/card` - Card container styling
+- `@angular/material/form-field` - Form field styling
+- `@angular/material/input` - Input field styling
+- `@angular/forms` - Reactive forms
+- `AuthService` - User login API calls
+
+**Location:** `src/app/components/user-login-form/`
+
+## Material Dialog Pattern
+
+The application uses Angular Material Dialogs for modal components. This pattern is used for authentication (login/registration) to keep the main application layout intact while presenting focused user interactions.
+
+### How Material Dialogs Work in This Application
+
+1. **Root Component (AppComponent)** injects `MatDialog` service
+2. **Buttons in AppComponent** trigger dialog opening methods:
+   - `openUserRegistrationDialog()` - Opens UserRegistrationFormComponent
+   - `openUserLoginDialog()` - Opens UserLoginFormComponent
+3. **Dialog components** (UserRegistrationFormComponent, UserLoginFormComponent):
+   - Are standalone components
+   - Are NOT included in the parent component's imports array
+   - Are opened at runtime by MatDialog service
+   - Close themselves on form submission
+4. **Communication**:
+   - Dialog components inject required services (AuthService, UserService)
+   - They communicate with backend API directly
+   - Show snackbar notifications for feedback
+   - Auto-close after successful submission
+
+### Benefits of This Pattern
+
+- **Clean separation of concerns** - Dialog logic isolated in component
+- **Reusability** - Same component can be opened from different locations
+- **No template pollution** - Dialog markup not in main component template
+- **Dynamic loading** - Components loaded only when needed
+- **Easy to test** - Components can be tested independently
+
+### Opening a Dialog Example
+
 ```typescript
-// To open the dialog in a component:
-import { MatDialog } from '@angular/material/dialog';
-import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form';
+// In AppComponent
+readonly dialog = inject(MatDialog);
 
-export class AppComponent {
-  constructor(private dialog: MatDialog) {}
+openUserLoginDialog(): void {
+  const dialogRef = this.dialog.open(UserLoginFormComponent, {
+    width: '280px',
+    disableClose: false
+  });
 
-  openRegistrationDialog() {
-    this.dialog.open(UserRegistrationFormComponent, {
-      width: '400px',
-      disableClose: false
-    });
-  }
+  // Optional: handle dialog close result
+  dialogRef.afterClosed().subscribe(() => {
+    // Dialog closed - perform any additional actions
+  });
 }
 ```
+
+### Important Notes
+
+- Dialog components should NOT be imported in parent component's `imports` array
+- Dialog components should be standalone (`standalone: true`)
+- Dialog components are dynamically instantiated by MatDialog service
+- Use `MatDialogRef` to close dialog: `this.dialogRef.close()`
+
+## Angular CLI Configuration
+
+The project uses Angular CLI with custom schematics configuration to enforce consistent project structure.
+
+### Component Naming Prefix
+
+All generated components automatically use the **`kino-`** prefix as configured in `angular.json`:
+
+```json
+"@schematics/angular:component": {
+  "prefix": "kino"
+}
+```
+
+**Examples:**
+- `ng generate component movie-list` → `<kino-movie-list></kino-movie-list>`
+- `ng generate component movie-details` → `<kino-movie-details></kino-movie-details>`
+- `ng generate component user-profile` → `<kino-user-profile></kino-user-profile>`
+
+**Exception:** The root AppComponent uses `app-root` selector (defined explicitly in component)
+
+### Component Directory Path
+
+Components are automatically generated in `src/app/components/` as configured:
+
+```json
+"@schematics/angular:component": {
+  "path": "src/app/components"
+}
+```
+
+This ensures consistent file organization and makes it easy to locate components as the project grows.
 
 ## Quick Start
 
@@ -200,7 +318,8 @@ cd kino-client
 # Install dependencies
 npm install
 
-# Start development server
+# Make sure backend API is running on localhost:8080
+# Then start development server
 npm start
 
 # Open http://localhost:4200 in your browser
@@ -211,6 +330,7 @@ npm start
 ### Prerequisites
 - Node.js 20+
 - npm 10.9.3
+- Backend API running on `http://localhost:8080`
 - Git
 - A code editor (VS Code recommended)
 
@@ -235,6 +355,38 @@ ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+### Important: Backend API Requirement
+
+**The application requires the REEL Movie API to be running** for authentication and data retrieval to work. 
+
+- **Default development URL:** `http://localhost:8080`
+- **Configuration:** See `src/environments/environment.ts`
+
+Make sure the backend API is running before testing login/registration functionality.
+
+### Testing Authentication
+
+Once both the frontend and backend are running:
+
+1. Navigate to `http://localhost:4200`
+2. Click "Sign Up" button to register a new user
+   - Fill in username, password, email, and birthdate
+   - Check browser console (F12 → Console tab) for registration response
+3. Click "Login" button to log in
+   - Use credentials from registration
+   - Check browser console for login response and token storage
+4. Verify authentication:
+   - Open browser DevTools (F12)
+   - Go to Application → Local Storage
+   - Look for `token` key containing JWT token
+   - Look for `user` key containing user profile data
+
+**Console Output Example:**
+```
+Registration response: { userId: "123", username: "john_doe", email: "john@example.com" }
+Login response: { user: {...}, token: "eyJhbGciOiJIUzI1NiIs..." }
+```
 
 ## Architecture & Dependency Injection
 
@@ -284,7 +436,7 @@ this.authService.login(credentials).subscribe({
 
 ### Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Angular CLI includes powerful code scaffolding tools. The project is configured to automatically generate components in the `src/app/components/` directory with the `kino-` prefix. To generate a new component, run:
 
 ```bash
 ng generate component component-name
@@ -292,18 +444,17 @@ ng generate component component-name
 
 **Common generation commands:**
 ```bash
-# Generate component
-ng generate component features/movie-list
+# Generate component (automatically placed in src/app/components/)
+ng generate component movie-list
 
-# Generate service
+# Generate service (in src/app/services/)
 ng generate service services/comment
-
-# Generate module
-ng generate module modules/shared
 
 # Generate pipe
 ng generate pipe pipes/uppercase-first
 ```
+
+**Generated component selector example:** `<kino-movie-list></kino-movie-list>`
 
 For a complete list of available schematics, run:
 
@@ -315,20 +466,35 @@ ng generate --help
 
 Best practices when adding a new component:
 
-1. **Create the component** in a feature folder
-2. **Import required Angular modules** (RouterOutlet, NgIf, etc.)
-3. **Inject services** in the component constructor
-4. **Use reactive patterns** with RxJS Observables
-5. **Add unit tests** in `.spec.ts` file
+1. **Generate the component** using Angular CLI (automatically placed in `src/app/components/`)
+   ```bash
+   ng generate component movie-list
+   ```
 
-**Example:**
+2. **Import required Angular modules** (CommonModule, ReactiveFormsModule, Material modules, etc.)
+
+3. **Inject services** using the `inject()` function pattern
+   ```typescript
+   private movieService = inject(MovieService);
+   ```
+
+4. **Use reactive patterns** with RxJS Observables and Services
+
+5. **Add Material components** if needed (Dialog, Form Fields, Buttons, Cards, etc.)
+
+6. **Write unit tests** in the auto-generated `.spec.ts` file
+
+7. **Follow the naming convention:** Use `kino-` prefix (automatically applied by Angular CLI)
+
+**Example - Movie List Component:**
 ```typescript
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MovieService } from '../services/movie.service';
+import { MovieService } from '../../services/movie.service';
 
 @Component({
-  selector: 'app-movie-list',
+  selector: 'kino-movie-list',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.scss'
@@ -337,6 +503,19 @@ export class MovieListComponent {
   private movieService = inject(MovieService);
   movies$ = this.movieService.getAllMovies();
 }
+```
+
+**Expected directory structure after generation:**
+```
+src/app/components/
+├── user-registration-form/
+├── user-login-form/
+├── movie-list/                    # Generated here
+│   ├── movie-list.component.ts
+│   ├── movie-list.component.html
+│   ├── movie-list.component.scss
+│   └── movie-list.component.spec.ts
+└── ... (more components)
 ```
 
 ## Building

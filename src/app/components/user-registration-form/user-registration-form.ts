@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
     standalone: true,
@@ -24,7 +24,7 @@ import { UserService } from '../services/user.service';
         MatFormFieldModule,
         MatCardModule,
         MatInputModule,
-        MatButtonModule
+        MatButtonModule,
     ],
 
 })
@@ -46,7 +46,7 @@ export class UserRegistrationFormComponent {
     registerUser(): void {
         if (this.registrationForm.valid) {
             
-            const formData = this.registrationForm.value;
+            const formData = this.registrationForm.value as { username: string; password: string; email: string; birthdate: string };
 
             const apiPayload = {
                 username: formData.username,
@@ -57,6 +57,7 @@ export class UserRegistrationFormComponent {
 
             this.userService.userRegistration(apiPayload).subscribe({
                 next: (result) => {
+                    console.log('Registration response:', result);
                     this.dialogRef.close(); 
                     this.snackBar.open('Registration successful! You can now log in.', 'OK', {
                         duration: 2000
