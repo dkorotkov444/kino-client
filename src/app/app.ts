@@ -1,36 +1,27 @@
 // src/app/app.ts
 
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { MovieCardComponent } from './components/movie-card/movie-card';    
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-root',
     imports: [
         CommonModule,
         RouterOutlet,
-        MatDialogModule,
         MatButtonModule,
+        MatToolbarModule,
     ],
     templateUrl: './app.html',
     styleUrl: './app.scss'
 })
 export class AppComponent {
-    protected readonly title = signal('kino-client');
+    readonly router: Router = inject(Router);
 
-    readonly dialog: MatDialog = inject(MatDialog);
-
-    /**
-     * Opens the movie card component inside an Angular Material Dialog.
-     */
-    openMoviesDialog(): void {
-        this.dialog.open(MovieCardComponent, {
-          width: '900px',
-          maxWidth: '90vw'
-        });
-      }
+    get showNavBar(): boolean {
+        return !this.router.url.includes('welcome');
+    }
 }
 

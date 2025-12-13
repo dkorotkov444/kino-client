@@ -12,10 +12,10 @@
                 </mat-dialog-content>
             </mat-card>
         }
+        @empty {
+            <p>No movies were found. Please try again later.</p>
+        }
     </div>
-    @empty {
-        <p>No movies were found. Please try again later.</p>
-    }
 
 } @else {
     <p>Loading your movie cards...</p>

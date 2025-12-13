@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -30,6 +31,7 @@ export class UserLoginFormComponent {
     readonly dialogRef: MatDialogRef<UserLoginFormComponent> = inject(MatDialogRef);
     readonly snackBar: MatSnackBar = inject(MatSnackBar);
     readonly authService: AuthService = inject(AuthService);
+    readonly router: Router = inject(Router);
 
     // Define the reactive form model with basic validation
     loginForm = new FormGroup({
@@ -55,6 +57,7 @@ export class UserLoginFormComponent {
                     this.snackBar.open('Login successful!', 'OK', {
                         duration: 2000
                     });
+                    this.router.navigate(['movies']); // Navigate to the movies home page after successful login
                 },
                 error: (error) => {
                     console.error('Login API Error:', error);

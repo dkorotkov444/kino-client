@@ -1,17 +1,11 @@
-﻿ 
-
-<div class="main-container">
-  <h1>Welcome to {{ title() }}</h1>
-  
-  <div class="button-group">
-    <button
-        mat-raised-button
-        color="primary"
-        (click)="openMoviesDialog()"
-    >
-        All Movies
-    </button>
-  </div>
-</div>
+﻿<!doctype html>
+@if (showNavBar) {
+  <mat-toolbar color="primary" class="navbar">
+    <span>Kino</span>
+    <span class="spacer"></span>
+    <a mat-button href="/movies">Movies</a>
+    <a mat-button href="/welcome">Home</a>
+  </mat-toolbar>
+}
 
 <router-outlet />

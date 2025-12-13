@@ -5,6 +5,16 @@
 	font-family: 'Roboto', sans-serif;
 }
 
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
 .main-container {
 	display: flex;
 	flex-direction: column;

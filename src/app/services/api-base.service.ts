@@ -13,10 +13,14 @@ export class ApiBaseService {
      * Get authorization headers with JWT token from localStorage
      */
     protected getAuthHeaders(): HttpHeaders {
-        const token = localStorage.getItem('token');
-        return new HttpHeaders({
-            Authorization: 'Bearer ' + token,
-        });
+        let headers: { [key: string]: string } = {};
+        if (typeof localStorage !== 'undefined') {
+            const token = localStorage.getItem('token');
+            if (token) {
+                headers = { Authorization: 'Bearer ' + token };
+            }
+        }
+        return new HttpHeaders(headers);
     }
 
     /**

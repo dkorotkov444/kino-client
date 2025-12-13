@@ -12,7 +12,7 @@ import { MovieService } from '../../services/movie.service';
     selector: 'kino-movie-card',
     imports: [
         AsyncPipe,
-        MatCardModule, 
+        MatCardModule,
         MatDialogModule,
     ],
     templateUrl: './movie-card.html',

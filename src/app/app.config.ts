@@ -2,7 +2,7 @@
 
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
@@ -10,8 +10,8 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 export const appConfig: ApplicationConfig = {
     providers: [
         provideBrowserGlobalErrorListeners(),
-        provideRouter(routes),          // Register the router service globally
-        provideHttpClient(),
+        provideRouter(routes),                      // Register the router service globally
+        provideHttpClient(withFetch()),             // Register the HTTP client service globally
         provideClientHydration(withEventReplay())
     ]
 };
