@@ -1,0 +1,17 @@
+.cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.card {
+	width: 220px;
+}
+
+.card img {
+	width: 100%;
+	height: auto;
+	display: block;
+	border-radius: 4px;
+}
+

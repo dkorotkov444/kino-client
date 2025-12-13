@@ -1,0 +1,24 @@
+ 
+
+<div class="main-container">
+    <h1>Welcome to {{ title() }}</h1>
+    
+    <div class="button-group">
+      <button
+        mat-raised-button
+        (click)="openUserRegistrationDialog()"
+        color="primary"
+      >
+        Sign Up
+      </button>
+      
+      <button
+        mat-raised-button
+        (click)="openUserLoginDialog()"
+        color="accent"
+      >
+        Login
+      </button>
+  
+    </div>
+</div>

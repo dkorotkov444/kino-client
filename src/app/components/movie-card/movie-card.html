@@ -1,0 +1,22 @@
+@if (movies$ | async; as movies) {
+
+    <div class="cards">
+        @for (movie of movies; track movie._id; let i = $index) {
+            <mat-card class="card">
+                <mat-dialog-content>
+                    <mat-card-title>{{ movie.title }}</mat-card-title>
+
+                    <mat-card-subtitle>
+                        <img [src]="movie.image_url" [alt]="'Poster for ' + movie.title" />
+                    </mat-card-subtitle>
+                </mat-dialog-content>
+            </mat-card>
+        }
+    </div>
+    @empty {
+        <p>No movies were found. Please try again later.</p>
+    }
+
+} @else {
+    <p>Loading your movie cards...</p>
+}
