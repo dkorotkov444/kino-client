@@ -1,59 +1,15 @@
-﻿<style>
-  :host {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    font-family: 'Roboto', sans-serif;
-  }
-
-  .main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    padding: 2rem;
-    gap: 2rem;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 500;
-    margin: 0;
-    text-align: center;
-    color: #1976d2;
-  }
-
-  .button-group {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  button {
-    min-width: 120px;
-  }
-</style>
+﻿ 
 
 <div class="main-container">
   <h1>Welcome to {{ title() }}</h1>
   
   <div class="button-group">
     <button
-      mat-raised-button
-      (click)="openUserRegistrationDialog()"
-      color="primary"
+        mat-raised-button
+        color="primary"
+        (click)="openMoviesDialog()"
     >
-      Sign Up
-    </button>
-    
-    <button
-      mat-raised-button
-      (click)="openUserLoginDialog()"
-      color="accent"
-    >
-      Login
+        All Movies
     </button>
   </div>
 </div>

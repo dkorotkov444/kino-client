@@ -1,3 +1,5 @@
+// src/app/app.config.ts
+
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
@@ -8,6 +10,8 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 export const appConfig: ApplicationConfig = {
     providers: [
         provideBrowserGlobalErrorListeners(),
-        provideRouter(routes), provideHttpClient(), provideClientHydration(withEventReplay())
+        provideRouter(routes),          // Register the router service globally
+        provideHttpClient(),
+        provideClientHydration(withEventReplay())
     ]
 };

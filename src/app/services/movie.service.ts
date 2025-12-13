@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiBaseService } from './api-base.service';
 
@@ -35,7 +35,11 @@ export class MovieService extends ApiBaseService {
         return this.http.get(this.apiUrl + 'movies', {
             headers: this.getAuthHeaders(),
         }).pipe(
-            catchError(this.handleError)
+            tap((response) => console.log('Movies response', response)),
+            catchError((error) => {
+                console.error('Movies request failed', error);
+                return of([]);
+            })
         );
     }
 
