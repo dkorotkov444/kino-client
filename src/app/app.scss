@@ -11,6 +11,21 @@
   z-index: 10;
 }
 
+.navbar-wrapper {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	background: inherit; /* keep primary bar background full-width */
+}
+
+.navbar-content {
+	width: 100%;
+	max-width: 1400px; /* match movie-view-container */
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+}
+
 .spacer {
   flex: 1 1 auto;
 }

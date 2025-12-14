@@ -6,7 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MovieService } from '../../services/movie.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DirectorDialogComponent } from '../director-dialog/director-dialog';
+import { GenreDialogComponent } from '../genre-dialog/genre-dialog';
+import { DescriptionDialogComponent } from '../description-dialog/description-dialog';
+import { StarringDialogComponent } from '../starring-dialog/starring-dialog';
 import { Movie } from '../../models/movie';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -20,12 +28,16 @@ import { map, shareReplay } from 'rxjs/operators';
         MatCardModule,
         MatFormFieldModule,
         MatInputModule,
+        MatChipsModule,
+        MatButtonModule,
+        MatIconModule,
     ],
     templateUrl: './movie-card.html',
     styleUrl: './movie-card.scss',
 })
 export class MovieCardComponent implements OnInit {
     private movieService = inject(MovieService);
+    readonly dialog = inject(MatDialog);
     
     // Reactive state
     private searchTermSubject = new BehaviorSubject<string>('');
@@ -34,6 +46,7 @@ export class MovieCardComponent implements OnInit {
     filteredMovies$!: Observable<Movie[]>;
     
     searchTerm = '';
+    currentIndex = 0;
 
     ngOnInit(): void {
         // Cache and share the movie list to avoid multiple HTTP calls from multiple subscriptions
@@ -66,5 +79,57 @@ export class MovieCardComponent implements OnInit {
 
     onSearchChange(): void {
         this.searchTermSubject.next(this.searchTerm);
+        // Reset carousel to first movie when searching
+        this.currentIndex = 0;
+    }
+
+    previousMovie(moviesLength: number): void {
+        this.currentIndex--;
+        if (this.currentIndex < 0) {
+            this.currentIndex = moviesLength - 1;
+        }
+    }
+
+    nextMovie(moviesLength: number): void {
+        this.currentIndex++;
+        if (this.currentIndex >= moviesLength) {
+            this.currentIndex = 0;
+        }
+    }
+
+    // Action dialogs
+    openDirector(movie: Movie): void {
+        if (movie?.director) {
+            this.dialog.open(DirectorDialogComponent, { data: movie.director, width: '420px' });
+        }
+    }
+
+    openGenre(movie: Movie): void {
+        if (movie?.genre) {
+            this.dialog.open(GenreDialogComponent, { data: movie.genre, width: '420px' });
+        }
+    }
+
+    openDescription(movie: Movie): void {
+        this.dialog.open(DescriptionDialogComponent, { data: { title: movie.title, description: movie.description }, width: '520px' });
+    }
+
+    openStarring(movie: Movie): void {
+        this.dialog.open(StarringDialogComponent, { data: { starring: movie.starring || [] }, width: '420px' });
+    }
+
+    toggleFavorite(movie: Movie): void { /* TODO: toggle favorite state */ }
+
+    // Minimal helper to render multiple cards in viewport without changing navigation logic
+    getVisibleMovies(all: Movie[]): Movie[] {
+        if (!all || all.length === 0) return [];
+        const len = all.length;
+        const i0 = this.currentIndex;
+        const i1 = i0 + 1 >= len ? 0 : i0 + 1;
+        const i2 = i1 + 1 >= len ? 0 : i1 + 1;
+        // Return up to 3 consecutive movies; CSS decides how many fit
+        if (len === 1) return [all[i0]];
+        if (len === 2) return [all[i0], all[i1]];
+        return [all[i0], all[i1], all[i2]];
     }
 }

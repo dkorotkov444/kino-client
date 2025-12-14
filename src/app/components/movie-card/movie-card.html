@@ -17,26 +17,83 @@
                 </mat-form-field>
             </div>
 
-            <!-- Movie Cards Grid -->
+            <!-- Movie Carousel -->
             @if (filteredMovies$ | async; as filteredMovies) {
-                <div class="movie-grid">
-                    @for (movie of filteredMovies; track movie._id) {
-                        <mat-card class="movie-card">
-                            <img 
-                                mat-card-image 
-                                [src]="movie.image_url" 
-                                [alt]="'Poster for ' + movie.title"
-                                class="movie-poster"
-                            />
-                            <mat-card-content>
-                                <mat-card-title>{{ movie.title }}</mat-card-title>
-                            </mat-card-content>
-                        </mat-card>
-                    }
-                    @empty {
-                        <div class="no-results">No movies match your search.</div>
-                    }
-                </div>
+                @if (filteredMovies.length === 0) {
+                    <div class="no-results">No movies match your search.</div>
+                } @else {
+                    <div class="carousel-container">
+                        <button 
+                            mat-icon-button 
+                            class="carousel-button prev-button"
+                            (click)="previousMovie(filteredMovies.length)"
+                            aria-label="Previous movie"
+                        >
+                            <mat-icon>chevron_left</mat-icon>
+                        </button>
+
+                        <div class="carousel-viewport">
+                            @if (getVisibleMovies(filteredMovies); as visible) {
+                                @for (movie of visible; track movie._id) {
+                                    <mat-card class="carousel-card">
+                                        <div class="poster-wrapper">
+                                            <img 
+                                                [src]="movie.image_url" 
+                                                [alt]="'Poster for ' + movie.title"
+                                                class="movie-poster"
+                                            />
+                                            <button 
+                                                mat-icon-button 
+                                                class="favorite-button"
+                                                (click)="toggleFavorite(movie)"
+                                                aria-label="Toggle favorite"
+                                            >
+                                                <mat-icon class="heart-icon">favorite_border</mat-icon>
+                                            </button>
+                                        </div>
+                                        <mat-card-content>
+                                            <div class="title-row">
+                                                <div class="title">{{ movie.title }}</div>
+                                                <div class="meta">
+                                                    <span class="year">{{ movie.release_year }}</span>
+                                                    @if (movie.rating_imdb) {
+                                                        <span 
+                                                          class="imdb-pill" 
+                                                          aria-label="IMDb rating {{ movie.rating_imdb }} out of 10">
+                                                            IMDb {{ movie.rating_imdb }}
+                                                        </span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="actions-row">
+                                                <mat-chip-set aria-label="movie actions">
+                                                    <mat-chip clickable (click)="openDirector(movie)">Director</mat-chip>
+                                                    <mat-chip clickable (click)="openGenre(movie)">Genre</mat-chip>
+                                                    <mat-chip clickable (click)="openDescription(movie)">Description</mat-chip>
+                                                    <mat-chip clickable (click)="openStarring(movie)">Starring</mat-chip>
+                                                </mat-chip-set>
+                                            </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                }
+                            }
+                        </div>
+
+                        <button 
+                            mat-icon-button 
+                            class="carousel-button next-button"
+                            (click)="nextMovie(filteredMovies.length)"
+                            aria-label="Next movie"
+                        >
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+                    </div>
+
+                    <!-- Carousel Indicators -->
+                    <div class="carousel-indicators">
+                        <span class="indicator-text">{{ currentIndex + 1 }} / {{ filteredMovies.length }}</span>
+                    </div>
+                }
             }
         }
     } @else {
