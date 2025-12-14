@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Starring</h2>
+<div mat-dialog-content>
+  <mat-list>
+    <mat-list-item *ngFor="let actor of (data.starring || [])">
+      <span matListItemTitle>{{ actor }}</span>
+    </mat-list-item>
+  </mat-list>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</div>
