@@ -1,6 +1,6 @@
-import { Injectable, PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -9,34 +9,70 @@ import { environment } from '../../environments/environment';
 })
 export class ApiBaseService {
     protected apiUrl = environment.apiUrl;
-    private readonly platformId = inject(PLATFORM_ID);
+    private snackBar = inject(MatSnackBar);
 
     /**
-     * Get authorization headers with JWT token from localStorage
-     */
-    protected getAuthHeaders(): HttpHeaders {
-        let headers: { [key: string]: string } = {};
-        if (isPlatformBrowser(this.platformId)) {
-            const token = localStorage.getItem('token');
-            if (token) {
-                headers = { Authorization: 'Bearer ' + token };
-            }
-        }
-        return new HttpHeaders(headers);
-    }
-
-    /**
-     * Centralized error handling for HTTP requests
+     * Centralized error handling for HTTP requests with user-friendly notifications
      */
     protected handleError(error: HttpErrorResponse): Observable<never> {
+        let userMessage = 'An unexpected error occurred. Please try again.';
+        
         if (error.error instanceof ErrorEvent) {
-            console.error('Some error occurred:', error.error.message);
+            // Client-side or network error
+            console.error('Network error:', error.error.message);
+            userMessage = 'Network error. Please check your connection.';
         } else {
+            // Backend returned an error response
             console.error(
-                `Error Status code ${error.status}, ` +
-                `Error body is: ${error.error}`
+                `Error Status: ${error.status}, ` +
+                `Message: ${error.message}, ` +
+                `Body: ${JSON.stringify(error.error)}`
             );
+            
+            // Specific messages based on status code
+            switch (error.status) {
+                case 400:
+                    userMessage = 'Invalid request. Please check your input.';
+                    break;
+                case 401:
+                    userMessage = 'Unauthorized. Please log in again.';
+                    break;
+                case 403:
+                    userMessage = 'Access denied. You don\'t have permission.';
+                    break;
+                case 404:
+                    userMessage = 'Resource not found.';
+                    break;
+                case 409:
+                    userMessage = 'Conflict. This item already exists.';
+                    break;
+                case 422:
+                    userMessage = 'Validation failed. Please check your input.';
+                    break;
+                case 500:
+                    userMessage = 'Server error. Please try again later.';
+                    break;
+                case 503:
+                    userMessage = 'Service unavailable. Please try again later.';
+                    break;
+            }
+            
+            // Use backend error message if available
+            if (error.error && typeof error.error === 'string') {
+                userMessage = error.error;
+            } else if (error.error && error.error.message) {
+                userMessage = error.error.message;
+            }
         }
-        return throwError(() => new Error('Something bad happened; please try again later.'));
+        
+        // Show snackbar notification to user
+        this.snackBar.open(userMessage, 'Close', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar']
+        });
+        
+        return throwError(() => new Error(userMessage));
     }
 }

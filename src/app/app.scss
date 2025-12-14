@@ -44,3 +44,13 @@ button {
 	min-width: 120px;
 }
 
+// Error snackbar styling
+::ng-deep .error-snackbar {
+	background-color: #f44336;
+	color: white;
+	
+	.mat-mdc-button {
+		color: white;
+	}
+}
+

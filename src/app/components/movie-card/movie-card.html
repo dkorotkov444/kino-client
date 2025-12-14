@@ -1,22 +1,45 @@
-@if (movies$ | async; as movies) {
+<div class="movie-view-container">
+    @if (movies$ | async; as movies) {
+        @if (movies.length === 0) {
+            <div class="empty-message">The movie list is empty!</div>
+        } @else {
+            <!-- Search Bar -->
+            <div class="search-container">
+                <mat-form-field appearance="outline" class="search-field">
+                    <mat-label>Search</mat-label>
+                    <input 
+                        matInput 
+                        type="search"
+                        placeholder="Search movies by title, director, genre, or actors (5+ characters)" 
+                        [(ngModel)]="searchTerm"
+                        (input)="onSearchChange()"
+                    />
+                </mat-form-field>
+            </div>
 
-    <div class="cards">
-        @for (movie of movies; track movie._id; let i = $index) {
-            <mat-card class="card">
-                <mat-dialog-content>
-                    <mat-card-title>{{ movie.title }}</mat-card-title>
-
-                    <mat-card-subtitle>
-                        <img [src]="movie.image_url" [alt]="'Poster for ' + movie.title" />
-                    </mat-card-subtitle>
-                </mat-dialog-content>
-            </mat-card>
+            <!-- Movie Cards Grid -->
+            @if (filteredMovies$ | async; as filteredMovies) {
+                <div class="movie-grid">
+                    @for (movie of filteredMovies; track movie._id) {
+                        <mat-card class="movie-card">
+                            <img 
+                                mat-card-image 
+                                [src]="movie.image_url" 
+                                [alt]="'Poster for ' + movie.title"
+                                class="movie-poster"
+                            />
+                            <mat-card-content>
+                                <mat-card-title>{{ movie.title }}</mat-card-title>
+                            </mat-card-content>
+                        </mat-card>
+                    }
+                    @empty {
+                        <div class="no-results">No movies match your search.</div>
+                    }
+                </div>
+            }
         }
-        @empty {
-            <p>No movies were found. Please try again later.</p>
-        }
-    </div>
-
-} @else {
-    <p>Loading your movie cards...</p>
-}
+    } @else {
+        <div class="loading-message">Loading movies...</div>
+    }
+</div>

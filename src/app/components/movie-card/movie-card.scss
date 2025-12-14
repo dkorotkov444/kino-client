@@ -1,17 +1,69 @@
-.cards {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 16px;
+.movie-view-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.card {
-	width: 220px;
+.loading-message,
+.empty-message {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #666;
 }
 
-.card img {
-	width: 100%;
-	height: auto;
-	display: block;
-	border-radius: 4px;
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.search-field {
+    width: 100%;
+    max-width: 500px;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.movie-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+mat-paginator {
+    display: flex;
+    justify-content: center;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
 }
 

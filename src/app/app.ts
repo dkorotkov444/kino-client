@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { AuthService } from './services/auth.service';
         RouterOutlet,
         MatButtonModule,
         MatToolbarModule,
+        MatSnackBarModule,
     ],
     templateUrl: './app.html',
     styleUrl: './app.scss'
