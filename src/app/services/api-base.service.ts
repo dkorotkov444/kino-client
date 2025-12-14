@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -8,13 +9,14 @@ import { environment } from '../../environments/environment';
 })
 export class ApiBaseService {
     protected apiUrl = environment.apiUrl;
+    private readonly platformId = inject(PLATFORM_ID);
 
     /**
      * Get authorization headers with JWT token from localStorage
      */
     protected getAuthHeaders(): HttpHeaders {
         let headers: { [key: string]: string } = {};
-        if (typeof localStorage !== 'undefined') {
+        if (isPlatformBrowser(this.platformId)) {
             const token = localStorage.getItem('token');
             if (token) {
                 headers = { Authorization: 'Bearer ' + token };

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiBaseService } from './api-base.service';
+import { Movie } from '../models/movie';
 
 @Injectable({
     providedIn: 'root',
@@ -19,9 +20,7 @@ export class MovieService extends ApiBaseService {
      * @returns Observable with array of movie title strings
      */
     public getMovieList(): Observable<any> {
-        return this.http.get(this.apiUrl + 'movies/list', {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.get(this.apiUrl + 'movies/list').pipe(
             catchError(this.handleError)
         );
     }
@@ -31,14 +30,12 @@ export class MovieService extends ApiBaseService {
      * GET to /movies
      * @returns Observable with array of complete movie objects
      */
-    public getAllMovies(): Observable<any> { // Note: Use a specific type instead of 'any' later!
-        return this.http.get(this.apiUrl + 'movies', {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+    public getAllMovies(): Observable<Movie[]> {
+        return this.http.get<Movie[]>(this.apiUrl + 'movies').pipe(
             tap((response) => console.log('Movies response', response)),
             catchError((error) => {
                 console.error('Movies request failed', error);
-                return of([]);
+                return of([] as Movie[]);
             })
         );
     }
@@ -49,10 +46,8 @@ export class MovieService extends ApiBaseService {
      * @param title - Movie title
      * @returns Observable with single movie object
      */
-    public getMovieByTitle(title: string): Observable<any> {
-        return this.http.get(this.apiUrl + 'movies/' + title, {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+    public getMovieByTitle(title: string): Observable<Movie> {
+        return this.http.get<Movie>(this.apiUrl + 'movies/' + title).pipe(
             catchError(this.handleError)
         );
     }
@@ -64,9 +59,7 @@ export class MovieService extends ApiBaseService {
      * @returns Observable with genre object { name, description }
      */
     public getGenre(genreName: string): Observable<any> {
-        return this.http.get(this.apiUrl + 'movies/genres/' + genreName, {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.get(this.apiUrl + 'movies/genres/' + genreName).pipe(
             catchError(this.handleError)
         );
     }
@@ -78,9 +71,7 @@ export class MovieService extends ApiBaseService {
      * @returns Observable with director object { name, bio, birth_date }
      */
     public getDirector(directorName: string): Observable<any> {
-        return this.http.get(this.apiUrl + 'movies/directors/' + directorName, {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.get(this.apiUrl + 'movies/directors/' + directorName).pipe(
             catchError(this.handleError)
         );
     }
@@ -91,10 +82,8 @@ export class MovieService extends ApiBaseService {
      * @param title - Movie title
      * @returns Observable with array of actor name strings
      */
-    public getMovieActors(title: string): Observable<any> {
-        return this.http.get(this.apiUrl + 'movies/' + title + '/starring', {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+    public getMovieActors(title: string): Observable<string[]> {
+        return this.http.get<string[]>(this.apiUrl + 'movies/' + title + '/starring').pipe(
             catchError(this.handleError)
         );
     }
@@ -106,9 +95,7 @@ export class MovieService extends ApiBaseService {
      * @returns Observable with actor information
      */
     public getActor(actorName: string): Observable<any> {
-        return this.http.get(this.apiUrl + 'movies/actors/' + actorName, {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.get(this.apiUrl + 'movies/actors/' + actorName).pipe(
             catchError(this.handleError)
         );
     }

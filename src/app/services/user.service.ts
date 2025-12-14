@@ -18,9 +18,7 @@ export class UserService extends ApiBaseService {
      * @returns Observable with array of user objects
      */
     public getAllUsers(): Observable<any> {
-        return this.http.get(this.apiUrl + 'users', {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.get(this.apiUrl + 'users').pipe(
             catchError(this.handleError)
         );
     }
@@ -53,9 +51,7 @@ export class UserService extends ApiBaseService {
      * @returns Observable with updated user object
      */
     public updateUser(username: string, updates: any): Observable<any> {
-        return this.http.patch(this.apiUrl + 'users/' + username, updates, {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.patch(this.apiUrl + 'users/' + username, updates).pipe(
             catchError(this.handleError)
         );
     }
@@ -67,9 +63,7 @@ export class UserService extends ApiBaseService {
      * @returns Observable with confirmation message
      */
     public deleteUser(username: string): Observable<any> {
-        return this.http.delete(this.apiUrl + 'users/' + username, {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.delete(this.apiUrl + 'users/' + username).pipe(
             catchError(this.handleError)
         );
     }
@@ -82,9 +76,7 @@ export class UserService extends ApiBaseService {
      * @returns Observable with updated user object
      */
     public addFavoriteMovie(username: string, movieTitle: string): Observable<any> {
-        return this.http.patch(this.apiUrl + 'users/' + username + '/' + movieTitle, {}, {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.patch(this.apiUrl + 'users/' + username + '/' + movieTitle, {}).pipe(
             catchError(this.handleError)
         );
     }
@@ -97,9 +89,7 @@ export class UserService extends ApiBaseService {
      * @returns Observable with updated user object
      */
     public removeFavoriteMovie(username: string, movieTitle: string): Observable<any> {
-        return this.http.delete(this.apiUrl + 'users/' + username + '/' + movieTitle, {
-            headers: this.getAuthHeaders(),
-        }).pipe(
+        return this.http.delete(this.apiUrl + 'users/' + username + '/' + movieTitle).pipe(
             catchError(this.handleError)
         );
     }

@@ -10,6 +10,7 @@ import { MovieCardComponent } from './components/movie-card/movie-card';
 export const routes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
+  //{ path: 'users', loadComponent: () => import('./components/user-profile/user-profile').then(m => m.UserProfileComponent) },
     // Handle redirects (pathMatch is often 'full' for empty routes)
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
 ];

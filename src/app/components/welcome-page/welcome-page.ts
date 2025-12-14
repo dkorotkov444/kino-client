@@ -1,6 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { RouterOutlet } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form';
@@ -8,9 +7,9 @@ import { UserLoginFormComponent } from '../user-login-form/user-login-form';
 
 @Component({
   selector: 'kino-welcome-page',
+  standalone: true,
   imports: [
     CommonModule,
-    //RouterOutlet,
     MatDialogModule,
     MatButtonModule,
   ],

@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
+import { Movie } from '../../models/movie';
 
 @Component({
     standalone: true,
@@ -21,7 +22,7 @@ import { MovieService } from '../../services/movie.service';
 export class MovieCardComponent implements OnInit {
     private movieService = inject(MovieService);
     // The movies array is an Observable that emits the array. Observable<any> matches the service's current return type.
-    public movies$!: Observable<any>; // Note: Use a specific type instead of 'any' later!
+    public movies$!: Observable<Movie[]>;
 
     constructor() {}
 
