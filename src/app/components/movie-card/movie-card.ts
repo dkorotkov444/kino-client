@@ -10,6 +10,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MovieService } from '../../services/movie.service';
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DirectorDialogComponent } from '../director-dialog/director-dialog';
 import { GenreDialogComponent } from '../genre-dialog/genre-dialog';
@@ -38,6 +40,8 @@ import { map, shareReplay } from 'rxjs/operators';
 export class MovieCardComponent implements OnInit {
     private movieService = inject(MovieService);
     readonly dialog = inject(MatDialog);
+    private userService = inject(UserService);
+    private authService = inject(AuthService);
     
     // Reactive state
     private searchTermSubject = new BehaviorSubject<string>('');
@@ -118,7 +122,19 @@ export class MovieCardComponent implements OnInit {
         this.dialog.open(StarringDialogComponent, { data: { starring: movie.starring || [] }, width: '420px' });
     }
 
-    toggleFavorite(movie: Movie): void { /* TODO: toggle favorite state */ }
+    toggleFavorite(movie: Movie): void {
+        const user = this.authService.getUser();
+        if (!user || !movie?.title) return;
+        const username = user.username;
+        const favorites: string[] = user.favorites || [];
+        const isFav = favorites.includes(movie.title);
+        const req$ = isFav
+            ? this.userService.removeFavoriteMovie(username, movie.title)
+            : this.userService.addFavoriteMovie(username, movie.title);
+        req$.subscribe({
+            next: (updated) => { this.authService.setUser(updated); },
+        });
+    }
 
     // Minimal helper to render multiple cards in viewport without changing navigation logic
     getVisibleMovies(all: Movie[]): Movie[] {

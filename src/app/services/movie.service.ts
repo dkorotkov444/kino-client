@@ -13,7 +13,6 @@ export class MovieService extends ApiBaseService {
         super();
     }
 
-
     /**
      * Get all movie titles only
      * GET to /movies/list
@@ -68,7 +67,7 @@ export class MovieService extends ApiBaseService {
      * Get director information by name
      * GET to /movies/directors/:directorName
      * @param directorName - Director name (e.g., 'Quentin Tarantino')
-     * @returns Observable with director object { name, bio, birth_date }
+     * @returns Observable with director object { name, bio, birth_date, death_date }
      */
     public getDirector(directorName: string): Observable<any> {
         return this.http.get(this.apiUrl + 'movies/directors/' + directorName).pipe(
