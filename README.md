@@ -1,65 +1,81 @@
 # KinoAngularClient
 
-A modern Angular 21 client application for browsing and managing movies using the REEL Movie API. Built with Angular's latest standalone components, RxJS for reactive programming, and Vitest for unit testing.
+A modern Angular 21 client application for browsing and managing movies using the REEL Movie API. Built with Angular's latest standalone components, RxJS reactive patterns with async pipe, automatic HTTP interceptors, and optimized SSR configuration.
 
 ## Overview
 
-KinoAngularClient is a movie browsing and management application that connects to the REEL Movie API. The application features user authentication, movie browsing, and a service-oriented architecture with comprehensive error handling.
+KinoAngularClient is a movie browsing and management application that connects to the REEL Movie API. The application features JWT authentication with automatic token injection, reactive movie browsing with search, and a clean service-oriented architecture with user-friendly error handling.
 
 **Version:** 0.0.0 | **Angular:** 21.0.0 | **Node:** 20+ | **npm:** 10.9.3
 
 ## Features
 
-- **User Authentication:** JWT-based login with automatic token management and localStorage persistence
+- **JWT Authentication:** Automatic token management with HTTP interceptor and localStorage persistence
+- **Auth Interceptor:** Centralized token injection for all authenticated API requests
 - **User Registration:** Full registration form with validation (username, password, email, birthdate)
-- **Material Design UI:** Professional Material Design components for forms and dialogs
-- **Movie Browsing:** Service layer ready for fetching and searching movies by title
-- **User Management:** Service layer for user profile management and favorites tracking
-- **Reactive Forms:** TypeScript-first reactive form validation with strong typing
-- **Service Architecture:** Modular, injectable services for authentication, movies, users, and API communication
-- **Error Handling:** Centralized HTTP error handling with proper error propagation
-- **Type Safety:** TypeScript with strict configuration and full type checking
-- **Standalone Components:** Modern Angular 21 standalone components architecture (no NgModules)
-- **Server-Side Rendering:** Built-in Angular SSR support with Express integration
-- **Material Dialogs:** Modal dialogs for user interactions
-- **Snackbar Notifications:** Toast notifications for user feedback
+- **Material Design UI:** Professional Material Design components throughout the app
+- **Movie Browsing:** Responsive grid layout with all movies displayed
+- **Movie Search:** Client-side filtering by title, director, genre, and actors (5+ characters)
+- **Reactive Patterns:** RxJS streams with async pipe, BehaviorSubjects, and shareReplay for optimal performance
+- **Type Safety:** Full TypeScript Movie interface matching backend MongoDB schema
+- **Error Notifications:** Material Snackbar with status-specific error messages (400, 401, 403, 404, etc.)
+- **Standalone Components:** Modern Angular 21 architecture (no NgModules)
+- **Optimized SSR:** Server-side rendering for public routes only (welcome page), client-side for authenticated views
+- **SSR Hydration:** Event replay for improved UX during app bootstrap
+- **Logout Functionality:** Navbar logout button with automatic state cleanup
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── components/                                      # Shared UI components
+│   ├── components/                                      # Application components
+│   │   ├── movie-card/                                # Movie browsing component
+│   │   │   ├── movie-card.ts                         # Reactive movie display with search and filtering
+│   │   │   ├── movie-card.html                       # Responsive grid layout with Material cards
+│   │   │   ├── movie-card.scss                       # Component styles with hover effects
+│   │   │   └── movie-card.spec.ts                    # Component tests
+│   │   │
 │   │   ├── user-registration-form/                    # User registration component (Material dialog)
 │   │   │   ├── user-registration-form.ts              # Registration form component with reactive forms
 │   │   │   ├── user-registration-form.html            # Registration form template
 │   │   │   ├── user-registration-form.scss            # Component styles
 │   │   │   └── user-registration-form.spec.ts         # Component tests
 │   │   │
-│   │   └── user-login-form/                           # User login component (Material dialog)
-│   │       ├── user-login-form.ts                     # Login form component with reactive forms
-│   │       ├── user-login-form.html                   # Login form template
-│   │       ├── user-login-form.scss                   # Component styles
-│   │       └── user-login-form.spec.ts                # Component tests
+│   │   ├── user-login-form/                           # User login component (Material dialog)
+│   │   │   ├── user-login-form.ts                     # Login form component with reactive forms
+│   │   │   ├── user-login-form.html                   # Login form template
+│   │   │   ├── user-login-form.scss                   # Component styles
+│   │   │   └── user-login-form.spec.ts                # Component tests
+│   │   │
+│   │   └── welcome-page/                              # Landing page component
+│   │       ├── welcome-page.ts                        # Welcome component with dialog triggers
+│   │       ├── welcome-page.html                      # Welcome page template
+│   │       ├── welcome-page.scss                      # Component styles
+│   │       └── welcome-page.spec.ts                   # Component tests
 │   │
 │   ├── services/                                       # Core application services
-│   │   ├── api-base.service.ts                        # Base API service with common functionality
+│   │   ├── api-base.service.ts                        # Base API service with enhanced error handling & snackbar notifications
 │   │   ├── api-base.service.spec.ts                   # API base service tests
 │   │   ├── auth.service.ts                            # Authentication and JWT token management
 │   │   ├── auth.service.spec.ts                       # Auth service tests
-│   │   ├── movie.service.ts                           # Movie data retrieval and management
+│   │   ├── auth.interceptor.ts                        # HTTP interceptor for automatic token injection
+│   │   ├── movie.service.ts                           # Movie data retrieval (typed with Movie interface)
 │   │   ├── movie.service.spec.ts                      # Movie service tests
 │   │   ├── user.service.ts                            # User profile and favorites management
 │   │   └── user.service.spec.ts                       # User service tests
 │   │
-│   ├── app.ts                                         # Root component (standalone, 'app-root' selector)
-│   ├── app.html                                       # Root template with router outlet and buttons
-│   ├── app.scss                                       # Global component styles
+│   ├── models/                                         # TypeScript interfaces
+│   │   └── movie.ts                                   # Movie interface matching MongoDB schema
+│   │
+│   ├── app.ts                                         # Root component with navbar and logout
+│   ├── app.html                                       # Root template with navbar and router outlet
+│   ├── app.scss                                       # Global component styles & error snackbar styling
 │   ├── app.spec.ts                                    # Root component tests
-│   ├── app.routes.ts                                  # Application routing configuration
-│   ├── app.routes.server.ts                           # Server-side routing for SSR
-│   ├── app.config.ts                                  # Application providers configuration
-│   └── app.config.server.ts                           # Server-side application configuration
+│   ├── app.routes.ts                                  # Application routing (welcome, movies)
+│   ├── app.routes.server.ts                           # SSR config: prerender welcome only, client-render movies
+│   ├── app.config.ts                                  # App providers with auth interceptor
+│   └── app.config.server.ts                           # Server-side configuration
 │
 ├── environments/                                       # Environment-specific configuration
 │   ├── environment.ts                                 # Development environment (localhost:8080)
@@ -89,16 +105,19 @@ All services are provided in the root injector and can be injected into any comp
 
 ### ApiBaseService
 
-Base service providing common functionality for all API services. Extend this service to inherit authentication and error handling capabilities.
+Base service providing common functionality for all API services. Extend this service to inherit error handling capabilities with user-friendly notifications.
 
 **Key Features:**
-- JWT token management from localStorage
-- Authorization header creation with Bearer token
-- Centralized HTTP error handling with proper error propagation
+- Centralized HTTP error handling with Material Snackbar notifications
+- Status-specific error messages (400, 401, 403, 404, 409, 422, 500, 503)
+- Network error detection and user-friendly messaging
+- Backend error message parsing and display
+- 5-second snackbar duration with close button
 
 **Methods:**
-- `getAuthHeaders()` - Returns HttpHeaders with Authorization Bearer token
-- `handleError(error)` - Centralized error handler for HTTP requests
+- `handleError(error)` - Enhanced error handler with snackbar notifications and status-specific messages
+
+**Note:** Authentication headers are now handled automatically by the `authInterceptor`, so manual header management is no longer needed.
 
 ### AuthService
 
@@ -117,24 +136,38 @@ Handles user authentication and session management. Automatically manages JWT to
 
 ### MovieService
 
-Manages movie data retrieval from the API. Provides methods to get movies, genres, directors, and actors.
+Manages movie data retrieval from the API. All methods return strongly-typed observables using the `Movie` interface. Authentication headers are automatically added by the `authInterceptor`.
 
 **Methods:**
-- `getMovieList()` - GET `/movies/list` - Returns array of movie title strings
-- `getAllMovies()` - GET `/movies` - Returns array of complete movie objects with full details
-- `getMovieByTitle(title)` - GET `/movies/:title` - Returns single movie object by title
+- `getMovieList()` - GET `/movies/list` - Returns `Observable<any>` of movie title strings
+- `getAllMovies()` - GET `/movies` - Returns `Observable<Movie[]>` with complete movie objects
+- `getMovieByTitle(title)` - GET `/movies/:title` - Returns `Observable<Movie>` for a single movie
 - `getGenre(genreName)` - GET `/movies/genres/:genreName` - Returns genre object with name and description
 - `getDirector(directorName)` - GET `/movies/directors/:directorName` - Returns director object with bio and birth date
-- `getMovieActors(title)` - GET `/movies/:title/starring` - Returns array of actor names for a movie
+- `getMovieActors(title)` - GET `/movies/:title/starring` - Returns `Observable<string[]>` of actor names
 - `getActor(actorName)` - GET `/movies/actors/:actorName` - Returns actor information
+
+### AuthInterceptor
+
+Functional HTTP interceptor that automatically attaches JWT tokens to authenticated requests.
+
+**Key Features:**
+- Automatically adds `Authorization: Bearer <token>` header to requests
+- Reads token from localStorage (client-side only, SSR-safe)
+- Skips public endpoints (`/login` and `POST /users` registration)
+- Platform-aware: only runs on browser (checks `isPlatformBrowser`)
+
+**Configuration:** Registered in `app.config.ts` via `provideHttpClient(withInterceptors([authInterceptor]))`
+
+**Location:** `src/app/services/auth.interceptor.ts`
 
 ### UserService
 
-Manages user profiles, registration, and user favorites. Handles user lifecycle operations including account updates and deletion.
+Manages user profiles, registration, and user favorites. Handles user lifecycle operations including account updates and deletion. Authentication headers are automatically added by the `authInterceptor`.
 
 **Methods:**
 - `getAllUsers()` - GET `/users` - Returns array of all user objects (admin use)
-- `userRegistration(userDetails)` - POST `/users` - Creates new user account
+- `userRegistration(userDetails)` - POST `/users` - Creates new user account (public endpoint, no auth required)
   - Expects: `{ username, password, email, birth_date? }`
   - Returns: newly created user object
 - `updateUser(username, updates)` - PATCH `/users/:username` - Updates user information
@@ -146,24 +179,78 @@ Manages user profiles, registration, and user favorites. Handles user lifecycle 
 - `removeFavoriteMovie(username, movieTitle)` - DELETE `/users/:username/:movieTitle` - Removes movie from favorites
   - Returns: updated user object with favorites array
 
+## TypeScript Models
+
+### Movie Interface
+
+Strongly-typed interface matching the backend MongoDB schema.
+
+**Location:** `src/app/models/movie.ts`
+
+**Properties:**
+```typescript
+interface Movie {
+  _id: string;                    // MongoDB document ID
+  title: string;                  // Movie title (required)
+  description: string;            // Movie description (required)
+  release_year: number;           // Release year (required)
+  image_url?: string;             // Poster image URL (optional)
+  rating_imdb?: number;           // IMDb rating (optional)
+  featured?: boolean;             // Featured flag (optional)
+  starring?: string[];            // Array of actor names (optional)
+  director?: {                    // Director object (optional)
+    name: string;                 // Director name (required if director exists)
+    bio?: string;                 // Director bio (optional)
+    birth_date?: string;          // Birth date as ISO string (optional)
+    death_date?: string;          // Death date as ISO string (optional)
+  };
+  genre?: {                       // Genre object (optional)
+    name: string;                 // Genre name (required if genre exists)
+    description?: string;         // Genre description (optional)
+  };
+}
+```
+
 ## Components
 
 ### App (Root Component)
 
-The main application component that bootstraps the Angular application. Uses standalone component architecture.
+The main application component with navigation bar and logout functionality. Uses standalone component architecture.
 
 **Features:**
+- Material toolbar navbar with conditional rendering (hidden on welcome page)
 - Router outlet for page navigation
-- Application title signal
-- Sign Up and Login buttons that open Material dialogs
-- Global layout and styling
-- Material button integration
+- Logout button in navbar that clears auth state and redirects to welcome
+- RouterLink navigation to Home (movies) and conditionally Profile
+- Material button and toolbar modules
 
-**Dialogs:**
-- `openUserRegistrationDialog()` - Opens UserRegistrationFormComponent in 280px wide dialog
-- `openUserLoginDialog()` - Opens UserLoginFormComponent in 280px wide dialog
+**Methods:**
+- `onLogout()` - Calls `authService.logout()` to clear localStorage and navigates to welcome
 
 **Location:** `src/app/app.ts`
+
+### MovieCardComponent
+
+Reactive movie browsing component with search and filtering. Displays movies in a responsive grid layout.
+
+**Features:**
+- **Reactive Streams:** Uses RxJS `BehaviorSubject`, `combineLatest`, and `shareReplay(1)` for efficient data flow
+- **Async Pipe:** Template subscribes to observables with async pipe (no manual subscription management)
+- **Search:** Real-time client-side filtering by title, director, genre, and actors (min 5 characters)
+- **Responsive Grid:** Auto-filling grid layout that adapts to screen size
+- **Hover Effects:** Card animations on hover for better UX
+- **Loading States:** Shows "Loading movies..." while fetching data
+- **Empty States:** Displays messages for empty results or no matches
+
+**Observables:**
+- `movies$` - Source stream from `MovieService.getAllMovies()` with `shareReplay(1)` to prevent duplicate HTTP calls
+- `filteredMovies$` - Derived stream that filters movies based on search term using `combineLatest`
+- `searchTermSubject` - BehaviorSubject for reactive search input
+
+**Methods:**
+- `onSearchChange()` - Updates search subject when user types (triggers filtering)
+
+**Location:** `src/app/components/movie-card/`
 
 ### UserRegistrationFormComponent
 
