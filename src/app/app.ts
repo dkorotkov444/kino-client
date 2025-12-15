@@ -1,11 +1,16 @@
 // src/app/app.ts
 
+// Angular core & common
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
+
+// Angular Material
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+// App services
 import { AuthService } from './services/auth.service';
 
 @Component({

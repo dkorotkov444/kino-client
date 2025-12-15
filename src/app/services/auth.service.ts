@@ -1,7 +1,12 @@
+// Angular core
 import { Injectable } from '@angular/core';
+
+// HTTP & RxJS
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+
+// App services
 import { ApiBaseService } from './api-base.service';
 
 @Injectable({

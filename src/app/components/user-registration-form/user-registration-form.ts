@@ -1,14 +1,21 @@
 // src/app/user-registration-form/user-registration-form.ts
 
+// Angular core & common
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
+
+// Forms
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+
+// Angular Material
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+
+// App services
 import { UserService } from '../../services/user.service';
 
 @Component({

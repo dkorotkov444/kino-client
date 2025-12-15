@@ -1,23 +1,31 @@
 // src/app/movie-card/movie-card.ts
 
+// Angular core & common
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+// Angular Material
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+// App services & models
 import { MovieService } from '../../services/movie.service';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
+import { Movie } from '../../models/movie';
+
+// Local components
 import { DirectorDialogComponent } from '../director-dialog/director-dialog';
 import { GenreDialogComponent } from '../genre-dialog/genre-dialog';
 import { DescriptionDialogComponent } from '../description-dialog/description-dialog';
 import { StarringDialogComponent } from '../starring-dialog/starring-dialog';
-import { Movie } from '../../models/movie';
+
+// RxJS
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 

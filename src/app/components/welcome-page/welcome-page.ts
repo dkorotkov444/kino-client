@@ -1,7 +1,12 @@
+// Angular core & common
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+// Angular Material
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+
+// Local components
 import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form';
 import { UserLoginFormComponent } from '../user-login-form/user-login-form';
 

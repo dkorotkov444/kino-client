@@ -1,6 +1,9 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+// Angular core & platform
 import { PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+
+// HTTP
+import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const platformId = inject(PLATFORM_ID);
