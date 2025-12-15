@@ -1,15 +1,15 @@
 ﻿@if (showNavBar) {
-  <div class="navbar-wrapper">
-    <mat-toolbar color="primary" class="navbar">
-      <div class="navbar-content">
-        <span class="brand">KINO Movies Application</span>
-        <span class="spacer"></span>
-        <a mat-button routerLink="/movies">Home</a>
-        <a mat-button routerLink="/users">Profile</a>
-        <button mat-button (click)="onLogout()">Logout</button>
-      </div>
-    </mat-toolbar>
-  </div>
+    <div class="navbar-wrapper">
+        <mat-toolbar color="primary" class="navbar">
+        <div class="navbar-content">
+            <span class="brand">KINO Movies Application</span>
+            <span class="spacer"></span>
+            <a mat-button routerLink="/movies">Home</a>
+            <a mat-button routerLink="/users">Profile</a>
+            <button mat-button (click)="onLogout()">Logout</button>
+        </div>
+        </mat-toolbar>
+    </div>
 }
 
 <router-outlet />

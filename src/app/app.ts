@@ -3,7 +3,7 @@
 // Angular core & common
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 // Angular Material
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +18,7 @@ import { AuthService } from './services/auth.service';
     standalone: true,
     imports: [
         CommonModule,
+        RouterLink,
         RouterOutlet,
         MatButtonModule,
         MatToolbarModule,
