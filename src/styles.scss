@@ -10,7 +10,7 @@ html {
     @include mat.theme((
         color: (
             primary: mat.$azure-palette,
-            tertiary: mat.$blue-palette,
+            accent: mat.$blue-palette,
             warn: mat.$red-palette,
         ),
         typography: Roboto,
@@ -38,3 +38,19 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* --- MAT-RAISED-BUTTON COLORS --- */
+
+// Force the Primary Button to use the primary color
+// This specifically targets the modern raised button class with the primary color attribute.
+.mat-mdc-raised-button.mat-primary {
+  background-color: #1976d2 !important; /* Azure/Blue primary color */
+  color: white !important; /* White text for contrast */
+}
+
+// Force the Warn Button (Remove account) to use the warn color
+// This specifically targets the modern raised button class with the warn color attribute.
+.mat-mdc-raised-button.mat-warn {
+  background-color: #f44336 !important; /* Red warn color */
+  color: white !important; /* White text for contrast */
+}

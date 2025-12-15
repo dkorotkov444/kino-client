@@ -1,5 +1,5 @@
 // Angular core & common
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Forms
@@ -38,49 +38,49 @@ import { MovieCardComponent } from '../movie-card/movie-card';
     styleUrl: './user-profile.scss',
 })
 export class UserProfileComponent {
-    constructor() {
-        // Debug: Log when the component is initialized
-        console.debug('[UserProfileComponent] Initialized');
-    }
     
     private fb = inject(FormBuilder);
     private auth = inject(AuthService);
     private userService = inject(UserService);
     private snack = inject(MatSnackBar);
     private dialog = inject(MatDialog);
+    private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
     user = this.auth.getUser();
 
     ngOnInit() {
         // Debug: Log when ngOnInit is called
-        console.debug('[UserProfileComponent] ngOnInit called');
+        //console.debug('[UserProfileComponent] ngOnInit called');
         console.debug('[UserProfileComponent] Current user:', this.user);
     }
 
     form = this.fb.group({
-        username: [this.user?.username || '', [Validators.required]],
-        password: [''],
+        username: [this.user?.username || '', [Validators.required, Validators.minLength(3)]],
+        password: ['', [Validators.minLength(8)]],
         email: [this.user?.email || '', [Validators.required, Validators.email]],
         birth_date: [this.user?.birth_date ? new Date(this.user.birth_date) : null],
     });
 
-    saving = false;
+    saving : boolean= false;
 
     save(): void {
         console.debug('[UserProfileComponent] save() called');
-        if (!this.user) {
+        if (this.form.invalid || !this.user) {
             console.debug('[UserProfileComponent] No user found, aborting save.');
             return;
         }
+
         const currentUsername = this.user.username;
         const value = this.form.value;
         const updates: any = {};
+
+        console.debug('[UserProfileComponent] Form value:', value);
+
         if (value.username && value.username !== currentUsername) updates.newUsername = value.username;
         if (value.password) updates.newPassword = value.password;
         if (value.email && value.email !== this.user.email) updates.newEmail = value.email;
         if (value.birth_date) updates.newBirthDate = this.toIsoDate(value.birth_date as Date);
 
-        console.debug('[UserProfileComponent] Form value:', value);
         console.debug('[UserProfileComponent] Updates to send:', updates);
 
         if (Object.keys(updates).length === 0) {
@@ -90,27 +90,32 @@ export class UserProfileComponent {
         }
 
         this.saving = true;
+        this.cdr.detectChanges();
+
         this.userService.updateUser(currentUsername, updates).subscribe({
-            next: (updated) => {
-                console.debug('[UserProfileComponent] Update successful:', updated);
-                // If username or password changed, force re-login
-                if (updates.newUsername || updates.newPassword) {
+            next: (updatedUser) => {
+                console.debug('[UserProfileComponent] Update successful:', updatedUser);
+                
+                if (updates.newUsername || updates.newPassword) {           // If username or password changed, force re-login
                     console.debug('[UserProfileComponent] Username or password changed, logging out.');
                     this.auth.logout();
                     this.snack.open('Username/password changed. You are logged out for security.', 'Close', { duration: 4000 });
-                } else {
-                    this.auth.setUser(updated);
-                    this.user = updated;
+                } else {                                                    // Otherwise, just update the user info in AuthService and locally
+                    this.auth.setUser(updatedUser);
+                    this.user = updatedUser;
                     this.snack.open('Profile updated successfully.', 'Close', { duration: 3000 });
                 }
             },
             error: (err) => {
                 console.debug('[UserProfileComponent] Update failed:', err);
                 this.snack.open('Failed to update profile.', 'Close', { duration: 4000 });
+                this.saving = false;
+                this.cdr.detectChanges();
             },
             complete: () => {
                 console.debug('[UserProfileComponent] Update request complete.');
                 this.saving = false;
+                this.cdr.detectChanges();
             }
         });
     }

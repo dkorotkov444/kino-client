@@ -4,6 +4,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 // App interceptors & routes
 import { authInterceptor } from './services/auth.interceptor';
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),                      // Register the router service globally
         provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
-        provideClientHydration(withEventReplay())
+        provideClientHydration(withEventReplay()),
+        { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, // Set Angular Material date locale to UK format
     ]
 };
