@@ -127,14 +127,18 @@ export class UserProfileComponent {
             return;
         }
         // Security check: confirm deletion with a dangerous-themed warning
-        const confirmed = window.confirm(
-            'Dangerous action!\n\nAre you sure you want to delete your account? This action cannot be undone.'
-        );
+        const confirmationMessage = 
+        '⚠️ WARNING: This action cannot be undone. \n\n' +
+        'Are you sure you want to permanently delete your account and all associated data?';
+
+        const confirmed = window.confirm(confirmationMessage );
+
         console.debug('[UserProfileComponent] User confirmed deletion:', confirmed);
         if (!confirmed) {
             console.debug('[UserProfileComponent] User cancelled account deletion.');
             return;
         }
+        
         const username = this.user.username;
         console.debug('[UserProfileComponent] Sending delete request for user:', username);
         this.userService.deleteUser(username).subscribe({
