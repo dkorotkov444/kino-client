@@ -1,5 +1,6 @@
 // Angular core
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 // HTTP & RxJS
 import { HttpClient } from '@angular/common/http';
@@ -13,6 +14,8 @@ import { ApiBaseService } from './api-base.service';
     providedIn: 'root',
 })
 export class AuthService extends ApiBaseService {
+    private router: Router = inject(Router);
+
     constructor(private http: HttpClient) {
         super();
     }
@@ -80,5 +83,6 @@ export class AuthService extends ApiBaseService {
     logout(): void {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        this.router.navigate(['welcome']);      // Redirect to welcome/login page
     }
 }

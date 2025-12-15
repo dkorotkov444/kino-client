@@ -14,7 +14,7 @@ export class ApiBaseService {
     /**
      * Centralized error handling for HTTP requests with user-friendly notifications
      */
-    protected handleError(error: HttpErrorResponse): Observable<never> {
+    protected handleError = (error: HttpErrorResponse): Observable<never> => {
         let userMessage = 'An unexpected error occurred. Please try again.';
         
         if (error.error instanceof ErrorEvent) {

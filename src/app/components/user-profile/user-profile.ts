@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
 // App services & components
 import { AuthService } from '../../services/auth.service';
@@ -37,14 +38,16 @@ import { MovieCardComponent } from '../movie-card/movie-card';
     styleUrl: './user-profile.scss',
 })
 export class UserProfileComponent {
-        constructor() {
-            // Debug: Log when the component is initialized
-            console.debug('[UserProfileComponent] Initialized');
-        }
+    constructor() {
+        // Debug: Log when the component is initialized
+        console.debug('[UserProfileComponent] Initialized');
+    }
+    
     private fb = inject(FormBuilder);
     private auth = inject(AuthService);
     private userService = inject(UserService);
     private snack = inject(MatSnackBar);
+    private dialog = inject(MatDialog);
 
     user = this.auth.getUser();
 
@@ -64,7 +67,11 @@ export class UserProfileComponent {
     saving = false;
 
     save(): void {
-        if (!this.user) return;
+        console.debug('[UserProfileComponent] save() called');
+        if (!this.user) {
+            console.debug('[UserProfileComponent] No user found, aborting save.');
+            return;
+        }
         const currentUsername = this.user.username;
         const value = this.form.value;
         const updates: any = {};
@@ -73,47 +80,68 @@ export class UserProfileComponent {
         if (value.email && value.email !== this.user.email) updates.newEmail = value.email;
         if (value.birth_date) updates.newBirthDate = this.toIsoDate(value.birth_date as Date);
 
+        console.debug('[UserProfileComponent] Form value:', value);
+        console.debug('[UserProfileComponent] Updates to send:', updates);
+
         if (Object.keys(updates).length === 0) {
-        this.snack.open('No changes to update.', 'Close', { duration: 3000 });
-        return;
+            console.debug('[UserProfileComponent] No changes to update.');
+            this.snack.open('No changes to update.', 'Close', { duration: 3000 });
+            return;
         }
 
         this.saving = true;
         this.userService.updateUser(currentUsername, updates).subscribe({
-        next: (updated) => {
-            // If username or password changed, force re-login
-            if (updates.newUsername || updates.newPassword) {
-                this.snack.open('Username/password changed. You will be logged out for security.', 'Close', { duration: 4000 });
-                this.auth.logout();
-            } else {
-                this.auth.setUser(updated);
-                this.user = updated;
-                this.snack.open('Profile updated successfully.', 'Close', { duration: 3000 });
+            next: (updated) => {
+                console.debug('[UserProfileComponent] Update successful:', updated);
+                // If username or password changed, force re-login
+                if (updates.newUsername || updates.newPassword) {
+                    console.debug('[UserProfileComponent] Username or password changed, logging out.');
+                    this.auth.logout();
+                    this.snack.open('Username/password changed. You are logged out for security.', 'Close', { duration: 4000 });
+                } else {
+                    this.auth.setUser(updated);
+                    this.user = updated;
+                    this.snack.open('Profile updated successfully.', 'Close', { duration: 3000 });
+                }
+            },
+            error: (err) => {
+                console.debug('[UserProfileComponent] Update failed:', err);
+                this.snack.open('Failed to update profile.', 'Close', { duration: 4000 });
+            },
+            complete: () => {
+                console.debug('[UserProfileComponent] Update request complete.');
+                this.saving = false;
             }
-        },
-        error: () => {
-            this.snack.open('Failed to update profile.', 'Close', { duration: 4000 });
-        },
-        complete: () => { this.saving = false; }
         });
     }
 
     deleteAccount(): void {
-        if (!this.user) return;
+        console.debug('[UserProfileComponent] deleteAccount() called');
+        if (!this.user) {
+            console.debug('[UserProfileComponent] No user found, aborting delete.');
+            return;
+        }
         // Security check: confirm deletion with a dangerous-themed warning
         const confirmed = window.confirm(
             'Dangerous action!\n\nAre you sure you want to delete your account? This action cannot be undone.'
         );
+        console.debug('[UserProfileComponent] User confirmed deletion:', confirmed);
         if (!confirmed) {
+            console.debug('[UserProfileComponent] User cancelled account deletion.');
             return;
         }
         const username = this.user.username;
+        console.debug('[UserProfileComponent] Sending delete request for user:', username);
         this.userService.deleteUser(username).subscribe({
             next: () => {
+                console.debug('[UserProfileComponent] Account deleted successfully. Logging out.');
                 this.auth.logout();
                 this.snack.open('Account deleted. Goodbye!', 'Close', { duration: 4000, panelClass: ['snack-danger'] });
             },
-            error: () => this.snack.open('Failed to delete account.', 'Close', { duration: 4000, panelClass: ['snack-danger'] }),
+            error: (err) => {
+                console.debug('[UserProfileComponent] Account deletion failed:', err);
+                this.snack.open('Failed to delete account.', 'Close', { duration: 4000, panelClass: ['snack-danger'] });
+            },
         });
     }
 

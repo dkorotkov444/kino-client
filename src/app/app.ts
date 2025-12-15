@@ -34,10 +34,5 @@ export class AppComponent {
     get showNavBar(): boolean {
         return !this.router.url.includes('welcome');
     }
-
-    onLogout(): void {
-        this.authService.logout();
-        this.router.navigate(['welcome']);
-    }
 }
 
