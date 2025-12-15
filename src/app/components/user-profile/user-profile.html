@@ -1,48 +1,48 @@
 <div class="profile-container">
-  <mat-card class="profile-card">
-    <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="save()" class="profile-form">
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Username</mat-label>
-            <input matInput formControlName="username" />
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>New Password</mat-label>
-            <input matInput type="password" formControlName="password" />
-          </mat-form-field>
-        </div>
+    <mat-card class="profile-card">
+        <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="save()" class="profile-form">
+            <div class="form-row">
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>New Password</mat-label>
+                <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+            </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" />
-          </mat-form-field>
-        </div>
+            <div class="form-row">
+            <mat-form-field appearance="outline" class="full">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" />
+            </mat-form-field>
+            </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Birthday</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="birth_date" />
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
+            <div class="form-row">
+            <mat-form-field appearance="outline">
+                <mat-label>Birthday</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="birth_date" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            </div>
 
-        <div class="actions">
-          <button mat-raised-button color="primary" type="submit" [disabled]="saving">Save Changes</button>
-          <button mat-raised-button color="warn" type="button" (click)="deleteAccount()">Remove account permanently</button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+            <div class="actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving">Save Changes</button>
+            <button mat-raised-button color="warn" type="button" (click)="deleteAccount()">Remove account permanently</button>
+            </div>
+        </form>
+        </mat-card-content>
+    </mat-card>
 
-  <div class="favorites-section">
-    <h3>Your Favorites</h3>
-    <!-- Placeholder: favorites carousel could reuse MovieCardComponent specialized for favorites later -->
-    <div class="favorites-carousel-placeholder">
-      <!-- Future: render user's favorite movies in a smaller carousel -->
-      <p>Favorites carousel will appear here.</p>
+    <div class="favorites-section">
+        <h3>Your Favorites</h3>
+        <!-- Placeholder: favorites carousel could reuse MovieCardComponent specialized for favorites later -->
+        <div class="favorites-carousel-placeholder">
+        <!-- Future: render user's favorite movies in a smaller carousel -->
+        <p>Favorites carousel will appear here.</p>
+        </div>
     </div>
-  </div>
 </div>
