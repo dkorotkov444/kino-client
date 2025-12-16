@@ -13,6 +13,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 // App services & models
 import { MovieService } from '../../services/movie.service';
 import { UserService } from '../../services/user.service';
@@ -47,17 +49,18 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class MovieCardComponent implements OnInit {
     private movieService = inject(MovieService);
-    readonly dialog = inject(MatDialog);
     private userService = inject(UserService);
     private authService = inject(AuthService);
+    private dialog = inject(MatDialog);
+    private snackBar = inject(MatSnackBar);
 
     // Inputs
     @Input() movie!: Movie;
-    @Input() isFavorite: boolean = false; // New input to control heart icon state
-    @Input() showChips: boolean = true; 
+    // @Input() isFavorite: boolean = false; // New input to control heart icon state
+    // @Input() showChips: boolean = true; 
 
     // Emits the full Movie object when the favorite button is clicked in the profile
-    @Output() favoriteToggled = new EventEmitter<Movie>();
+    // @Output() favoriteToggled = new EventEmitter<Movie>();
     
     // Reactive state
     private searchTermSubject = new BehaviorSubject<string>('');
@@ -136,28 +139,57 @@ export class MovieCardComponent implements OnInit {
         this.dialog.open(StarringDialogComponent, { data: { starring: movie.starring || [] }, width: '420px' });
     }
 
+    /**
+     * FIX: Getter to determine the heart icon state (always solid red if favorited)
+     */
+    get isFavoriteIconSolid(): boolean {
+        const user = this.authService.getUser();
+        // Check if the user is logged in, has favorites, and the current movie is in the list
+        if (!user || !user.favorites || !this.movie?._id) {
+            return false;
+        }
+        // Check against the MongoDB ID for accurate comparison
+        return user.favorites.includes(this.movie._id);
+    }
+
+    /**
+     * Handles favorite toggling internally for the standalone movie card.
+     */
     toggleFavorite(movie: Movie): void {
 
         // 1. Logic for reuse in User Profile: If a parent is listening via the output, emit the event.
-        if (this.favoriteToggled.observed) {
+        /*if (this.favoriteToggled.observed) {
             this.favoriteToggled.emit(movie);
             return;
-        }
+        }*/
         // 2. Logic for standalone (Movie Card): Handle favorite toggling internally.
         const user = this.authService.getUser();
-        if (!user || !movie?.title) return;
+        if (!user || !movie?.title) {
+            this.snackBar.open('Please log in to manage favorites.', 'Close', { duration: 3000 });
+            return;
+        }
+
         const username = user.username;
         const favorites: string[] = user.favorites || [];
 
-        // Check if movie is already a favorite
+        // Check against movie._id if movie is already a favorite
         const isFavorite = favorites.includes(movie._id);
         
+        // API endpoint requires movie.title for adding/removing favorites
         const req$ = isFavorite
             ? this.userService.removeFavoriteMovie(username, movie.title)
             : this.userService.addFavoriteMovie(username, movie.title);
 
         req$.subscribe({
-            next: (updatedUser) => { this.authService.setUser(updatedUser); },
+            next: (updatedUser) => { 
+                this.authService.setUser(updatedUser); 
+                // Provide feedback based on the action performed
+                this.snackBar.open(
+                    `${movie.title} ${isFavorite ? 'removed from' : 'added to'} favorites.`, 
+                    'Close', 
+                    { duration: 2000 }
+                )
+            },
         });
     }
 

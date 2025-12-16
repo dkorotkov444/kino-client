@@ -14,19 +14,19 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
+// import { MatDialog } from '@angular/material/dialog';
 
 // App services & components
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { MovieService } from '../../services/movie.service';
-import { MovieCardComponent } from '../movie-card/movie-card';
+// import { MovieCardComponent } from '../movie-card/movie-card';
 import { Movie } from '../../models/movie';
 import { User } from '../../models/user';
 
 // RxJS imports
 import { Observable, combineLatest, of, BehaviorSubject } from 'rxjs'; 
-import { map, shareReplay, startWith } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
     standalone: true,
@@ -41,7 +41,7 @@ import { map, shareReplay, startWith } from 'rxjs/operators';
         MatButtonModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MovieCardComponent,
+        // MovieCardComponent,
     ],
     templateUrl: './user-profile.html',
     styleUrl: './user-profile.scss',
@@ -51,21 +51,21 @@ export class UserProfileComponent implements OnInit {
     private fb = inject(FormBuilder);
     private auth = inject(AuthService);
     private userService = inject(UserService);
-    private movieService = inject(MovieService);
+    // private movieService = inject(MovieService);
     private snack = inject(MatSnackBar);
-    private dialog = inject(MatDialog);
+    // private dialog = inject(MatDialog);
     private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
     // Local state for the user
     user: User | null = this.auth.getUser();
     // Local BehaviorSubject to handle synchronous updates from AuthService
-    private userSubject = new BehaviorSubject<User | null>(this.user);
+    /*private userSubject = new BehaviorSubject<User | null>(this.user);
     user$: Observable<User | null> = this.userSubject.asObservable().pipe(
         shareReplay(1)
-    );
+    );*/
 
     // Favorite movies
-    favoriteMovies$: Observable<Movie[]> = of([]);
+    // favoriteMovies$: Observable<Movie[]> = of([]);
 
     // Reactive form for profile editing
     form = this.fb.group({
@@ -83,7 +83,7 @@ export class UserProfileComponent implements OnInit {
         console.debug('[UserProfileComponent] Current user:', this.user);
 
         // Get the cached Observable from the service
-        const allMovies$ = this.movieService.getAllMovies();
+        /*const allMovies$ = this.movieService.getAllMovies();
 
         // Combine movies and user streams and filter using modern combineLatest array syntax.
         this.favoriteMovies$ = combineLatest([
@@ -98,7 +98,7 @@ export class UserProfileComponent implements OnInit {
                 return allMovies.filter(movie => favoriteIds.includes(movie._id));
             }),
             shareReplay(1) // Cache the final list of favorites
-        );
+        );*/
     }
 
     save(): void {
@@ -140,7 +140,7 @@ export class UserProfileComponent implements OnInit {
                     this.snack.open('Username/password changed. You are logged out for security.', 'Close', { duration: 4000 });
                 } else {                                                    // Otherwise, just update the user info in AuthService and locally
                     this.auth.setUser(updatedUser); 
-                    this.userSubject.next(updatedUser);
+                    //this.userSubject.next(updatedUser);
                     this.user = updatedUser; 
                     this.snack.open('Profile updated successfully.', 'Close', { duration: 3000 });
                 }
@@ -197,7 +197,7 @@ export class UserProfileComponent implements OnInit {
      * Toggles a movie's favorite status. This is called from the MovieCardComponent via @Output.
      * @param movie - The Movie object to toggle.
      */
-    toggleFavorite(movie: Movie): void {
+    /*toggleFavorite(movie: Movie): void {
         // Guard against null user or missing movie title (API requirement)
         if (!this.user || !movie.title) return;     // Note: API requires movie.title for the endpoint
         
@@ -223,7 +223,7 @@ export class UserProfileComponent implements OnInit {
             },
             error: () => this.snack.open('Failed to update favorites.', 'Close', { duration: 3000 }),
         });
-    }
+    }*/
 
     private toIsoDate(d: Date): string {
         const yyyy = d.getFullYear();
