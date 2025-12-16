@@ -1,7 +1,7 @@
 // src/app/movie-card/movie-card.ts
 
 // Angular core & common
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -50,6 +50,14 @@ export class MovieCardComponent implements OnInit {
     readonly dialog = inject(MatDialog);
     private userService = inject(UserService);
     private authService = inject(AuthService);
+
+    // Inputs
+    @Input() movie!: Movie;
+    @Input() isFavorite: boolean = false; // New input to control heart icon state
+    @Input() showChips: boolean = true; 
+
+    // Emits the full Movie object when the favorite button is clicked in the profile
+    @Output() favoriteToggled = new EventEmitter<Movie>();
     
     // Reactive state
     private searchTermSubject = new BehaviorSubject<string>('');
@@ -62,9 +70,7 @@ export class MovieCardComponent implements OnInit {
 
     ngOnInit(): void {
         // Cache and share the movie list to avoid multiple HTTP calls from multiple subscriptions
-        this.movies$ = this.movieService.getAllMovies().pipe(
-            shareReplay(1)
-        );
+        this.movies$ = this.movieService.getAllMovies().pipe();
         
         // Filter movies based on search term
         this.filteredMovies$ = combineLatest([
@@ -131,16 +137,27 @@ export class MovieCardComponent implements OnInit {
     }
 
     toggleFavorite(movie: Movie): void {
+
+        // 1. Logic for reuse in User Profile: If a parent is listening via the output, emit the event.
+        if (this.favoriteToggled.observed) {
+            this.favoriteToggled.emit(movie);
+            return;
+        }
+        // 2. Logic for standalone (Movie Card): Handle favorite toggling internally.
         const user = this.authService.getUser();
         if (!user || !movie?.title) return;
         const username = user.username;
         const favorites: string[] = user.favorites || [];
-        const isFav = favorites.includes(movie.title);
-        const req$ = isFav
+
+        // Check if movie is already a favorite
+        const isFavorite = favorites.includes(movie._id);
+        
+        const req$ = isFavorite
             ? this.userService.removeFavoriteMovie(username, movie.title)
             : this.userService.addFavoriteMovie(username, movie.title);
+
         req$.subscribe({
-            next: (updated) => { this.authService.setUser(updated); },
+            next: (updatedUser) => { this.authService.setUser(updatedUser); },
         });
     }
 

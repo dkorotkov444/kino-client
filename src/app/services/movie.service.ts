@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, shareReplay } from 'rxjs/operators';
 import { ApiBaseService } from './api-base.service';
 import { Movie } from '../models/movie';
 
@@ -9,6 +9,10 @@ import { Movie } from '../models/movie';
     providedIn: 'root',
 })
 export class MovieService extends ApiBaseService {
+
+    // Private property to hold the cached movie observable.
+    private allMovies$: Observable<Movie[]> | null = null;
+
     constructor(private http: HttpClient) {
         super();
     }
@@ -25,18 +29,22 @@ export class MovieService extends ApiBaseService {
     }
 
     /**
-     * Get all movies with full details
+     * Get all movies with full details (cached)
      * GET to /movies
      * @returns Observable with array of complete movie objects
      */
     public getAllMovies(): Observable<Movie[]> {
-        return this.http.get<Movie[]>(this.apiUrl + 'movies').pipe(
-            tap((response) => console.log('Movies response', response)),
-            catchError((error) => {
-                console.error('Movies request failed', error);
-                return of([] as Movie[]);
-            })
-        );
+        if (!this.allMovies$) {
+            this.allMovies$ = this.http.get<Movie[]>(this.apiUrl + 'movies').pipe(
+                tap((response) => console.log('[MovieService] Fetching all movies from API. Total:', response.length)),
+                catchError((error) => {
+                    console.error('Movies request failed', error);
+                    return of([] as Movie[]);
+                }),
+                shareReplay(1) // Cache the latest emitted value
+            );
+        }
+        return this.allMovies$;     // Return the cached observable
     }
 
     /**

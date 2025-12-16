@@ -68,7 +68,7 @@ export class UserService extends ApiBaseService {
      * @returns Observable with confirmation message
      */
     public deleteUser(username: string): Observable<any> {
-        return this.http.delete(this.apiUrl + 'users/' + username).pipe(
+        return this.http.delete(this.apiUrl + 'users/' + username, { responseType: 'text' as 'json' }).pipe(
             catchError(this.handleError)
         );
     }

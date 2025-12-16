@@ -46,10 +46,25 @@
 
     <div class="favorites-section">
         <h3>Your Favorites</h3>
-        <!-- Placeholder: favorites carousel could reuse MovieCardComponent specialized for favorites later -->
-        <div class="favorites-carousel-placeholder">
-        <!-- Future: render user's favorite movies in a smaller carousel -->
-        <p>Favorites carousel will appear here.</p>
-        </div>
+        
+        @if (favoriteMovies$ | async; as favoriteMovies) {
+            
+            @if (favoriteMovies.length > 0) {
+                <div class="favorites-grid-container">
+                    @for (movie of favoriteMovies; track movie._id) {
+                        <kino-movie-card 
+                            [movie]="movie" 
+                            [isFavorite]="true" 
+                            [showChips]="false"
+                            (favoriteToggled)="toggleFavorite(movie)">
+                        </kino-movie-card>
+                    }
+                </div>
+            } @else {
+                <div class="favorites-carousel-placeholder">
+                    <p>You have no favorite movies yet. Add some from the Home screen!</p>
+                </div>
+            }
+        }
     </div>
 </div>
