@@ -660,8 +660,6 @@ Use this for GitHub Pages. It disables server-side logic to provide a standard c
 ```json
 "options": {
   "outputMode": "static",
-  "ssr": false,
-  "prerender": false
 }
 ```
 
