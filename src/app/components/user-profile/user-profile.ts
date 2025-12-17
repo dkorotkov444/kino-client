@@ -1,3 +1,9 @@
+/**
+ * @file src/app/components/user-profile/user-profile.ts
+ * @fileoverview User profile component for Kino app
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
 // Angular core & common
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -37,6 +43,9 @@ import { User } from '../../models/user';
     templateUrl: './user-profile.html',
     styleUrl: './user-profile.scss',
 })
+/**
+ * User profile component.
+ */
 export class UserProfileComponent implements OnInit {
     
     private fb = inject(FormBuilder);
@@ -58,8 +67,14 @@ export class UserProfileComponent implements OnInit {
     // Loading state
     saving : boolean= false;
 
+    /**
+     * Angular lifecycle hook. No-op for now.
+     */
     ngOnInit() {}
 
+    /**
+     * Save profile changes. Updates user info and handles re-login if username or password changes.
+     */
     save(): void {
         if (this.form.invalid || !this.user) {
             return;
@@ -106,6 +121,9 @@ export class UserProfileComponent implements OnInit {
         });
     }
 
+    /**
+     * Delete the user account after confirmation. Logs out and notifies the user.
+     */
     deleteAccount(): void {
         if (!this.user) {
             return;

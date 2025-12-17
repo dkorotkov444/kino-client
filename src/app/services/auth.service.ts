@@ -1,9 +1,17 @@
-// Angular core
+
+/**
+ * @file src/app/services/auth.service.ts
+ * @fileoverview Auth API service for Kino app
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
+
+// Angular
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
-// HTTP & RxJS
 import { HttpClient } from '@angular/common/http';
+
+// RxJS
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -13,18 +21,30 @@ import { ApiBaseService } from './api-base.service';
 @Injectable({
     providedIn: 'root',
 })
+/**
+ * Service for authentication-related API operations.
+ * Handles login, token, and user data management.
+ * @extends ApiBaseService
+ */
 export class AuthService extends ApiBaseService {
+    /**
+     * Angular Router instance for navigation.
+     */
     private router: Router = inject(Router);
 
+    /**
+     * Creates an instance of AuthService.
+     * @param http Angular HttpClient for HTTP requests
+     */
     constructor(private http: HttpClient) {
         super();
     }
 
     /**
-     * Login user and return JWT token + user profile
-     * POST to /login
-     * @param credentials - { username: string, password: string }
-     * @returns Observable with { user: object, token: string }
+     * Logs in a user and returns JWT token and user profile.
+     * @route POST /login
+     * @param credentials Object with username and password
+     * @returns Observable with user object and token string
      */
     public login(credentials: { username: string; password: string }): Observable<any> {
         return this.http.post(this.apiUrl + 'login', credentials).pipe(
@@ -42,21 +62,24 @@ export class AuthService extends ApiBaseService {
     }
 
     /**
-     * Store JWT token in localStorage
+     * Stores JWT token in localStorage.
+     * @param token JWT token string
      */
     setToken(token: string): void {
         localStorage.setItem('token', token);
     }
 
     /**
-     * Store user data in localStorage
+     * Stores user data in localStorage.
+     * @param user User object
      */
     setUser(user: any): void {
         localStorage.setItem('user', JSON.stringify(user));
     }
 
     /**
-     * Get JWT token from localStorage
+     * Gets JWT token from localStorage.
+     * @returns JWT token string or null
      */
     getToken(): string | null {
         return localStorage.getItem('token');
@@ -78,11 +101,11 @@ export class AuthService extends ApiBaseService {
     }
 
     /**
-     * Logout user by clearing token and user data
+     * Logout user by clearing token and user data. After logout, navigates to welcome page.
      */
     logout(): void {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        this.router.navigate(['welcome']);      // Redirect to welcome/login page
+        this.router.navigate(['welcome']);
     }
 }

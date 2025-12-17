@@ -1,17 +1,14 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+/**
+ * @file src/environments/environment.ts
+ * @fileoverview Development environment configuration for Kino app.
+ * This file is used for local builds and debugging. It can be replaced during build by using the `fileReplacements` array in angular.json.
+ * `ng build` replaces `environment.ts` with `environment.prod.ts` for production builds.
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
 
 export const environment = {
     production: false,
     apiUrl: 'http://localhost:8080/'  // Your local development API URL
 };
 
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

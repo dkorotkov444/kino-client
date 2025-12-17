@@ -1,4 +1,9 @@
-// src/app/app.ts
+/**
+ * @file src/app/app.ts
+ * @fileoverview Root application component for Kino app
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
 
 // Angular core & common
 import { Component, inject } from '@angular/core';

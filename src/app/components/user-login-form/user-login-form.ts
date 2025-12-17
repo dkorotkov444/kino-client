@@ -1,3 +1,9 @@
+/**
+ * @file src/app/components/user-login-form/user-login-form.ts
+ * @fileoverview User login dialog component for Kino app
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
 // Angular core & common
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -33,6 +39,9 @@ import { AuthService } from '../../services/auth.service';
     templateUrl: './user-login-form.html',
     styleUrl: './user-login-form.scss',
 })
+/**
+ * User login dialog component.
+ */
 export class UserLoginFormComponent {
     // Modern dependency injection (v21)
     readonly dialogRef: MatDialogRef<UserLoginFormComponent> = inject(MatDialogRef);

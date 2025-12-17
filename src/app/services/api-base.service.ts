@@ -1,18 +1,44 @@
+
+/**
+ * @file src/app/services/api-base.service.ts
+ * @fileoverview Base service for API operations and error handling in Kino app
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
+
+
+// Angular
 import { Injectable, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+// RxJS
 import { Observable, throwError } from 'rxjs';
+
+// App environment
 import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
+/**
+ * Base service for API operations.
+ * Provides common functionality such as error handling and API URL management.
+ */
 export class ApiBaseService {
+    /**
+     * Base URL for API endpoints.
+     */
     protected apiUrl = environment.apiUrl;
+    /**
+     * Angular Material Snackbar for notifications.
+     */
     private snackBar = inject(MatSnackBar);
 
     /**
-     * Centralized error handling for HTTP requests with user-friendly notifications
+     * Centralized error handling for HTTP requests with user-friendly notifications.
+     * @param error HTTP error response
+     * @returns Observable that throws an error
      */
     protected handleError = (error: HttpErrorResponse): Observable<never> => {
         let userMessage = 'An unexpected error occurred. Please try again.';

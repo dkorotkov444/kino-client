@@ -1,3 +1,9 @@
+/**
+ * @file src/app/components/welcome-page/welcome-page.ts
+ * @fileoverview Welcome page component for the Kino app. Handles user entry, registration, and login dialogs.
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
 // Angular core & common
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,22 +27,20 @@ import { UserLoginFormComponent } from '../user-login-form/user-login-form';
   templateUrl: './welcome-page.html',
   styleUrl: './welcome-page.scss',
 })
+/**
+ * Welcome page component for the Kino app.
+ * Displays the app title and provides entry points for user registration and login.
+ */
 export class WelcomePageComponent {
     protected readonly title = signal('KINO App');
-
     readonly dialog: MatDialog = inject(MatDialog);
-    /**
-     * Opens the user registration form inside an Angular Material Dialog.
-     */
+
     openUserRegistrationDialog(): void {
         this.dialog.open(UserRegistrationFormComponent, {
         width: '280px',
         });
     }
 
-    /**
-     * Opens the user login form inside an Angular Material Dialog.
-     */
     openUserLoginDialog(): void {
         this.dialog.open(UserLoginFormComponent, {
             width: '280px',

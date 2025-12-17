@@ -1,8 +1,16 @@
-// Angular core
-import { Injectable } from '@angular/core';
 
-// HTTP & RxJS
+/**
+ * @file src/app/services/user.service.ts
+ * @fileoverview User API service for Kino app
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
+
+// Angular
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+// RxJS
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -12,14 +20,23 @@ import { ApiBaseService } from './api-base.service';
 @Injectable({
     providedIn: 'root',
 })
+/**
+ * Service for user-related API operations.
+ * Handles user registration, retrieval, and updates.
+ * @extends ApiBaseService
+ */
 export class UserService extends ApiBaseService {
+    /**
+     * Creates an instance of UserService.
+     * @param http Angular HttpClient for HTTP requests
+     */
     constructor(private http: HttpClient) {
         super();
     }
 
     /**
-     * Return a list of all users (for admin use only)
-     * GET to /users
+     * Returns a list of all users (for admin use only).
+     * @route GET /users
      * @returns Observable with array of user objects
      */
     public getAllUsers(): Observable<any> {
@@ -29,9 +46,9 @@ export class UserService extends ApiBaseService {
     }
 
     /**
-     * Register a new user
-     * POST to /users
-     * @param userDetails - { username, password, email, birth_date? }
+     * Registers a new user.
+     * @route POST /users
+     * @param userDetails Object containing username, password, email, and optional birth_date
      * @returns Observable with newly created user object
      */
     public userRegistration(userDetails: any): Observable<any> {
@@ -41,18 +58,13 @@ export class UserService extends ApiBaseService {
         );
     }
 
-    /**
-     * Get user profile by username
-     * Note: API doesn't have GET /users/:username endpoint documented
-     * Users get their profile from login response
-     */
     // getUserProfile not implemented - not in API documentation
 
     /**
-     * Update user information
-     * PATCH to /users/:username
-     * @param username - Current username
-     * @param updates - { newUsername?, newPassword?, newEmail?, newBirthDate? }
+     * Updates user information.
+     * @route PATCH /users/:username
+     * @param username Current username
+     * @param updates Object with newUsername, newPassword, newEmail, or newBirthDate
      * @returns Observable with updated user object
      */
     public updateUser(username: string, updates: any): Observable<any> {
@@ -63,8 +75,8 @@ export class UserService extends ApiBaseService {
 
     /**
      * Delete user account
-     * DELETE to /users/:username
-     * @param username - Username to delete
+     * @route DELETE /users/:username
+     * @param username Username to delete
      * @returns Observable with confirmation message
      */
     public deleteUser(username: string): Observable<any> {
@@ -75,9 +87,9 @@ export class UserService extends ApiBaseService {
 
     /**
      * Add movie to user's favorites
-     * PATCH to /users/:username/:movieId
-     * @param username - Username
-     * @param movieId - Movie ID to add
+     * @route PATCH /users/:username/:movieId
+     * @param username Username
+     * @param movieId Movie ID to add
      * @returns Observable with updated user object
      */
     public addFavoriteMovie(username: string, movieId: string): Observable<any> {
@@ -88,9 +100,9 @@ export class UserService extends ApiBaseService {
 
     /**
      * Remove movie from user's favorites
-     * DELETE to /users/:username/:movieId
-     * @param username - Username
-     * @param movieId - Movie ID to remove
+     * @route DELETE /users/:username/:movieId
+     * @param username Username
+     * @param movieId Movie ID to remove
      * @returns Observable with updated user object
      */
     public removeFavoriteMovie(username: string, movieId: string): Observable<any> {

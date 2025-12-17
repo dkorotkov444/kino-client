@@ -1,4 +1,9 @@
-// src/app/app.config.ts
+/**
+ * @file src/app/app.config.ts
+ * @fileoverview Provides global application configuration for the Kino app, including router, HTTP client, hydration, and error handling providers.
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
 
 // Angular core & platform
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';

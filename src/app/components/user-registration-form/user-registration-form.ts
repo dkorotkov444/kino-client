@@ -1,13 +1,14 @@
-// src/app/user-registration-form/user-registration-form.ts
+/**
+ * @file src/app/components/user-registration-form/user-registration-form.ts
+ * @fileoverview User registration dialog component for Kino app
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
 
-// Angular core & common
+// Angular
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
-
-// Forms
+import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-
-// Angular Material
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,6 +36,9 @@ import { UserService } from '../../services/user.service';
     ],
 
 })
+/**
+ * User registration dialog component.
+ */
 export class UserRegistrationFormComponent {
     // Modern dependency injection (v21)
     readonly dialogRef: MatDialogRef<UserRegistrationFormComponent> = inject(MatDialogRef);
