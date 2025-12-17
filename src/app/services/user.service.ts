@@ -75,26 +75,26 @@ export class UserService extends ApiBaseService {
 
     /**
      * Add movie to user's favorites
-     * PATCH to /users/:username/:movieTitle
+     * PATCH to /users/:username/:movieId
      * @param username - Username
-     * @param movieTitle - Movie title to add
+     * @param movieId - Movie ID to add
      * @returns Observable with updated user object
      */
-    public addFavoriteMovie(username: string, movieTitle: string): Observable<any> {
-        return this.http.patch(this.apiUrl + 'users/' + username + '/' + movieTitle, {}).pipe(
+    public addFavoriteMovie(username: string, movieId: string): Observable<any> {
+        return this.http.patch(this.apiUrl + 'users/' + username + '/' + movieId, {}).pipe(
             catchError(this.handleError)
         );
     }
 
     /**
      * Remove movie from user's favorites
-     * DELETE to /users/:username/:movieTitle
+     * DELETE to /users/:username/:movieId
      * @param username - Username
-     * @param movieTitle - Movie title to remove
+     * @param movieId - Movie ID to remove
      * @returns Observable with updated user object
      */
-    public removeFavoriteMovie(username: string, movieTitle: string): Observable<any> {
-        return this.http.delete(this.apiUrl + 'users/' + username + '/' + movieTitle).pipe(
+    public removeFavoriteMovie(username: string, movieId: string): Observable<any> {
+        return this.http.delete(this.apiUrl + 'users/' + username + '/' + movieId).pipe(
             catchError(this.handleError)
         );
     }

@@ -174,12 +174,32 @@ Manages user profiles, registration, and user favorites. Handles user lifecycle 
   - Updates: `{ newUsername?, newPassword?, newEmail?, newBirthDate? }`
   - Returns: updated user object
 - `deleteUser(username)` - DELETE `/users/:username` - Deletes user account
-- `addFavoriteMovie(username, movieTitle)` - PATCH `/users/:username/:movieTitle` - Adds movie to favorites
+- `addFavoriteMovie(username, movieId)` - PATCH `/users/:username/:movieId` - Adds movie to favorites
   - Returns: updated user object with favorites array
-- `removeFavoriteMovie(username, movieTitle)` - DELETE `/users/:username/:movieTitle` - Removes movie from favorites
+- `removeFavoriteMovie(username, movieId)` - DELETE `/users/:username/:movieId` - Removes movie from favorites
   - Returns: updated user object with favorites array
 
 ## TypeScript Models
+
+### User Interface
+
+Strongly-typed interface matching the backend MongoDB schema.
+
+**Location:** `src/app/models/user.ts`
+
+**Properties:**
+```typescript
+interface User {
+  username: string;             // The user's unique username (required)
+  password: string;             // The user's password (required)
+  email: string;                // The user's email address (required)
+  birth_date?: string;          // The user's birth date (optional, ISO string)
+  tokenInvalidBefore?: Date;    // Date before which tokens are invalid (optional)
+  favorites?: string[];         // Array of favorite movie IDs (optional)
+}
+```
+
+This model is used for registration, authentication, and user profile management throughout the application.
 
 ### Movie Interface
 

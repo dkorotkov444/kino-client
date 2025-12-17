@@ -164,7 +164,7 @@ export class MovieCardComponent implements OnInit {
         }*/
         // 2. Logic for standalone (Movie Card): Handle favorite toggling internally.
         const user = this.authService.getUser();
-        if (!user || !movie?.title) {
+        if (!user || !movie?._id) {
             this.snackBar.open('Please log in to manage favorites.', 'Close', { duration: 3000 });
             return;
         }
@@ -177,8 +177,8 @@ export class MovieCardComponent implements OnInit {
         
         // API endpoint requires movie.title for adding/removing favorites
         const req$ = isFavorite
-            ? this.userService.removeFavoriteMovie(username, movie.title)
-            : this.userService.addFavoriteMovie(username, movie.title);
+            ? this.userService.removeFavoriteMovie(username, movie._id)
+            : this.userService.addFavoriteMovie(username, movie._id);
 
         req$.subscribe({
             next: (updatedUser) => { 
