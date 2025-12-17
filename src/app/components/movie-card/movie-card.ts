@@ -1,7 +1,7 @@
 // src/app/movie-card/movie-card.ts
 
 // Angular core & common
-import { Component, inject, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -29,7 +29,7 @@ import { StarringDialogComponent } from '../starring-dialog/starring-dialog';
 
 // RxJS
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
     standalone: true,
@@ -53,15 +53,8 @@ export class MovieCardComponent implements OnInit {
     private authService = inject(AuthService);
     private dialog = inject(MatDialog);
     private snackBar = inject(MatSnackBar);
+    private cdr = inject(ChangeDetectorRef);
 
-    // Inputs
-    @Input() movie!: Movie;
-    // @Input() isFavorite: boolean = false; // New input to control heart icon state
-    // @Input() showChips: boolean = true; 
-
-    // Emits the full Movie object when the favorite button is clicked in the profile
-    // @Output() favoriteToggled = new EventEmitter<Movie>();
-    
     // Reactive state
     private searchTermSubject = new BehaviorSubject<string>('');
     
@@ -100,8 +93,7 @@ export class MovieCardComponent implements OnInit {
 
     onSearchChange(): void {
         this.searchTermSubject.next(this.searchTerm);
-        // Reset carousel to first movie when searching
-        this.currentIndex = 0;
+        this.currentIndex = 0;          // Reset carousel to first movie when searching
     }
 
     previousMovie(moviesLength: number): void {
@@ -140,16 +132,24 @@ export class MovieCardComponent implements OnInit {
     }
 
     /**
-     * FIX: Getter to determine the heart icon state (always solid red if favorited)
+     * Function to determine the heart icon state (always solid red if favorited)
      */
-    get isFavoriteIconSolid(): boolean {
+     isFavorite(movie: Movie): boolean {
         const user = this.authService.getUser();
+
+        // Log the data every time Angular checks the icon status
+        console.debug('--- isFavorite Check ---');
+        console.debug('Movie:', movie?.title, 'ID:', movie?._id);
+        console.debug('User Favorites:', user?.favorites);
+
         // Check if the user is logged in, has favorites, and the current movie is in the list
-        if (!user || !user.favorites || !this.movie?._id) {
+        if (!user || !user.favorites || !movie?._id) {
+            console.debug('Result: false (Missing data)');
             return false;
         }
         // Check against the MongoDB ID for accurate comparison
-        return user.favorites.includes(this.movie._id);
+        console.debug('Result: Match');
+        return user.favorites.includes(movie._id);
     }
 
     /**
@@ -157,12 +157,6 @@ export class MovieCardComponent implements OnInit {
      */
     toggleFavorite(movie: Movie): void {
 
-        // 1. Logic for reuse in User Profile: If a parent is listening via the output, emit the event.
-        /*if (this.favoriteToggled.observed) {
-            this.favoriteToggled.emit(movie);
-            return;
-        }*/
-        // 2. Logic for standalone (Movie Card): Handle favorite toggling internally.
         const user = this.authService.getUser();
         if (!user || !movie?._id) {
             this.snackBar.open('Please log in to manage favorites.', 'Close', { duration: 3000 });
@@ -183,6 +177,7 @@ export class MovieCardComponent implements OnInit {
         req$.subscribe({
             next: (updatedUser) => { 
                 this.authService.setUser(updatedUser); 
+                this.cdr.detectChanges();
                 // Provide feedback based on the action performed
                 this.snackBar.open(
                     `${movie.title} ${isFavorite ? 'removed from' : 'added to'} favorites.`, 

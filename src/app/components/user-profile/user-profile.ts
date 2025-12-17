@@ -14,13 +14,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
-// import { MatDialog } from '@angular/material/dialog';
 
 // App services & components
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { MovieService } from '../../services/movie.service';
-// import { MovieCardComponent } from '../movie-card/movie-card';
 import { Movie } from '../../models/movie';
 import { User } from '../../models/user';
 
@@ -41,7 +39,6 @@ import { map, shareReplay } from 'rxjs/operators';
         MatButtonModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        // MovieCardComponent,
     ],
     templateUrl: './user-profile.html',
     styleUrl: './user-profile.scss',
@@ -51,21 +48,11 @@ export class UserProfileComponent implements OnInit {
     private fb = inject(FormBuilder);
     private auth = inject(AuthService);
     private userService = inject(UserService);
-    // private movieService = inject(MovieService);
     private snack = inject(MatSnackBar);
-    // private dialog = inject(MatDialog);
     private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
     // Local state for the user
     user: User | null = this.auth.getUser();
-    // Local BehaviorSubject to handle synchronous updates from AuthService
-    /*private userSubject = new BehaviorSubject<User | null>(this.user);
-    user$: Observable<User | null> = this.userSubject.asObservable().pipe(
-        shareReplay(1)
-    );*/
-
-    // Favorite movies
-    // favoriteMovies$: Observable<Movie[]> = of([]);
 
     // Reactive form for profile editing
     form = this.fb.group({
@@ -79,26 +66,7 @@ export class UserProfileComponent implements OnInit {
 
     ngOnInit() {
         // Debug: Log when ngOnInit is called
-        //console.debug('[UserProfileComponent] ngOnInit called');
         console.debug('[UserProfileComponent] Current user:', this.user);
-
-        // Get the cached Observable from the service
-        /*const allMovies$ = this.movieService.getAllMovies();
-
-        // Combine movies and user streams and filter using modern combineLatest array syntax.
-        this.favoriteMovies$ = combineLatest([
-            allMovies$, 
-            this.user$
-        ]).pipe(
-            map(([allMovies, user]) => {
-                // Favorites contains MOVIE IDs from MongoDB
-                const favoriteIds = user?.favorites || []; 
-
-                // Filter movies by checking if movie._id is in the user's favorites array
-                return allMovies.filter(movie => favoriteIds.includes(movie._id));
-            }),
-            shareReplay(1) // Cache the final list of favorites
-        );*/
     }
 
     save(): void {
@@ -140,7 +108,6 @@ export class UserProfileComponent implements OnInit {
                     this.snack.open('Username/password changed. You are logged out for security.', 'Close', { duration: 4000 });
                 } else {                                                    // Otherwise, just update the user info in AuthService and locally
                     this.auth.setUser(updatedUser); 
-                    //this.userSubject.next(updatedUser);
                     this.user = updatedUser; 
                     this.snack.open('Profile updated successfully.', 'Close', { duration: 3000 });
                 }
@@ -192,38 +159,6 @@ export class UserProfileComponent implements OnInit {
             },
         });
     }
-
-    /**
-     * Toggles a movie's favorite status. This is called from the MovieCardComponent via @Output.
-     * @param movie - The Movie object to toggle.
-     */
-    /*toggleFavorite(movie: Movie): void {
-        // Guard against null user or missing movie title (API requirement)
-        if (!this.user || !movie.title) return;     // Note: API requires movie.title for the endpoint
-        
-        const username = this.user.username;
-        const favorites: string[] = this.user.favorites || [];
-
-        // Check if movie is already a favorite
-        const isFavorite = favorites.includes(movie._id);
-
-        // Prepare the appropriate request
-        const req$ = isFavorite
-            ? this.userService.removeFavoriteMovie(username, movie.title)
-            : this.userService.addFavoriteMovie(username, movie.title);
-
-        req$.subscribe({
-            next: (updatedUser) => {
-                this.auth.setUser(updatedUser); 
-                this.userSubject.next(updatedUser);
-                this.user = updatedUser; 
-                this.snack.open(
-                    `${movie.title} ${isFavorite ? 'removed from' : 'added to'} favorites.`,
-                    'Close', { duration: 3000 });
-            },
-            error: () => this.snack.open('Failed to update favorites.', 'Close', { duration: 3000 }),
-        });
-    }*/
 
     private toIsoDate(d: Date): string {
         const yyyy = d.getFullYear();
