@@ -45,12 +45,12 @@
                                             <button 
                                                 mat-icon-button 
                                                 class="favorite-button"
-                                                [color]="isFavoriteIconSolid ? 'warn' : ''"
+                                                [color]="isFavorite(movie) ? 'warn' : ''"
                                                 (click)="toggleFavorite(movie)"
                                                 aria-label="Toggle favorite"
                                             >
                                                 <mat-icon class="heart-icon">
-                                                    {{ isFavoriteIconSolid ? 'favorite' : 'favorite_border' }}
+                                                    {{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}
                                                 </mat-icon>
                                             </button>
                                         </div>

@@ -104,10 +104,20 @@
     top: 8px;
     right: 8px;
     background: rgba(255,255,255,0.9);
+    color: #f44336 !important;
+}
+
+.favorite-button[color="warn"] .heart-icon {
+    color: #f44336 !important; /* This forces the red color on the heart */
 }
 
 .heart-icon {
-    color: var(--mdc-theme-primary, #3f51b5);
+    font-size: 24px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.favorite-button:hover .heart-icon {
+    transform: scale(1.2);
 }
 
 .title-row {
