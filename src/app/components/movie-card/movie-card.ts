@@ -136,19 +136,11 @@ export class MovieCardComponent implements OnInit {
      */
      isFavorite(movie: Movie): boolean {
         const user = this.authService.getUser();
-
-        // Log the data every time Angular checks the icon status
-        console.debug('--- isFavorite Check ---');
-        console.debug('Movie:', movie?.title, 'ID:', movie?._id);
-        console.debug('User Favorites:', user?.favorites);
-
         // Check if the user is logged in, has favorites, and the current movie is in the list
         if (!user || !user.favorites || !movie?._id) {
-            console.debug('Result: false (Missing data)');
             return false;
         }
         // Check against the MongoDB ID for accurate comparison
-        console.debug('Result: Match');
         return user.favorites.includes(movie._id);
     }
 

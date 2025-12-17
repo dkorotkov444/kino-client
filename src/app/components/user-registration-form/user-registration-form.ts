@@ -64,7 +64,6 @@ export class UserRegistrationFormComponent {
 
             this.userService.userRegistration(apiPayload).subscribe({
                 next: (result) => {
-                    console.log('Registration response:', result);
                     this.dialogRef.close(); 
                     this.snackBar.open('Registration successful! You can now log in.', 'OK', {
                         duration: 2000

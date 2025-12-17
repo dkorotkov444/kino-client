@@ -59,7 +59,6 @@ export class UserLoginFormComponent {
 
             this.authService.login(apiPayload).subscribe({
                 next: (result) => {
-                    console.log('Login response:', result);
                     this.dialogRef.close(); 
                     this.snackBar.open('Login successful!', 'OK', {
                         duration: 2000
