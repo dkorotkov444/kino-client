@@ -641,12 +641,55 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+
 ### Server-Side Rendering (SSR)
 
 To run the SSR build:
 
 ```bash
 npm run serve:ssr:kino-client
+```
+
+## Deployment Modes
+
+### 1. Static Hosting (GitHub Pages / S3)
+Use this for GitHub Pages. It disables server-side logic to provide a standard client-side app.
+
+**angular.json Settings:**
+
+```json
+"options": {
+  "outputMode": "static",
+  "ssr": false,
+  "prerender": false
+}
+```
+
+**Build & Deploy:**
+
+```bash
+ng build --base-href /kino-client/
+npx angular-cli-ghpages --dir=dist/kino-client/browser
+```
+
+### 2. SSR Hosting (Node.js / VPS)
+Use this for environments with a Node.js runtime. It renders HTML on the server for better SEO.
+
+**angular.json Settings:**
+
+```json
+"options": {
+  "outputMode": "server",
+  "ssr": { "entry": "src/server.ts" },
+  "prerender": true
+}
+```
+
+**Build & Run:**
+
+```bash
+ng build
+node dist/kino-client/server/server.mjs
 ```
 
 ## Running unit tests
