@@ -46,6 +46,7 @@
     "@types/node": "^20.17.19",
     "angular-cli-ghpages": "^2.0.3",
     "jsdom": "^27.1.0",
+    "typedoc": "^0.28.15",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
