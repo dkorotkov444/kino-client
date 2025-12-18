@@ -42,7 +42,8 @@ export class AuthService extends ApiBaseService {
 
     /**
      * Logs in a user and returns JWT token and user profile.
-     * @route POST /login
+     * @route /login
+     * @method POST
      * @param credentials Object with username and password
      * @returns Observable with user object and token string
      */

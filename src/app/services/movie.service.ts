@@ -42,7 +42,8 @@ export class MovieService extends ApiBaseService {
 
     /**
      * Gets all movie titles only.
-     * @route GET /movies/list
+     * @route /movies/list
+     * @method GET
      * @returns Observable with array of movie title strings
      */
     public getMovieList(): Observable<any> {
@@ -53,7 +54,8 @@ export class MovieService extends ApiBaseService {
 
     /**
      * Gets all movies with full details (cached).
-     * @route GET /movies
+     * @route /movies
+     * @method GET
      * @returns Observable with array of complete movie objects
      */
     public getAllMovies(): Observable<Movie[]> {
@@ -72,7 +74,8 @@ export class MovieService extends ApiBaseService {
 
     /**
      * Gets a single movie by title.
-     * @route GET /movies/:title
+     * @route /movies/:title
+     * @method GET
      * @param title Movie title
      * @returns Observable with single movie object
      */
@@ -84,7 +87,8 @@ export class MovieService extends ApiBaseService {
 
     /**
      * Get genre information by name
-     * @route GET /movies/genres/:genreName
+     * @route /movies/genres/:genreName
+     * @method GET
      * @param genreName - Genre name (e.g., 'Sci-Fi', 'Crime')
      * @returns Observable with genre object { name, description }
      */
@@ -96,7 +100,8 @@ export class MovieService extends ApiBaseService {
 
     /**
      * Get director information by name
-     * @route GET /movies/directors/:directorName
+     * @route /movies/directors/:directorName
+     * @method GET
      * @param directorName - Director name (e.g., 'Quentin Tarantino')
      * @returns Observable with director object { name, bio, birth_date, death_date }
      */
@@ -108,7 +113,8 @@ export class MovieService extends ApiBaseService {
 
     /**
      * Get actors starring in a movie
-     * @route GET /movies/:title/starring
+     * @route /movies/:title/starring
+     * @method GET
      * @param title - Movie title
      * @returns Observable with array of actor name strings
      */
@@ -120,7 +126,8 @@ export class MovieService extends ApiBaseService {
 
     /**
      * Get actor information by name
-     * @route GET /movies/actors/:actorName
+     * @route /movies/actors/:actorName
+     * @method GET
      * @param actorName - Actor name
      * @returns Observable with actor information
      */

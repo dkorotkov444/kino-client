@@ -36,7 +36,8 @@ export class UserService extends ApiBaseService {
 
     /**
      * Returns a list of all users (for admin use only).
-     * @route GET /users
+     * @route /users
+     * @method GET
      * @returns Observable with array of user objects
      */
     public getAllUsers(): Observable<any> {
@@ -47,7 +48,8 @@ export class UserService extends ApiBaseService {
 
     /**
      * Registers a new user.
-     * @route POST /users
+     * @route /users
+     * @method POST
      * @param userDetails Object containing username, password, email, and optional birth_date
      * @returns Observable with newly created user object
      */
@@ -62,7 +64,8 @@ export class UserService extends ApiBaseService {
 
     /**
      * Updates user information.
-     * @route PATCH /users/:username
+     * @route /users/:username
+     * @method PATCH
      * @param username Current username
      * @param updates Object with newUsername, newPassword, newEmail, or newBirthDate
      * @returns Observable with updated user object
@@ -75,7 +78,8 @@ export class UserService extends ApiBaseService {
 
     /**
      * Delete user account
-     * @route DELETE /users/:username
+     * @route /users/:username
+     * @method DELETE
      * @param username Username to delete
      * @returns Observable with confirmation message
      */
@@ -87,7 +91,8 @@ export class UserService extends ApiBaseService {
 
     /**
      * Add movie to user's favorites
-     * @route PATCH /users/:username/:movieId
+     * @route /users/:username/:movieId
+     * @method PATCH
      * @param username Username
      * @param movieId Movie ID to add
      * @returns Observable with updated user object
@@ -100,7 +105,8 @@ export class UserService extends ApiBaseService {
 
     /**
      * Remove movie from user's favorites
-     * @route DELETE /users/:username/:movieId
+     * @route /users/:username/:movieId
+     * @method DELETE
      * @param username Username
      * @param movieId Movie ID to remove
      * @returns Observable with updated user object
