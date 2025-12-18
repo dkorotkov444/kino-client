@@ -6,14 +6,8 @@
     "out": "docs",
     "name": "Kino Client Documentation",
     "includeVersion": true,
-    "customTags": [
-      "file",
-      "fileoverview",
-      "author",
-      "copyright",
-      "route",
-      "method"
-    ],
+    "categorizeByGroup": false,
+    "categoryOrder": ["Models", "Services", "Components", "*"],
     "plugin": [],
     "readme": "./README.md"
-  }
+}
