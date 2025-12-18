@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "deploy": "ng build --configuration production && npx ngh --dir=dist/kino-client/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:kino-client": "node dist/kino-client/server/server.mjs",
