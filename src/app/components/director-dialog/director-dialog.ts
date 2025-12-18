@@ -1,5 +1,6 @@
 /**
- * @file src/app/components/director-dialog/director-dialog.ts
+ * @module
+ * @category Components
  * @fileoverview Dialog component to display director information in Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

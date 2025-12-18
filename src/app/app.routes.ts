@@ -1,5 +1,6 @@
 /**
- * @file src/app/app.routes.ts
+ * @module
+ * @category Routes
  * @fileoverview Defines the main navigation routes for the Kino app, mapping URL paths to standalone components.
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

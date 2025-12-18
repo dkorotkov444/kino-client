@@ -1,5 +1,6 @@
 /**
- * @file src/app/components/user-login-form/user-login-form.ts
+ * @module
+ * @category Components
  * @fileoverview User login dialog component for Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

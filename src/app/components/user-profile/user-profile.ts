@@ -1,5 +1,6 @@
 /**
- * @file src/app/components/user-profile/user-profile.ts
+ * @module
+ * @category Components
  * @fileoverview User profile component for Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

@@ -1,6 +1,6 @@
-
 /**
- * @file src/app/services/api-base.service.ts
+ * @module
+ * @category Services
  * @fileoverview Base service for API operations and error handling in Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

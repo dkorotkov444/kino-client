@@ -1,5 +1,6 @@
 /**
- * @file src/app/components/movie-card/movie-card.ts
+ * @module
+ * @category Components
  * @fileoverview Movie card component for Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

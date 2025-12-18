@@ -1,5 +1,6 @@
 /**
- * @file src/app/models/user.ts
+ * @module
+ * @category Models
  * @fileoverview User model interface for Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

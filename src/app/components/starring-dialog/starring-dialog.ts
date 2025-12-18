@@ -1,5 +1,6 @@
 /**
- * @file src/app/components/starring-dialog/starring-dialog.ts
+ * @module
+ * @category Components
  * @fileoverview Dialog component to display starring actors in Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

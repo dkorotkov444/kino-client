@@ -1,6 +1,6 @@
-
 /**
- * @file src/app/services/movie.service.ts
+ * @module
+ * @category Services
  * @fileoverview Movie API service for Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

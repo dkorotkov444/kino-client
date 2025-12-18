@@ -1,5 +1,6 @@
 /**
- * @file src/app/components/genre-dialog/genre-dialog.ts
+ * @module
+ * @category Components
  * @fileoverview Dialog component to display genre information in Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

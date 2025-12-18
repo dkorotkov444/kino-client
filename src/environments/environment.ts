@@ -1,5 +1,6 @@
 /**
- * @file src/environments/environment.ts
+ * @module
+ * @category Environments
  * @fileoverview Development environment configuration for Kino app.
  * This file is used for local builds and debugging. It can be replaced during build by using the `fileReplacements` array in angular.json.
  * `ng build` replaces `environment.ts` with `environment.prod.ts` for production builds.

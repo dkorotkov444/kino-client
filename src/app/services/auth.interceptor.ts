@@ -1,3 +1,11 @@
+/**
+ * @module
+ * @category Services
+ * @fileoverview HTTP interceptor to add authentication token to requests in Kino app
+ * @author Dmitri Korotkov
+ * @copyright Dmitri Korotkov 2025
+ */
+
 // Angular core & platform
 import { PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';

@@ -1,5 +1,6 @@
 /**
- * @file src/app/models/movie.ts
+ * @module
+ * @category Models
  * @fileoverview Movie model interface for Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

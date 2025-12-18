@@ -1,5 +1,6 @@
 /**
- * @file src/app/components/description-dialog/description-dialog.ts
+ * @module
+ * @category Components
  * @fileoverview Dialog component to display movie description in Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

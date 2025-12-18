@@ -1,5 +1,6 @@
 /**
- * @file src/app/components/welcome-page/welcome-page.ts
+ * @module
+ * @category Components
  * @fileoverview Welcome page component for the Kino app. Handles user entry, registration, and login dialogs.
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

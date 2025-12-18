@@ -1,5 +1,6 @@
 /**
- * @file src/environments/environment.prod.ts
+ * @module
+ * @category Environments
  * @fileoverview Production environment configuration for Kino app.
  * This file is used for production builds and deployment. It replaces environment.ts during the build process.
  * @author Dmitri Korotkov

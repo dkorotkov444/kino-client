@@ -1,5 +1,6 @@
 /**
- * @file src/app/app.ts
+ * @module
+ * @category App
  * @fileoverview Root application component for Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025

@@ -1,6 +1,6 @@
-
 /**
- * @file src/app/services/user.service.ts
+ * @module
+ * @category Services
  * @fileoverview User API service for Kino app
  * @author Dmitri Korotkov
  * @copyright Dmitri Korotkov 2025
