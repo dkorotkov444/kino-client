@@ -8,6 +8,10 @@
     "includeVersion": true,
     "categorizeByGroup": false,
     "categoryOrder": ["Models", "Services", "Components", "*"],
+    "validation": {
+        "invalidLink": false,
+        "notExported": false
+    },
     "plugin": [],
     "readme": "./README.md"
 }

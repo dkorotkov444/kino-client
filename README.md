@@ -743,7 +743,7 @@ ng build --configuration production
 - **Development:** `http://localhost:8080`
 - **Production:** `https://reel-movie-api-608b8b4b3a04.herokuapp.com`
 
-For detailed API documentation, see `docs/Movie_API_Documentation.md`.
+For detailed API documentation, see `api-docs/Movie_API_Docs.md`.
 
 ## Authentication Flow
 
@@ -881,4 +881,4 @@ When contributing to the project:
 - [Angular CLI Reference](https://angular.dev/tools/cli)
 - [RxJS Documentation](https://rxjs.dev)
 - [Vitest Documentation](https://vitest.dev)
-- [REEL Movie API Documentation](docs/Movie_API_Documentation.md)
+- [REEL Movie API Documentation](api-docs/Movie_API_Docs.md)
