@@ -1,0 +1,590 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Kino Client Documentation - v1.0.0</title><meta name="description" content="Documentation for Kino Client Documentation"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script><script async src="assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">Kino Client Documentation - v1.0.0</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>Kino Client Documentation - v1.0.0</h1></div><div class="tsd-panel tsd-typography"><h1 id="kinoangularclient" class="tsd-anchor-link">KinoAngularClient<a href="#kinoangularclient" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1><p>A modern Angular 21 client application for browsing and managing movies using the REEL Movie API. Built with Angular's latest standalone components, RxJS reactive patterns with async pipe, automatic HTTP interceptors, and optimized SSR configuration.</p>
+<h2 id="overview" class="tsd-anchor-link">Overview<a href="#overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>KinoAngularClient is a movie browsing and management application that connects to the REEL Movie API. The application features JWT authentication with automatic token injection, reactive movie browsing with search, and a clean service-oriented architecture with user-friendly error handling.</p>
+<p><strong>Version:</strong> 0.0.0 | <strong>Angular:</strong> 21.0.0 | <strong>Node:</strong> 20+ | <strong>npm:</strong> 10.9.3</p>
+<h2 id="features" class="tsd-anchor-link">Features<a href="#features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>JWT Authentication:</strong> Automatic token management with HTTP interceptor and localStorage persistence</li>
+<li><strong>Auth Interceptor:</strong> Centralized token injection for all authenticated API requests</li>
+<li><strong>User Registration:</strong> Full registration form with validation (username, password, email, birthdate)</li>
+<li><strong>Material Design UI:</strong> Professional Material Design components throughout the app</li>
+<li><strong>Movie Browsing:</strong> Responsive grid layout with all movies displayed</li>
+<li><strong>Movie Search:</strong> Client-side filtering by title, director, genre, and actors (5+ characters)</li>
+<li><strong>Reactive Patterns:</strong> RxJS streams with async pipe, BehaviorSubjects, and shareReplay for optimal performance</li>
+<li><strong>Type Safety:</strong> Full TypeScript Movie interface matching backend MongoDB schema</li>
+<li><strong>Error Notifications:</strong> Material Snackbar with status-specific error messages (400, 401, 403, 404, etc.)</li>
+<li><strong>Standalone Components:</strong> Modern Angular 21 architecture (no NgModules)</li>
+<li><strong>Optimized SSR:</strong> Server-side rendering for public routes only (welcome page), client-side for authenticated views</li>
+<li><strong>SSR Hydration:</strong> Event replay for improved UX during app bootstrap</li>
+<li><strong>Logout Functionality:</strong> Navbar logout button with automatic state cleanup</li>
+</ul>
+<h2 id="project-structure" class="tsd-anchor-link">Project Structure<a href="#project-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code><span class="hl-0">src</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-0">app</span><span class="hl-1">/</span><br/><span class="hl-1">│   ├── </span><span class="hl-0">components</span><span class="hl-1">/                                      # </span><span class="hl-0">Application</span><span class="hl-1"> </span><span class="hl-0">components</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">card</span><span class="hl-1">/                                # </span><span class="hl-0">Movie</span><span class="hl-1"> </span><span class="hl-0">browsing</span><span class="hl-1"> </span><span class="hl-0">component</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">card</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                         # </span><span class="hl-0">Reactive</span><span class="hl-1"> </span><span class="hl-0">movie</span><span class="hl-1"> </span><span class="hl-0">display</span><span class="hl-1"> </span><span class="hl-2">with</span><span class="hl-1"> </span><span class="hl-0">search</span><span class="hl-1"> </span><span class="hl-0">and</span><span class="hl-1"> </span><span class="hl-0">filtering</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">card</span><span class="hl-1">.</span><span class="hl-0">html</span><span class="hl-1">                       # </span><span class="hl-0">Responsive</span><span class="hl-1"> </span><span class="hl-0">grid</span><span class="hl-1"> </span><span class="hl-0">layout</span><span class="hl-1"> </span><span class="hl-2">with</span><span class="hl-1"> </span><span class="hl-0">Material</span><span class="hl-1"> </span><span class="hl-0">cards</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">card</span><span class="hl-1">.</span><span class="hl-0">scss</span><span class="hl-1">                       # </span><span class="hl-0">Component</span><span class="hl-1"> </span><span class="hl-0">styles</span><span class="hl-1"> </span><span class="hl-2">with</span><span class="hl-1"> </span><span class="hl-0">hover</span><span class="hl-1"> </span><span class="hl-0">effects</span><br/><span class="hl-1">│   │   │   └── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">card</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                    # </span><span class="hl-0">Component</span><span class="hl-1"> </span><span class="hl-0">tests</span><br/><span class="hl-1">│   │   │</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">registration</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">/                    # </span><span class="hl-0">User</span><span class="hl-1"> </span><span class="hl-0">registration</span><span class="hl-1"> </span><span class="hl-3">component</span><span class="hl-1"> (</span><span class="hl-0">Material</span><span class="hl-1"> </span><span class="hl-0">dialog</span><span class="hl-1">)</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">registration</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">              # </span><span class="hl-0">Registration</span><span class="hl-1"> </span><span class="hl-0">form</span><span class="hl-1"> </span><span class="hl-0">component</span><span class="hl-1"> </span><span class="hl-2">with</span><span class="hl-1"> </span><span class="hl-0">reactive</span><span class="hl-1"> </span><span class="hl-0">forms</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">registration</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">.</span><span class="hl-0">html</span><span class="hl-1">            # </span><span class="hl-0">Registration</span><span class="hl-1"> </span><span class="hl-0">form</span><span class="hl-1"> </span><span class="hl-0">template</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">registration</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">.</span><span class="hl-0">scss</span><span class="hl-1">            # </span><span class="hl-0">Component</span><span class="hl-1"> </span><span class="hl-0">styles</span><br/><span class="hl-1">│   │   │   └── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">registration</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">         # </span><span class="hl-0">Component</span><span class="hl-1"> </span><span class="hl-0">tests</span><br/><span class="hl-1">│   │   │</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">login</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">/                           # </span><span class="hl-0">User</span><span class="hl-1"> </span><span class="hl-0">login</span><span class="hl-1"> </span><span class="hl-3">component</span><span class="hl-1"> (</span><span class="hl-0">Material</span><span class="hl-1"> </span><span class="hl-0">dialog</span><span class="hl-1">)</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">login</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                     # </span><span class="hl-0">Login</span><span class="hl-1"> </span><span class="hl-0">form</span><span class="hl-1"> </span><span class="hl-0">component</span><span class="hl-1"> </span><span class="hl-2">with</span><span class="hl-1"> </span><span class="hl-0">reactive</span><span class="hl-1"> </span><span class="hl-0">forms</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">login</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">.</span><span class="hl-0">html</span><span class="hl-1">                   # </span><span class="hl-0">Login</span><span class="hl-1"> </span><span class="hl-0">form</span><span class="hl-1"> </span><span class="hl-0">template</span><br/><span class="hl-1">│   │   │   ├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">login</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">.</span><span class="hl-0">scss</span><span class="hl-1">                   # </span><span class="hl-0">Component</span><span class="hl-1"> </span><span class="hl-0">styles</span><br/><span class="hl-1">│   │   │   └── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">login</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                # </span><span class="hl-0">Component</span><span class="hl-1"> </span><span class="hl-0">tests</span><br/><span class="hl-1">│   │   │</span><br/><span class="hl-1">│   │   └── </span><span class="hl-0">welcome</span><span class="hl-1">-</span><span class="hl-0">page</span><span class="hl-1">/                              # </span><span class="hl-0">Landing</span><span class="hl-1"> </span><span class="hl-0">page</span><span class="hl-1"> </span><span class="hl-0">component</span><br/><span class="hl-1">│   │       ├── </span><span class="hl-0">welcome</span><span class="hl-1">-</span><span class="hl-0">page</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                        # </span><span class="hl-0">Welcome</span><span class="hl-1"> </span><span class="hl-0">component</span><span class="hl-1"> </span><span class="hl-2">with</span><span class="hl-1"> </span><span class="hl-0">dialog</span><span class="hl-1"> </span><span class="hl-0">triggers</span><br/><span class="hl-1">│   │       ├── </span><span class="hl-0">welcome</span><span class="hl-1">-</span><span class="hl-0">page</span><span class="hl-1">.</span><span class="hl-0">html</span><span class="hl-1">                      # </span><span class="hl-0">Welcome</span><span class="hl-1"> </span><span class="hl-0">page</span><span class="hl-1"> </span><span class="hl-0">template</span><br/><span class="hl-1">│   │       ├── </span><span class="hl-0">welcome</span><span class="hl-1">-</span><span class="hl-0">page</span><span class="hl-1">.</span><span class="hl-0">scss</span><span class="hl-1">                      # </span><span class="hl-0">Component</span><span class="hl-1"> </span><span class="hl-0">styles</span><br/><span class="hl-1">│   │       └── </span><span class="hl-0">welcome</span><span class="hl-1">-</span><span class="hl-0">page</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                   # </span><span class="hl-0">Component</span><span class="hl-1"> </span><span class="hl-0">tests</span><br/><span class="hl-1">│   │</span><br/><span class="hl-1">│   ├── </span><span class="hl-0">services</span><span class="hl-1">/                                       # </span><span class="hl-0">Core</span><span class="hl-1"> </span><span class="hl-0">application</span><span class="hl-1"> </span><span class="hl-0">services</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">api</span><span class="hl-1">-</span><span class="hl-0">base</span><span class="hl-1">.</span><span class="hl-0">service</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                        # </span><span class="hl-0">Base</span><span class="hl-1"> </span><span class="hl-4">API</span><span class="hl-1"> </span><span class="hl-0">service</span><span class="hl-1"> </span><span class="hl-2">with</span><span class="hl-1"> </span><span class="hl-0">enhanced</span><span class="hl-1"> </span><span class="hl-0">error</span><span class="hl-1"> </span><span class="hl-0">handling</span><span class="hl-1"> &amp; </span><span class="hl-0">snackbar</span><span class="hl-1"> </span><span class="hl-0">notifications</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">api</span><span class="hl-1">-</span><span class="hl-0">base</span><span class="hl-1">.</span><span class="hl-0">service</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                   # </span><span class="hl-4">API</span><span class="hl-1"> </span><span class="hl-0">base</span><span class="hl-1"> </span><span class="hl-0">service</span><span class="hl-1"> </span><span class="hl-0">tests</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">auth</span><span class="hl-1">.</span><span class="hl-0">service</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                            # </span><span class="hl-0">Authentication</span><span class="hl-1"> </span><span class="hl-0">and</span><span class="hl-1"> </span><span class="hl-4">JWT</span><span class="hl-1"> </span><span class="hl-0">token</span><span class="hl-1"> </span><span class="hl-0">management</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">auth</span><span class="hl-1">.</span><span class="hl-0">service</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                       # </span><span class="hl-0">Auth</span><span class="hl-1"> </span><span class="hl-0">service</span><span class="hl-1"> </span><span class="hl-0">tests</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">auth</span><span class="hl-1">.</span><span class="hl-0">interceptor</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                        # </span><span class="hl-4">HTTP</span><span class="hl-1"> </span><span class="hl-0">interceptor</span><span class="hl-1"> </span><span class="hl-0">for</span><span class="hl-1"> </span><span class="hl-0">automatic</span><span class="hl-1"> </span><span class="hl-0">token</span><span class="hl-1"> </span><span class="hl-0">injection</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">movie</span><span class="hl-1">.</span><span class="hl-0">service</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                           # </span><span class="hl-0">Movie</span><span class="hl-1"> </span><span class="hl-0">data</span><span class="hl-1"> </span><span class="hl-3">retrieval</span><span class="hl-1"> (</span><span class="hl-0">typed</span><span class="hl-1"> </span><span class="hl-0">with</span><span class="hl-1"> </span><span class="hl-0">Movie</span><span class="hl-1"> </span><span class="hl-0">interface</span><span class="hl-1">)</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">movie</span><span class="hl-1">.</span><span class="hl-0">service</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                      # </span><span class="hl-0">Movie</span><span class="hl-1"> </span><span class="hl-0">service</span><span class="hl-1"> </span><span class="hl-0">tests</span><br/><span class="hl-1">│   │   ├── </span><span class="hl-0">user</span><span class="hl-1">.</span><span class="hl-0">service</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                            # </span><span class="hl-0">User</span><span class="hl-1"> </span><span class="hl-0">profile</span><span class="hl-1"> </span><span class="hl-0">and</span><span class="hl-1"> </span><span class="hl-0">favorites</span><span class="hl-1"> </span><span class="hl-0">management</span><br/><span class="hl-1">│   │   └── </span><span class="hl-0">user</span><span class="hl-1">.</span><span class="hl-0">service</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                       # </span><span class="hl-0">User</span><span class="hl-1"> </span><span class="hl-0">service</span><span class="hl-1"> </span><span class="hl-0">tests</span><br/><span class="hl-1">│   │</span><br/><span class="hl-1">│   ├── </span><span class="hl-0">models</span><span class="hl-1">/                                         # </span><span class="hl-0">TypeScript</span><span class="hl-1"> </span><span class="hl-0">interfaces</span><br/><span class="hl-1">│   │   └── </span><span class="hl-0">movie</span><span class="hl-1">.</span><span class="hl-0">ts</span><span class="hl-1">                                   # </span><span class="hl-0">Movie</span><span class="hl-1"> </span><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-6">matching</span><span class="hl-1"> </span><span class="hl-6">MongoDB</span><span class="hl-1"> </span><span class="hl-6">schema</span><br/><span class="hl-1">│   │</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">app</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                                         # </span><span class="hl-6">Root</span><span class="hl-1"> </span><span class="hl-6">component</span><span class="hl-1"> </span><span class="hl-6">with</span><span class="hl-1"> </span><span class="hl-6">navbar</span><span class="hl-1"> </span><span class="hl-6">and</span><span class="hl-1"> </span><span class="hl-6">logout</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">app</span><span class="hl-1">.</span><span class="hl-6">html</span><span class="hl-1">                                       # </span><span class="hl-6">Root</span><span class="hl-1"> </span><span class="hl-6">template</span><span class="hl-1"> </span><span class="hl-6">with</span><span class="hl-1"> </span><span class="hl-6">navbar</span><span class="hl-1"> </span><span class="hl-6">and</span><span class="hl-1"> </span><span class="hl-6">router</span><span class="hl-1"> </span><span class="hl-6">outlet</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">app</span><span class="hl-1">.</span><span class="hl-6">scss</span><span class="hl-1">                                       # </span><span class="hl-6">Global</span><span class="hl-1"> </span><span class="hl-6">component</span><span class="hl-1"> </span><span class="hl-6">styles</span><span class="hl-1"> &amp; </span><span class="hl-6">error</span><span class="hl-1"> </span><span class="hl-6">snackbar</span><span class="hl-1"> </span><span class="hl-6">styling</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">app</span><span class="hl-1">.</span><span class="hl-6">spec</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                                    # </span><span class="hl-6">Root</span><span class="hl-1"> </span><span class="hl-6">component</span><span class="hl-1"> </span><span class="hl-6">tests</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">app</span><span class="hl-1">.</span><span class="hl-6">routes</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                                  # </span><span class="hl-6">Application</span><span class="hl-1"> </span><span class="hl-6">routing</span><span class="hl-1"> (</span><span class="hl-6">welcome</span><span class="hl-1">, </span><span class="hl-6">movies</span><span class="hl-1">)</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">app</span><span class="hl-1">.</span><span class="hl-6">routes</span><span class="hl-1">.</span><span class="hl-6">server</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                           # </span><span class="hl-6">SSR</span><span class="hl-1"> </span><span class="hl-6">config</span><span class="hl-1">: </span><span class="hl-6">prerender</span><span class="hl-1"> </span><span class="hl-6">welcome</span><span class="hl-1"> </span><span class="hl-6">only</span><span class="hl-1">, </span><span class="hl-6">client</span><span class="hl-1">-</span><span class="hl-6">render</span><span class="hl-1"> </span><span class="hl-6">movies</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">app</span><span class="hl-1">.</span><span class="hl-6">config</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                                  # </span><span class="hl-6">App</span><span class="hl-1"> </span><span class="hl-6">providers</span><span class="hl-1"> </span><span class="hl-6">with</span><span class="hl-1"> </span><span class="hl-6">auth</span><span class="hl-1"> </span><span class="hl-6">interceptor</span><br/><span class="hl-1">│   └── </span><span class="hl-6">app</span><span class="hl-1">.</span><span class="hl-6">config</span><span class="hl-1">.</span><span class="hl-6">server</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                           # </span><span class="hl-6">Server</span><span class="hl-1">-</span><span class="hl-6">side</span><span class="hl-1"> </span><span class="hl-6">configuration</span><br/><span class="hl-1">│</span><br/><span class="hl-1">├── </span><span class="hl-6">environments</span><span class="hl-1">/                                       # </span><span class="hl-6">Environment</span><span class="hl-1">-</span><span class="hl-6">specific</span><span class="hl-1"> </span><span class="hl-6">configuration</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">environment</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                                 # </span><span class="hl-6">Development</span><span class="hl-1"> </span><span class="hl-6">environment</span><span class="hl-1"> (</span><span class="hl-6">localhost</span><span class="hl-1">:8080)</span><br/><span class="hl-1">│   └── </span><span class="hl-6">environment</span><span class="hl-1">.</span><span class="hl-6">prod</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                            # </span><span class="hl-6">Production</span><span class="hl-1"> </span><span class="hl-6">environment</span><span class="hl-1"> (</span><span class="hl-6">Heroku</span><span class="hl-1"> </span><span class="hl-6">API</span><span class="hl-1">)</span><br/><span class="hl-1">│</span><br/><span class="hl-1">├── </span><span class="hl-6">main</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                                            # </span><span class="hl-6">Application</span><span class="hl-1"> </span><span class="hl-6">bootstrap</span><span class="hl-1"> </span><span class="hl-6">entry</span><span class="hl-1"> </span><span class="hl-6">point</span><br/><span class="hl-1">├── </span><span class="hl-6">main</span><span class="hl-1">.</span><span class="hl-6">server</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                                     # </span><span class="hl-6">Server</span><span class="hl-1">-</span><span class="hl-6">side</span><span class="hl-1"> </span><span class="hl-6">bootstrap</span><span class="hl-1"> </span><span class="hl-6">for</span><span class="hl-1"> </span><span class="hl-6">SSR</span><br/><span class="hl-1">├── </span><span class="hl-6">server</span><span class="hl-1">.</span><span class="hl-6">ts</span><span class="hl-1">                                          # </span><span class="hl-6">Express</span><span class="hl-1"> </span><span class="hl-6">server</span><span class="hl-1"> </span><span class="hl-6">configuration</span><span class="hl-1"> </span><span class="hl-6">for</span><span class="hl-1"> </span><span class="hl-6">SSR</span><br/><span class="hl-1">├── </span><span class="hl-6">styles</span><span class="hl-1">.</span><span class="hl-6">scss</span><span class="hl-1">                                        # </span><span class="hl-6">Global</span><span class="hl-1"> </span><span class="hl-6">application</span><span class="hl-1"> </span><span class="hl-6">styles</span><br/><span class="hl-1">└── </span><span class="hl-6">index</span><span class="hl-1">.</span><span class="hl-6">html</span><span class="hl-1">                                         # </span><span class="hl-6">Main</span><span class="hl-1"> </span><span class="hl-6">HTML</span><span class="hl-1"> </span><span class="hl-6">entry</span><span class="hl-1"> </span><span class="hl-6">point</span>
+</code><button>Copy</button></pre>
+
+<h3 id="component-architecture" class="tsd-anchor-link">Component Architecture<a href="#component-architecture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The application uses <strong>standalone components</strong> (Angular 21):</p>
+<ul>
+<li><strong>App (Root Component):</strong> Entry point with router outlet for lazy-loaded routes</li>
+<li><strong>UserRegistrationFormComponent:</strong> Material dialog component for user registration with:
+<ul>
+<li>Reactive forms with validation</li>
+<li>Material Dialog integration</li>
+<li>Snackbar notifications for success/error</li>
+<li>Service integration with UserService</li>
+</ul>
+</li>
+</ul>
+<h2 id="services" class="tsd-anchor-link">Services<a href="#services" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>All services are provided in the root injector and can be injected into any component or service.</p>
+<h3 id="apibaseservice" class="tsd-anchor-link">ApiBaseService<a href="#apibaseservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Base service providing common functionality for all API services. Extend this service to inherit error handling capabilities with user-friendly notifications.</p>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li>Centralized HTTP error handling with Material Snackbar notifications</li>
+<li>Status-specific error messages (400, 401, 403, 404, 409, 422, 500, 503)</li>
+<li>Network error detection and user-friendly messaging</li>
+<li>Backend error message parsing and display</li>
+<li>5-second snackbar duration with close button</li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>handleError(error)</code> - Enhanced error handler with snackbar notifications and status-specific messages</li>
+</ul>
+<p><strong>Note:</strong> Authentication headers are now handled automatically by the <code>authInterceptor</code>, so manual header management is no longer needed.</p>
+<h3 id="authservice" class="tsd-anchor-link">AuthService<a href="#authservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Handles user authentication and session management. Automatically manages JWT tokens and user data in localStorage.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>login(credentials)</code> - POST <code>/login</code> - Authenticates user with username/password
+<ul>
+<li>Returns: <code>{ user: object, token: string }</code></li>
+<li>Auto-stores token and user data</li>
+</ul>
+</li>
+<li><code>setToken(token)</code> - Stores JWT token in localStorage</li>
+<li><code>setUser(user)</code> - Stores user profile in localStorage</li>
+<li><code>getToken()</code> - Retrieves token from localStorage</li>
+<li><code>getUser()</code> - Retrieves and parses user data from localStorage</li>
+<li><code>isAuthenticated()</code> - Checks if user has valid token</li>
+<li><code>logout()</code> - Clears token and user data from localStorage</li>
+</ul>
+<h3 id="movieservice" class="tsd-anchor-link">MovieService<a href="#movieservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Manages movie data retrieval from the API. All methods return strongly-typed observables using the <code>Movie</code> interface. Authentication headers are automatically added by the <code>authInterceptor</code>.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>getMovieList()</code> - GET <code>/movies/list</code> - Returns <code>Observable&lt;any&gt;</code> of movie title strings</li>
+<li><code>getAllMovies()</code> - GET <code>/movies</code> - Returns <code>Observable&lt;Movie[]&gt;</code> with complete movie objects</li>
+<li><code>getMovieByTitle(title)</code> - GET <code>/movies/:title</code> - Returns <code>Observable&lt;Movie&gt;</code> for a single movie</li>
+<li><code>getGenre(genreName)</code> - GET <code>/movies/genres/:genreName</code> - Returns genre object with name and description</li>
+<li><code>getDirector(directorName)</code> - GET <code>/movies/directors/:directorName</code> - Returns director object with bio and birth date</li>
+<li><code>getMovieActors(title)</code> - GET <code>/movies/:title/starring</code> - Returns <code>Observable&lt;string[]&gt;</code> of actor names</li>
+<li><code>getActor(actorName)</code> - GET <code>/movies/actors/:actorName</code> - Returns actor information</li>
+</ul>
+<h3 id="authinterceptor" class="tsd-anchor-link">AuthInterceptor<a href="#authinterceptor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Functional HTTP interceptor that automatically attaches JWT tokens to authenticated requests.</p>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li>Automatically adds <code>Authorization: Bearer &lt;token&gt;</code> header to requests</li>
+<li>Reads token from localStorage (client-side only, SSR-safe)</li>
+<li>Skips public endpoints (<code>/login</code> and <code>POST /users</code> registration)</li>
+<li>Platform-aware: only runs on browser (checks <code>isPlatformBrowser</code>)</li>
+</ul>
+<p><strong>Configuration:</strong> Registered in <code>app.config.ts</code> via <code>provideHttpClient(withInterceptors([authInterceptor]))</code></p>
+<p><strong>Location:</strong> <code>src/app/services/auth.interceptor.ts</code></p>
+<h3 id="userservice" class="tsd-anchor-link">UserService<a href="#userservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Manages user profiles, registration, and user favorites. Handles user lifecycle operations including account updates and deletion. Authentication headers are automatically added by the <code>authInterceptor</code>.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>getAllUsers()</code> - GET <code>/users</code> - Returns array of all user objects (admin use)</li>
+<li><code>userRegistration(userDetails)</code> - POST <code>/users</code> - Creates new user account (public endpoint, no auth required)
+<ul>
+<li>Expects: <code>{ username, password, email, birth_date? }</code></li>
+<li>Returns: newly created user object</li>
+</ul>
+</li>
+<li><code>updateUser(username, updates)</code> - PATCH <code>/users/:username</code> - Updates user information
+<ul>
+<li>Updates: <code>{ newUsername?, newPassword?, newEmail?, newBirthDate? }</code></li>
+<li>Returns: updated user object</li>
+</ul>
+</li>
+<li><code>deleteUser(username)</code> - DELETE <code>/users/:username</code> - Deletes user account</li>
+<li><code>addFavoriteMovie(username, movieId)</code> - PATCH <code>/users/:username/:movieId</code> - Adds movie to favorites
+<ul>
+<li>Returns: updated user object with favorites array</li>
+</ul>
+</li>
+<li><code>removeFavoriteMovie(username, movieId)</code> - DELETE <code>/users/:username/:movieId</code> - Removes movie from favorites
+<ul>
+<li>Returns: updated user object with favorites array</li>
+</ul>
+</li>
+</ul>
+<h2 id="typescript-models" class="tsd-anchor-link">TypeScript Models<a href="#typescript-models" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="user-interface" class="tsd-anchor-link">User Interface<a href="#user-interface" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Strongly-typed interface matching the backend MongoDB schema.</p>
+<p><strong>Location:</strong> <code>src/app/models/user.ts</code></p>
+<p><strong>Properties:</strong></p>
+<pre><code class="typescript"><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-6">User</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-0">username</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">;             </span><span class="hl-7">// The user&#39;s unique username (required)</span><br/><span class="hl-1">  </span><span class="hl-0">password</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">;             </span><span class="hl-7">// The user&#39;s password (required)</span><br/><span class="hl-1">  </span><span class="hl-0">email</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">;                </span><span class="hl-7">// The user&#39;s email address (required)</span><br/><span class="hl-1">  </span><span class="hl-0">birth_date</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">;          </span><span class="hl-7">// The user&#39;s birth date (optional, ISO string)</span><br/><span class="hl-1">  </span><span class="hl-0">tokenInvalidBefore</span><span class="hl-1">?: </span><span class="hl-6">Date</span><span class="hl-1">;    </span><span class="hl-7">// Date before which tokens are invalid (optional)</span><br/><span class="hl-1">  </span><span class="hl-0">favorites</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">[];         </span><span class="hl-7">// Array of favorite movie IDs (optional)</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>This model is used for registration, authentication, and user profile management throughout the application.</p>
+<h3 id="movie-interface" class="tsd-anchor-link">Movie Interface<a href="#movie-interface" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Strongly-typed interface matching the backend MongoDB schema.</p>
+<p><strong>Location:</strong> <code>src/app/models/movie.ts</code></p>
+<p><strong>Properties:</strong></p>
+<pre><code class="typescript"><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-6">Movie</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-0">_id</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">;                    </span><span class="hl-7">// MongoDB document ID</span><br/><span class="hl-1">  </span><span class="hl-0">title</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">;                  </span><span class="hl-7">// Movie title (required)</span><br/><span class="hl-1">  </span><span class="hl-0">description</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">;            </span><span class="hl-7">// Movie description (required)</span><br/><span class="hl-1">  </span><span class="hl-0">release_year</span><span class="hl-1">: </span><span class="hl-6">number</span><span class="hl-1">;           </span><span class="hl-7">// Release year (required)</span><br/><span class="hl-1">  </span><span class="hl-0">image_url</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">;             </span><span class="hl-7">// Poster image URL (optional)</span><br/><span class="hl-1">  </span><span class="hl-0">rating_imdb</span><span class="hl-1">?: </span><span class="hl-6">number</span><span class="hl-1">;           </span><span class="hl-7">// IMDb rating (optional)</span><br/><span class="hl-1">  </span><span class="hl-0">featured</span><span class="hl-1">?: </span><span class="hl-6">boolean</span><span class="hl-1">;             </span><span class="hl-7">// Featured flag (optional)</span><br/><span class="hl-1">  </span><span class="hl-0">starring</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">[];            </span><span class="hl-7">// Array of actor names (optional)</span><br/><span class="hl-1">  </span><span class="hl-0">director</span><span class="hl-1">?: {                    </span><span class="hl-7">// Director object (optional)</span><br/><span class="hl-1">    </span><span class="hl-0">name</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">;                 </span><span class="hl-7">// Director name (required if director exists)</span><br/><span class="hl-1">    </span><span class="hl-0">bio</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">;                 </span><span class="hl-7">// Director bio (optional)</span><br/><span class="hl-1">    </span><span class="hl-0">birth_date</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">;          </span><span class="hl-7">// Birth date as ISO string (optional)</span><br/><span class="hl-1">    </span><span class="hl-0">death_date</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">;          </span><span class="hl-7">// Death date as ISO string (optional)</span><br/><span class="hl-1">  };</span><br/><span class="hl-1">  </span><span class="hl-0">genre</span><span class="hl-1">?: {                       </span><span class="hl-7">// Genre object (optional)</span><br/><span class="hl-1">    </span><span class="hl-0">name</span><span class="hl-1">: </span><span class="hl-6">string</span><span class="hl-1">;                 </span><span class="hl-7">// Genre name (required if genre exists)</span><br/><span class="hl-1">    </span><span class="hl-0">description</span><span class="hl-1">?: </span><span class="hl-6">string</span><span class="hl-1">;         </span><span class="hl-7">// Genre description (optional)</span><br/><span class="hl-1">  };</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="components" class="tsd-anchor-link">Components<a href="#components" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="app-root-component" class="tsd-anchor-link">App (Root Component)<a href="#app-root-component" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The main application component with navigation bar and logout functionality. Uses standalone component architecture.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Material toolbar navbar with conditional rendering (hidden on welcome page)</li>
+<li>Router outlet for page navigation</li>
+<li>Logout button in navbar that clears auth state and redirects to welcome</li>
+<li>RouterLink navigation to Home (movies) and conditionally Profile</li>
+<li>Material button and toolbar modules</li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>onLogout()</code> - Calls <code>authService.logout()</code> to clear localStorage and navigates to welcome</li>
+</ul>
+<p><strong>Location:</strong> <code>src/app/app.ts</code></p>
+<h3 id="moviecardcomponent" class="tsd-anchor-link">MovieCardComponent<a href="#moviecardcomponent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Reactive movie browsing component with search and filtering. Displays movies in a responsive grid layout.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li><strong>Reactive Streams:</strong> Uses RxJS <code>BehaviorSubject</code>, <code>combineLatest</code>, and <code>shareReplay(1)</code> for efficient data flow</li>
+<li><strong>Async Pipe:</strong> Template subscribes to observables with async pipe (no manual subscription management)</li>
+<li><strong>Search:</strong> Real-time client-side filtering by title, director, genre, and actors (min 5 characters)</li>
+<li><strong>Responsive Grid:</strong> Auto-filling grid layout that adapts to screen size</li>
+<li><strong>Hover Effects:</strong> Card animations on hover for better UX</li>
+<li><strong>Loading States:</strong> Shows &quot;Loading movies...&quot; while fetching data</li>
+<li><strong>Empty States:</strong> Displays messages for empty results or no matches</li>
+</ul>
+<p><strong>Observables:</strong></p>
+<ul>
+<li><code>movies$</code> - Source stream from <code>MovieService.getAllMovies()</code> with <code>shareReplay(1)</code> to prevent duplicate HTTP calls</li>
+<li><code>filteredMovies$</code> - Derived stream that filters movies based on search term using <code>combineLatest</code></li>
+<li><code>searchTermSubject</code> - BehaviorSubject for reactive search input</li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>onSearchChange()</code> - Updates search subject when user types (triggers filtering)</li>
+</ul>
+<p><strong>Location:</strong> <code>src/app/components/movie-card/</code></p>
+<h3 id="userregistrationformcomponent" class="tsd-anchor-link">UserRegistrationFormComponent<a href="#userregistrationformcomponent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>A Material dialog component for user registration with reactive form validation.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Standalone component with Material dependencies</li>
+<li>Reactive form with validation:
+<ul>
+<li>Username: required</li>
+<li>Password: required</li>
+<li>Email: required, valid email format</li>
+<li>Birthdate: optional (date format)</li>
+</ul>
+</li>
+<li>Form submission to <code>UserService.userRegistration()</code></li>
+<li>Material Dialog integration for modal presentation</li>
+<li>Snackbar notifications for success/error feedback</li>
+<li>Automatic dialog closing on successful registration</li>
+</ul>
+<p><strong>Dependencies:</strong></p>
+<ul>
+<li><code>@angular/material/dialog</code> - MatDialog integration</li>
+<li><code>@angular/material/snack-bar</code> - Toast notifications</li>
+<li><code>@angular/material/card</code> - Card container styling</li>
+<li><code>@angular/material/form-field</code> - Form field styling</li>
+<li><code>@angular/material/input</code> - Input field styling</li>
+<li><code>@angular/forms</code> - Reactive forms</li>
+<li><code>UserService</code> - User registration API calls</li>
+</ul>
+<p><strong>Location:</strong> <code>src/app/components/user-registration-form/</code></p>
+<h3 id="userloginformcomponent" class="tsd-anchor-link">UserLoginFormComponent<a href="#userloginformcomponent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>A Material dialog component for user login with reactive form validation.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Standalone component with Material dependencies</li>
+<li>Reactive form with validation:
+<ul>
+<li>Username: required</li>
+<li>Password: required</li>
+</ul>
+</li>
+<li>Form submission to <code>AuthService.login()</code></li>
+<li>Material Dialog integration for modal presentation</li>
+<li>Snackbar notifications for success/error feedback</li>
+<li>Automatic dialog closing on successful login</li>
+<li>Console logging of login response for debugging</li>
+</ul>
+<p><strong>Dependencies:</strong></p>
+<ul>
+<li><code>@angular/material/dialog</code> - MatDialog integration</li>
+<li><code>@angular/material/snack-bar</code> - Toast notifications</li>
+<li><code>@angular/material/card</code> - Card container styling</li>
+<li><code>@angular/material/form-field</code> - Form field styling</li>
+<li><code>@angular/material/input</code> - Input field styling</li>
+<li><code>@angular/forms</code> - Reactive forms</li>
+<li><code>AuthService</code> - User login API calls</li>
+</ul>
+<p><strong>Location:</strong> <code>src/app/components/user-login-form/</code></p>
+<h2 id="material-dialog-pattern" class="tsd-anchor-link">Material Dialog Pattern<a href="#material-dialog-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The application uses Angular Material Dialogs for modal components. This pattern is used for authentication (login/registration) to keep the main application layout intact while presenting focused user interactions.</p>
+<h3 id="how-material-dialogs-work-in-this-application" class="tsd-anchor-link">How Material Dialogs Work in This Application<a href="#how-material-dialogs-work-in-this-application" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ol>
+<li><strong>Root Component (AppComponent)</strong> injects <code>MatDialog</code> service</li>
+<li><strong>Buttons in AppComponent</strong> trigger dialog opening methods:
+<ul>
+<li><code>openUserRegistrationDialog()</code> - Opens UserRegistrationFormComponent</li>
+<li><code>openUserLoginDialog()</code> - Opens UserLoginFormComponent</li>
+</ul>
+</li>
+<li><strong>Dialog components</strong> (UserRegistrationFormComponent, UserLoginFormComponent):
+<ul>
+<li>Are standalone components</li>
+<li>Are NOT included in the parent component's imports array</li>
+<li>Are opened at runtime by MatDialog service</li>
+<li>Close themselves on form submission</li>
+</ul>
+</li>
+<li><strong>Communication</strong>:
+<ul>
+<li>Dialog components inject required services (AuthService, UserService)</li>
+<li>They communicate with backend API directly</li>
+<li>Show snackbar notifications for feedback</li>
+<li>Auto-close after successful submission</li>
+</ul>
+</li>
+</ol>
+<h3 id="benefits-of-this-pattern" class="tsd-anchor-link">Benefits of This Pattern<a href="#benefits-of-this-pattern" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Clean separation of concerns</strong> - Dialog logic isolated in component</li>
+<li><strong>Reusability</strong> - Same component can be opened from different locations</li>
+<li><strong>No template pollution</strong> - Dialog markup not in main component template</li>
+<li><strong>Dynamic loading</strong> - Components loaded only when needed</li>
+<li><strong>Easy to test</strong> - Components can be tested independently</li>
+</ul>
+<h3 id="opening-a-dialog-example" class="tsd-anchor-link">Opening a Dialog Example<a href="#opening-a-dialog-example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="typescript"><span class="hl-7">// In AppComponent</span><br/><span class="hl-0">readonly</span><span class="hl-1"> </span><span class="hl-0">dialog</span><span class="hl-1"> = </span><span class="hl-3">inject</span><span class="hl-1">(</span><span class="hl-0">MatDialog</span><span class="hl-1">);</span><br/><br/><span class="hl-3">openUserLoginDialog</span><span class="hl-1">(): </span><span class="hl-5">void</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-4">dialogRef</span><span class="hl-1"> = </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">dialog</span><span class="hl-1">.</span><span class="hl-3">open</span><span class="hl-1">(</span><span class="hl-0">UserLoginFormComponent</span><span class="hl-1">, {</span><br/><span class="hl-1">    </span><span class="hl-0">width:</span><span class="hl-1"> </span><span class="hl-8">&#39;280px&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">disableClose:</span><span class="hl-1"> </span><span class="hl-5">false</span><br/><span class="hl-1">  });</span><br/><br/><span class="hl-1">  </span><span class="hl-7">// Optional: handle dialog close result</span><br/><span class="hl-1">  </span><span class="hl-0">dialogRef</span><span class="hl-1">.</span><span class="hl-3">afterClosed</span><span class="hl-1">().</span><span class="hl-3">subscribe</span><span class="hl-1">(() </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-7">// Dialog closed - perform any additional actions</span><br/><span class="hl-1">  });</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="important-notes" class="tsd-anchor-link">Important Notes<a href="#important-notes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>Dialog components should NOT be imported in parent component's <code>imports</code> array</li>
+<li>Dialog components should be standalone (<code>standalone: true</code>)</li>
+<li>Dialog components are dynamically instantiated by MatDialog service</li>
+<li>Use <code>MatDialogRef</code> to close dialog: <code>this.dialogRef.close()</code></li>
+</ul>
+<h2 id="angular-cli-configuration" class="tsd-anchor-link">Angular CLI Configuration<a href="#angular-cli-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The project uses Angular CLI with custom schematics configuration to enforce consistent project structure.</p>
+<h3 id="component-naming-prefix" class="tsd-anchor-link">Component Naming Prefix<a href="#component-naming-prefix" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>All generated components automatically use the <strong><code>kino-</code></strong> prefix as configured in <code>angular.json</code>:</p>
+<pre><code class="json"><span class="hl-8">&quot;@schematics/angular:component&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;prefix&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;kino&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Examples:</strong></p>
+<ul>
+<li><code>ng generate component movie-list</code> → <code>&lt;kino-movie-list&gt;&lt;/kino-movie-list&gt;</code></li>
+<li><code>ng generate component movie-details</code> → <code>&lt;kino-movie-details&gt;&lt;/kino-movie-details&gt;</code></li>
+<li><code>ng generate component user-profile</code> → <code>&lt;kino-user-profile&gt;&lt;/kino-user-profile&gt;</code></li>
+</ul>
+<p><strong>Exception:</strong> The root AppComponent uses <code>app-root</code> selector (defined explicitly in component)</p>
+<h3 id="component-directory-path" class="tsd-anchor-link">Component Directory Path<a href="#component-directory-path" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Components are automatically generated in <code>src/app/components/</code> as configured:</p>
+<pre><code class="json"><span class="hl-8">&quot;@schematics/angular:component&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;path&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;src/app/components&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>This ensures consistent file organization and makes it easy to locate components as the project grows.</p>
+<h2 id="quick-start" class="tsd-anchor-link">Quick Start<a href="#quick-start" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Get up and running in minutes:</p>
+<pre><code class="bash"><span class="hl-7"># Clone the repository</span><br/><span class="hl-3">git</span><span class="hl-1"> </span><span class="hl-8">clone</span><span class="hl-1"> </span><span class="hl-8">https://github.com/dkorotkov444/kino-client.git</span><br/><span class="hl-3">cd</span><span class="hl-1"> </span><span class="hl-8">kino-client</span><br/><br/><span class="hl-7"># Install dependencies</span><br/><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">install</span><br/><br/><span class="hl-7"># Make sure backend API is running on localhost:8080</span><br/><span class="hl-7"># Then start development server</span><br/><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">start</span><br/><br/><span class="hl-7"># Open http://localhost:4200 in your browser</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="development-setup" class="tsd-anchor-link">Development Setup<a href="#development-setup" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="prerequisites" class="tsd-anchor-link">Prerequisites<a href="#prerequisites" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>Node.js 20+</li>
+<li>npm 10.9.3</li>
+<li>Backend API running on <code>http://localhost:8080</code></li>
+<li>Git</li>
+<li>A code editor (VS Code recommended)</li>
+</ul>
+<h3 id="installation" class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">install</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="development-server" class="tsd-anchor-link">Development server<a href="#development-server" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>To start a local development server, run:</p>
+<pre><code class="bash"><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">start</span>
+</code><button type="button">Copy</button></pre>
+
+<p>or</p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">serve</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Once the server is running, open your browser and navigate to <code>http://localhost:4200/</code>. The application will automatically reload whenever you modify any of the source files.</p>
+<h3 id="important-backend-api-requirement" class="tsd-anchor-link">Important: Backend API Requirement<a href="#important-backend-api-requirement" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>The application requires the REEL Movie API to be running</strong> for authentication and data retrieval to work.</p>
+<ul>
+<li><strong>Default development URL:</strong> <code>http://localhost:8080</code></li>
+<li><strong>Configuration:</strong> See <code>src/environments/environment.ts</code></li>
+</ul>
+<p>Make sure the backend API is running before testing login/registration functionality.</p>
+<h3 id="testing-authentication" class="tsd-anchor-link">Testing Authentication<a href="#testing-authentication" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Once both the frontend and backend are running:</p>
+<ol>
+<li>Navigate to <code>http://localhost:4200</code></li>
+<li>Click &quot;Sign Up&quot; button to register a new user
+<ul>
+<li>Fill in username, password, email, and birthdate</li>
+<li>Check browser console (F12 → Console tab) for registration response</li>
+</ul>
+</li>
+<li>Click &quot;Login&quot; button to log in
+<ul>
+<li>Use credentials from registration</li>
+<li>Check browser console for login response and token storage</li>
+</ul>
+</li>
+<li>Verify authentication:
+<ul>
+<li>Open browser DevTools (F12)</li>
+<li>Go to Application → Local Storage</li>
+<li>Look for <code>token</code> key containing JWT token</li>
+<li>Look for <code>user</code> key containing user profile data</li>
+</ul>
+</li>
+</ol>
+<p><strong>Console Output Example:</strong></p>
+<pre><code><span class="hl-0">Registration</span><span class="hl-1"> </span><span class="hl-10">response</span><span class="hl-1">: { </span><span class="hl-10">userId</span><span class="hl-1">: </span><span class="hl-8">&quot;123&quot;</span><span class="hl-1">, </span><span class="hl-10">username</span><span class="hl-1">: </span><span class="hl-8">&quot;john_doe&quot;</span><span class="hl-1">, </span><span class="hl-10">email</span><span class="hl-1">: </span><span class="hl-8">&quot;john@example.com&quot;</span><span class="hl-1"> }</span><br/><span class="hl-0">Login</span><span class="hl-1"> </span><span class="hl-10">response</span><span class="hl-1">: { </span><span class="hl-10">user</span><span class="hl-1">: {...}, </span><span class="hl-10">token</span><span class="hl-1">: </span><span class="hl-8">&quot;eyJhbGciOiJIUzI1NiIs...&quot;</span><span class="hl-1"> }</span>
+</code><button>Copy</button></pre>
+
+<h2 id="architecture-dependency-injection" class="tsd-anchor-link">Architecture &amp; Dependency Injection<a href="#architecture-dependency-injection" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The application uses Angular's dependency injection system with root-level providers. All services are provided as singletons in the root injector using <code>providedIn: 'root'</code>:</p>
+<pre><code class="typescript"><span class="hl-1">@</span><span class="hl-3">Injectable</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-0">providedIn:</span><span class="hl-1"> </span><span class="hl-8">&#39;root&#39;</span><br/><span class="hl-1">})</span><br/><span class="hl-2">export</span><span class="hl-1"> </span><span class="hl-5">class</span><span class="hl-1"> </span><span class="hl-6">AuthService</span><span class="hl-1"> </span><span class="hl-5">extends</span><span class="hl-1"> </span><span class="hl-6">ApiBaseService</span><span class="hl-1"> { ... }</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Services are automatically tree-shakeable (only bundled if used)</li>
+<li>Single instance shared across the entire application</li>
+<li>Can be injected into any component or service</li>
+<li>No need for manual module imports</li>
+</ul>
+<p><strong>Service Hierarchy:</strong></p>
+<pre><code><span class="hl-3">ApiBaseService</span><span class="hl-1"> (</span><span class="hl-0">base</span><span class="hl-1"> </span><span class="hl-0">class</span><span class="hl-1">)</span><br/><span class="hl-1">├── </span><span class="hl-3">AuthService</span><span class="hl-1"> (</span><span class="hl-0">authentication</span><span class="hl-1">)</span><br/><span class="hl-1">├── </span><span class="hl-3">MovieService</span><span class="hl-1"> (</span><span class="hl-0">movie</span><span class="hl-1"> </span><span class="hl-0">data</span><span class="hl-1">)</span><br/><span class="hl-1">└── </span><span class="hl-3">UserService</span><span class="hl-1"> (</span><span class="hl-0">user</span><span class="hl-1"> </span><span class="hl-0">management</span><span class="hl-1">)</span>
+</code><button>Copy</button></pre>
+
+<h2 id="error-handling" class="tsd-anchor-link">Error Handling<a href="#error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>All HTTP requests use centralized error handling through <code>ApiBaseService.handleError()</code>:</p>
+<p><strong>Error Handling Flow:</strong></p>
+<ol>
+<li>HTTP request fails in any service</li>
+<li>Error caught in <code>.pipe(catchError(this.handleError))</code></li>
+<li>Error logged to console with status code and details</li>
+<li>Throws error message: <code>'Something bad happened; please try again later.'</code></li>
+<li>Component/caller handles the Observable error</li>
+</ol>
+<p><strong>Usage Example:</strong></p>
+<pre><code class="typescript"><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">authService</span><span class="hl-1">.</span><span class="hl-3">login</span><span class="hl-1">(</span><span class="hl-0">credentials</span><span class="hl-1">).</span><span class="hl-3">subscribe</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-3">next</span><span class="hl-0">:</span><span class="hl-1"> (</span><span class="hl-0">response</span><span class="hl-1">) </span><span class="hl-5">=&gt;</span><span class="hl-1"> { </span><span class="hl-7">/* handle success */</span><span class="hl-1"> },</span><br/><span class="hl-1">  </span><span class="hl-3">error</span><span class="hl-0">:</span><span class="hl-1"> (</span><span class="hl-0">error</span><span class="hl-1">) </span><span class="hl-5">=&gt;</span><span class="hl-1"> { </span><span class="hl-7">/* handle error */</span><span class="hl-1"> }</span><br/><span class="hl-1">});</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="development-workflow" class="tsd-anchor-link">Development Workflow<a href="#development-workflow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="code-scaffolding" class="tsd-anchor-link">Code scaffolding<a href="#code-scaffolding" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Angular CLI includes powerful code scaffolding tools. The project is configured to automatically generate components in the <code>src/app/components/</code> directory with the <code>kino-</code> prefix. To generate a new component, run:</p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">generate</span><span class="hl-1"> </span><span class="hl-8">component</span><span class="hl-1"> </span><span class="hl-8">component-name</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Common generation commands:</strong></p>
+<pre><code class="bash"><span class="hl-7"># Generate component (automatically placed in src/app/components/)</span><br/><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">generate</span><span class="hl-1"> </span><span class="hl-8">component</span><span class="hl-1"> </span><span class="hl-8">movie-list</span><br/><br/><span class="hl-7"># Generate service (in src/app/services/)</span><br/><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">generate</span><span class="hl-1"> </span><span class="hl-8">service</span><span class="hl-1"> </span><span class="hl-8">services/comment</span><br/><br/><span class="hl-7"># Generate pipe</span><br/><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">generate</span><span class="hl-1"> </span><span class="hl-8">pipe</span><span class="hl-1"> </span><span class="hl-8">pipes/uppercase-first</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Generated component selector example:</strong> <code>&lt;kino-movie-list&gt;&lt;/kino-movie-list&gt;</code></p>
+<p>For a complete list of available schematics, run:</p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">generate</span><span class="hl-1"> </span><span class="hl-5">--help</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="creating-a-new-component" class="tsd-anchor-link">Creating a New Component<a href="#creating-a-new-component" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Best practices when adding a new component:</p>
+<ol>
+<li>
+<p><strong>Generate the component</strong> using Angular CLI (automatically placed in <code>src/app/components/</code>)</p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">generate</span><span class="hl-1"> </span><span class="hl-8">component</span><span class="hl-1"> </span><span class="hl-8">movie-list</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li>
+<p><strong>Import required Angular modules</strong> (CommonModule, ReactiveFormsModule, Material modules, etc.)</p>
+</li>
+<li>
+<p><strong>Inject services</strong> using the <code>inject()</code> function pattern</p>
+<pre><code class="typescript"><span class="hl-0">private</span><span class="hl-1"> </span><span class="hl-0">movieService</span><span class="hl-1"> = </span><span class="hl-3">inject</span><span class="hl-1">(</span><span class="hl-0">MovieService</span><span class="hl-1">);</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li>
+<p><strong>Use reactive patterns</strong> with RxJS Observables and Services</p>
+</li>
+<li>
+<p><strong>Add Material components</strong> if needed (Dialog, Form Fields, Buttons, Cards, etc.)</p>
+</li>
+<li>
+<p><strong>Write unit tests</strong> in the auto-generated <code>.spec.ts</code> file</p>
+</li>
+<li>
+<p><strong>Follow the naming convention:</strong> Use <code>kino-</code> prefix (automatically applied by Angular CLI)</p>
+</li>
+</ol>
+<p><strong>Example - Movie List Component:</strong></p>
+<pre><code class="typescript"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">Component</span><span class="hl-1">, </span><span class="hl-0">inject</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-8">&#39;@angular/core&#39;</span><span class="hl-1">;</span><br/><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">CommonModule</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-8">&#39;@angular/common&#39;</span><span class="hl-1">;</span><br/><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">MovieService</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-8">&#39;../../services/movie.service&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-1">@</span><span class="hl-3">Component</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-0">selector:</span><span class="hl-1"> </span><span class="hl-8">&#39;kino-movie-list&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">standalone:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">imports:</span><span class="hl-1"> [</span><span class="hl-0">CommonModule</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-0">templateUrl:</span><span class="hl-1"> </span><span class="hl-8">&#39;./movie-list.component.html&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">styleUrl:</span><span class="hl-1"> </span><span class="hl-8">&#39;./movie-list.component.scss&#39;</span><br/><span class="hl-1">})</span><br/><span class="hl-2">export</span><span class="hl-1"> </span><span class="hl-5">class</span><span class="hl-1"> </span><span class="hl-6">MovieListComponent</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">private</span><span class="hl-1"> </span><span class="hl-0">movieService</span><span class="hl-1"> = </span><span class="hl-3">inject</span><span class="hl-1">(</span><span class="hl-0">MovieService</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-0">movies$</span><span class="hl-1"> = </span><span class="hl-5">this</span><span class="hl-1">.</span><span class="hl-0">movieService</span><span class="hl-1">.</span><span class="hl-3">getAllMovies</span><span class="hl-1">();</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Expected directory structure after generation:</strong></p>
+<pre><code><span class="hl-0">src</span><span class="hl-1">/</span><span class="hl-0">app</span><span class="hl-1">/</span><span class="hl-0">components</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">registration</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-0">user</span><span class="hl-1">-</span><span class="hl-0">login</span><span class="hl-1">-</span><span class="hl-0">form</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">list</span><span class="hl-1">/                    # </span><span class="hl-0">Generated</span><span class="hl-1"> </span><span class="hl-0">here</span><br/><span class="hl-1">│   ├── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">list</span><span class="hl-1">.</span><span class="hl-0">component</span><span class="hl-1">.</span><span class="hl-0">ts</span><br/><span class="hl-1">│   ├── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">list</span><span class="hl-1">.</span><span class="hl-0">component</span><span class="hl-1">.</span><span class="hl-0">html</span><br/><span class="hl-1">│   ├── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">list</span><span class="hl-1">.</span><span class="hl-0">component</span><span class="hl-1">.</span><span class="hl-0">scss</span><br/><span class="hl-1">│   └── </span><span class="hl-0">movie</span><span class="hl-1">-</span><span class="hl-0">list</span><span class="hl-1">.</span><span class="hl-0">component</span><span class="hl-1">.</span><span class="hl-0">spec</span><span class="hl-1">.</span><span class="hl-0">ts</span><br/><span class="hl-1">└── ... (</span><span class="hl-0">more</span><span class="hl-1"> </span><span class="hl-0">components</span><span class="hl-1">)</span>
+</code><button>Copy</button></pre>
+
+<h2 id="building" class="tsd-anchor-link">Building<a href="#building" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>To build the project run:</p>
+<pre><code class="bash"><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">run</span><span class="hl-1"> </span><span class="hl-8">build</span>
+</code><button type="button">Copy</button></pre>
+
+<p>or</p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">build</span>
+</code><button type="button">Copy</button></pre>
+
+<p>This will compile your project and store the build artifacts in the <code>dist/</code> directory. By default, the production build optimizes your application for performance and speed.</p>
+<h3 id="server-side-rendering-ssr" class="tsd-anchor-link">Server-Side Rendering (SSR)<a href="#server-side-rendering-ssr" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>To run the SSR build:</p>
+<pre><code class="bash"><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">run</span><span class="hl-1"> </span><span class="hl-8">serve:ssr:kino-client</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="deployment-modes" class="tsd-anchor-link">Deployment Modes<a href="#deployment-modes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="1-static-hosting-github-pages-s3" class="tsd-anchor-link">1. Static Hosting (GitHub Pages / S3)<a href="#1-static-hosting-github-pages-s3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Use this for GitHub Pages. It disables server-side logic to provide a standard client-side app.</p>
+<p><strong>angular.json Settings:</strong></p>
+<pre><code class="json"><span class="hl-8">&quot;options&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;outputMode&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;static&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Build &amp; Deploy:</strong></p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">build</span><span class="hl-1"> </span><span class="hl-5">--base-href</span><span class="hl-1"> </span><span class="hl-8">/kino-client/</span><br/><span class="hl-3">npx</span><span class="hl-1"> </span><span class="hl-8">angular-cli-ghpages</span><span class="hl-1"> </span><span class="hl-5">--dir=dist/kino-client/browser</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="2-ssr-hosting-nodejs-vps" class="tsd-anchor-link">2. SSR Hosting (Node.js / VPS)<a href="#2-ssr-hosting-nodejs-vps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Use this for environments with a Node.js runtime. It renders HTML on the server for better SEO.</p>
+<p><strong>angular.json Settings:</strong></p>
+<pre><code class="json"><span class="hl-8">&quot;options&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;outputMode&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;server&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;ssr&quot;</span><span class="hl-1">: { </span><span class="hl-9">&quot;entry&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;src/server.ts&quot;</span><span class="hl-1"> },</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;prerender&quot;</span><span class="hl-1">: </span><span class="hl-5">true</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Build &amp; Run:</strong></p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">build</span><br/><span class="hl-3">node</span><span class="hl-1"> </span><span class="hl-8">dist/kino-client/server/server.mjs</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="running-unit-tests" class="tsd-anchor-link">Running unit tests<a href="#running-unit-tests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>To execute unit tests with the <a href="https://vitest.dev/">Vitest</a> test runner, use the following command:</p>
+<pre><code class="bash"><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">test</span>
+</code><button type="button">Copy</button></pre>
+
+<p>or</p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">test</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Tests are configured for all service files and component specs.</p>
+<h2 id="api-configuration" class="tsd-anchor-link">API Configuration<a href="#api-configuration" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The application connects to the REEL Movie API. Configure the API URL in the environment files:</p>
+<h3 id="environment-files" class="tsd-anchor-link">Environment Files<a href="#environment-files" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Development:</strong> <code>src/environments/environment.ts</code></li>
+<li><strong>Production:</strong> <code>src/environments/environment.prod.ts</code></li>
+</ul>
+<h3 id="development-environment" class="tsd-anchor-link">Development Environment<a href="#development-environment" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="typescript"><span class="hl-2">export</span><span class="hl-1"> </span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-4">environment</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-0">production:</span><span class="hl-1"> </span><span class="hl-5">false</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">apiUrl:</span><span class="hl-1"> </span><span class="hl-8">&#39;http://localhost:8080/&#39;</span><span class="hl-1">  </span><span class="hl-7">// Local API for testing</span><br/><span class="hl-1">};</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="production-environment" class="tsd-anchor-link">Production Environment<a href="#production-environment" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="typescript"><span class="hl-2">export</span><span class="hl-1"> </span><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-4">environment</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-0">production:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">apiUrl:</span><span class="hl-1"> </span><span class="hl-8">&#39;https://reel-movie-api-608b8b4b3a04.herokuapp.com&#39;</span><span class="hl-1">  </span><span class="hl-7">// Production API</span><br/><span class="hl-1">};</span>
+</code><button type="button">Copy</button></pre>
+
+<p><strong>Build with Production Configuration:</strong></p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">build</span><span class="hl-1"> </span><span class="hl-5">--configuration</span><span class="hl-1"> </span><span class="hl-8">production</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="api-base-urls" class="tsd-anchor-link">API Base URLs<a href="#api-base-urls" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Development:</strong> <code>http://localhost:8080</code></li>
+<li><strong>Production:</strong> <code>https://reel-movie-api-608b8b4b3a04.herokuapp.com</code></li>
+</ul>
+<p>For detailed API documentation, see <code>api-docs/Movie_API_Docs.md</code>.</p>
+<h2 id="authentication-flow" class="tsd-anchor-link">Authentication Flow<a href="#authentication-flow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ol>
+<li>User submits login credentials via <code>AuthService.login()</code></li>
+<li>Server returns JWT token and user profile</li>
+<li>Token is automatically stored in localStorage</li>
+<li>Subsequent API requests automatically include Authorization header with token</li>
+<li>Token expires in 3 hours</li>
+</ol>
+<h2 id="dependencies" class="tsd-anchor-link">Dependencies<a href="#dependencies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="core" class="tsd-anchor-link">Core<a href="#core" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><code>@angular/core</code> - Angular framework</li>
+<li><code>@angular/forms</code> - Form handling</li>
+<li><code>@angular/router</code> - Client-side routing</li>
+<li><code>@angular/platform-browser</code> - Browser platform</li>
+<li><code>@angular/platform-server</code> - Server platform for SSR</li>
+<li><code>@angular/ssr</code> - Server-side rendering</li>
+<li><code>@angular/common</code> - Common utilities</li>
+</ul>
+<h3 id="api-data" class="tsd-anchor-link">API &amp; Data<a href="#api-data" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><code>rxjs</code> - Reactive programming library</li>
+</ul>
+<h3 id="server" class="tsd-anchor-link">Server<a href="#server" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><code>express</code> - Web server framework for SSR</li>
+</ul>
+<h3 id="development" class="tsd-anchor-link">Development<a href="#development" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><code>@angular/cli</code> - Angular CLI tooling</li>
+<li><code>@angular/build</code> - Build system</li>
+<li><code>typescript</code> - TypeScript compiler</li>
+<li><code>vitest</code> - Unit testing framework</li>
+<li><code>jsdom</code> - DOM implementation for testing</li>
+</ul>
+<h2 id="scripts" class="tsd-anchor-link">Scripts<a href="#scripts" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;start&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;ng serve&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;build&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;ng build&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;watch&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;ng build --watch --configuration development&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;test&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;ng test&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;serve:ssr:kino-client&quot;</span><span class="hl-1">: </span><span class="hl-8">&quot;node dist/kino-client/server/server.mjs&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="code-style" class="tsd-anchor-link">Code Style<a href="#code-style" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The project uses Prettier for code formatting with the following configuration:</p>
+<ul>
+<li>Print width: 100 characters</li>
+<li>Single quotes for JavaScript/TypeScript</li>
+<li>Angular parser for HTML files</li>
+</ul>
+<p><strong>Format code:</strong></p>
+<pre><code class="bash"><span class="hl-3">npx</span><span class="hl-1"> </span><span class="hl-8">prettier</span><span class="hl-1"> </span><span class="hl-5">--write</span><span class="hl-1"> </span><span class="hl-8">&quot;src/**/*.{ts,html,scss}&quot;</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="troubleshooting" class="tsd-anchor-link">Troubleshooting<a href="#troubleshooting" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="common-issues" class="tsd-anchor-link">Common Issues<a href="#common-issues" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p><strong>Issue: &quot;Cannot find module '@angular/...'&quot;</strong></p>
+<ul>
+<li>Run <code>npm install</code> to ensure all dependencies are installed</li>
+<li>Delete <code>node_modules</code> and <code>package-lock.json</code>, then run <code>npm install</code> again</li>
+</ul>
+<p><strong>Issue: CORS errors when calling API</strong></p>
+<ul>
+<li>Ensure the API is running on the configured URL</li>
+<li>Check <code>src/environments/environment.ts</code> for correct <code>apiUrl</code></li>
+<li>Verify CORS is enabled on the backend API</li>
+</ul>
+<p><strong>Issue: 401 Unauthorized errors</strong></p>
+<ul>
+<li>User may not be logged in (token missing)</li>
+<li>Token may have expired (3-hour expiration)</li>
+<li>Run <code>AuthService.logout()</code> and login again</li>
+<li>Check browser localStorage: <code>localStorage.getItem('token')</code></li>
+</ul>
+<p><strong>Issue: &quot;ng: The term 'ng' is not recognized&quot;</strong></p>
+<ul>
+<li>Angular CLI not installed globally or locally</li>
+<li>Run <code>npm install --global @angular/cli</code></li>
+<li>Or use <code>npx ng &lt;command&gt;</code> to run locally installed CLI</li>
+</ul>
+<p><strong>Issue: Port 4200 already in use</strong></p>
+<ul>
+<li>Start server on different port: <code>ng serve --port 4300</code></li>
+<li>Or kill process using port 4200</li>
+</ul>
+<h3 id="testing-tips" class="tsd-anchor-link">Testing Tips<a href="#testing-tips" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="bash"><span class="hl-7"># Run tests in watch mode</span><br/><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">test</span><br/><br/><span class="hl-7"># Run tests with coverage</span><br/><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">test</span><span class="hl-1"> </span><span class="hl-5">--code-coverage</span><br/><br/><span class="hl-7"># Run specific test file</span><br/><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">test</span><span class="hl-1"> </span><span class="hl-5">--include=</span><span class="hl-8">&#39;**/movie.service.spec.ts&#39;</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="contributing-guidelines" class="tsd-anchor-link">Contributing Guidelines<a href="#contributing-guidelines" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>When contributing to the project:</p>
+<ol>
+<li>
+<p><strong>Create a feature branch</strong> from <code>main</code></p>
+<pre><code class="bash"><span class="hl-3">git</span><span class="hl-1"> </span><span class="hl-8">checkout</span><span class="hl-1"> </span><span class="hl-5">-b</span><span class="hl-1"> </span><span class="hl-8">feature/your-feature-name</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li>
+<p><strong>Follow the existing code style</strong> (Prettier will auto-format)</p>
+</li>
+<li>
+<p><strong>Add tests</strong> for new features</p>
+<pre><code class="bash"><span class="hl-3">ng</span><span class="hl-1"> </span><span class="hl-8">generate</span><span class="hl-1"> </span><span class="hl-8">service</span><span class="hl-1"> </span><span class="hl-8">services/new-service</span><span class="hl-1"> </span><span class="hl-5">--skip-tests=false</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li>
+<p><strong>Keep commits atomic</strong> - one feature per commit</p>
+</li>
+<li>
+<p><strong>Write meaningful commit messages</strong></p>
+<pre><code><span class="hl-10">feat</span><span class="hl-1">: </span><span class="hl-0">add</span><span class="hl-1"> </span><span class="hl-0">user</span><span class="hl-1"> </span><span class="hl-0">profile</span><span class="hl-1"> </span><span class="hl-0">component</span><br/><span class="hl-10">fix</span><span class="hl-1">: </span><span class="hl-0">resolve</span><span class="hl-1"> </span><span class="hl-0">token</span><span class="hl-1"> </span><span class="hl-0">expiration</span><span class="hl-1"> </span><span class="hl-0">issue</span><br/><span class="hl-10">docs</span><span class="hl-1">: </span><span class="hl-0">update</span><span class="hl-1"> </span><span class="hl-4">API</span><span class="hl-1"> </span><span class="hl-0">documentation</span>
+</code><button>Copy</button></pre>
+
+</li>
+<li>
+<p><strong>Test before pushing</strong></p>
+<pre><code class="bash"><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">test</span><br/><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-8">run</span><span class="hl-1"> </span><span class="hl-8">build</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li>
+<p><strong>Create a pull request</strong> with clear description</p>
+</li>
+</ol>
+<h2 id="additional-resources" class="tsd-anchor-link">Additional Resources<a href="#additional-resources" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><a href="https://angular.dev">Angular Documentation</a></li>
+<li><a href="https://angular.dev/tools/cli">Angular CLI Reference</a></li>
+<li><a href="https://rxjs.dev">RxJS Documentation</a></li>
+<li><a href="https://vitest.dev">Vitest Documentation</a></li>
+<li><a href="media/Movie_API_Docs.md">REEL Movie API Documentation</a></li>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#kinoangularclient"><span>Kino<wbr/>Angular<wbr/>Client</span></a><ul><li><a href="#overview"><span>Overview</span></a></li><li><a href="#features"><span>Features</span></a></li><li><a href="#project-structure"><span>Project <wbr/>Structure</span></a></li><li><ul><li><a href="#component-architecture"><span>Component <wbr/>Architecture</span></a></li></ul></li><li><a href="#services"><span>Services</span></a></li><li><ul><li><a href="#apibaseservice"><span>Api<wbr/>Base<wbr/>Service</span></a></li><li><a href="#authservice"><span>Auth<wbr/>Service</span></a></li><li><a href="#movieservice"><span>Movie<wbr/>Service</span></a></li><li><a href="#authinterceptor"><span>Auth<wbr/>Interceptor</span></a></li><li><a href="#userservice"><span>User<wbr/>Service</span></a></li></ul></li><li><a href="#typescript-models"><span>Type<wbr/>Script <wbr/>Models</span></a></li><li><ul><li><a href="#user-interface"><span>User <wbr/>Interface</span></a></li><li><a href="#movie-interface"><span>Movie <wbr/>Interface</span></a></li></ul></li><li><a href="#components"><span>Components</span></a></li><li><ul><li><a href="#app-root-component"><span>App (<wbr/>Root <wbr/>Component)</span></a></li><li><a href="#moviecardcomponent"><span>Movie<wbr/>Card<wbr/>Component</span></a></li><li><a href="#userregistrationformcomponent"><span>User<wbr/>Registration<wbr/>Form<wbr/>Component</span></a></li><li><a href="#userloginformcomponent"><span>User<wbr/>Login<wbr/>Form<wbr/>Component</span></a></li></ul></li><li><a href="#material-dialog-pattern"><span>Material <wbr/>Dialog <wbr/>Pattern</span></a></li><li><ul><li><a href="#how-material-dialogs-work-in-this-application"><span>How <wbr/>Material <wbr/>Dialogs <wbr/>Work in <wbr/>This <wbr/>Application</span></a></li><li><a href="#benefits-of-this-pattern"><span>Benefits of <wbr/>This <wbr/>Pattern</span></a></li><li><a href="#opening-a-dialog-example"><span>Opening a <wbr/>Dialog <wbr/>Example</span></a></li><li><a href="#important-notes"><span>Important <wbr/>Notes</span></a></li></ul></li><li><a href="#angular-cli-configuration"><span>Angular <wbr/>CLI <wbr/>Configuration</span></a></li><li><ul><li><a href="#component-naming-prefix"><span>Component <wbr/>Naming <wbr/>Prefix</span></a></li><li><a href="#component-directory-path"><span>Component <wbr/>Directory <wbr/>Path</span></a></li></ul></li><li><a href="#quick-start"><span>Quick <wbr/>Start</span></a></li><li><a href="#development-setup"><span>Development <wbr/>Setup</span></a></li><li><ul><li><a href="#prerequisites"><span>Prerequisites</span></a></li><li><a href="#installation"><span>Installation</span></a></li></ul></li><li><a href="#development-server"><span>Development server</span></a></li><li><ul><li><a href="#important-backend-api-requirement"><span>Important: <wbr/>Backend <wbr/>API <wbr/>Requirement</span></a></li><li><a href="#testing-authentication"><span>Testing <wbr/>Authentication</span></a></li></ul></li><li><a href="#architecture-dependency-injection"><span>Architecture &amp; <wbr/>Dependency <wbr/>Injection</span></a></li><li><a href="#error-handling"><span>Error <wbr/>Handling</span></a></li><li><a href="#development-workflow"><span>Development <wbr/>Workflow</span></a></li><li><ul><li><a href="#code-scaffolding"><span>Code scaffolding</span></a></li><li><a href="#creating-a-new-component"><span>Creating a <wbr/>New <wbr/>Component</span></a></li></ul></li><li><a href="#building"><span>Building</span></a></li><li><ul><li><a href="#server-side-rendering-ssr"><span>Server-<wbr/>Side <wbr/>Rendering (<wbr/>SSR)</span></a></li></ul></li><li><a href="#deployment-modes"><span>Deployment <wbr/>Modes</span></a></li><li><ul><li><a href="#1-static-hosting-github-pages-s3"><span>1. <wbr/>Static <wbr/>Hosting (<wbr/>Git<wbr/>Hub <wbr/>Pages / <wbr/>S3)</span></a></li><li><a href="#2-ssr-hosting-nodejs-vps"><span>2. <wbr/>SSR <wbr/>Hosting (<wbr/>Node.js / <wbr/>VPS)</span></a></li></ul></li><li><a href="#running-unit-tests"><span>Running unit tests</span></a></li><li><a href="#api-configuration"><span>API <wbr/>Configuration</span></a></li><li><ul><li><a href="#environment-files"><span>Environment <wbr/>Files</span></a></li><li><a href="#development-environment"><span>Development <wbr/>Environment</span></a></li><li><a href="#production-environment"><span>Production <wbr/>Environment</span></a></li><li><a href="#api-base-urls"><span>API <wbr/>Base <wbr/>UR<wbr/>Ls</span></a></li></ul></li><li><a href="#authentication-flow"><span>Authentication <wbr/>Flow</span></a></li><li><a href="#dependencies"><span>Dependencies</span></a></li><li><ul><li><a href="#core"><span>Core</span></a></li><li><a href="#api-data"><span>API &amp; <wbr/>Data</span></a></li><li><a href="#server"><span>Server</span></a></li><li><a href="#development"><span>Development</span></a></li></ul></li><li><a href="#scripts"><span>Scripts</span></a></li><li><a href="#code-style"><span>Code <wbr/>Style</span></a></li><li><a href="#troubleshooting"><span>Troubleshooting</span></a></li><li><ul><li><a href="#common-issues"><span>Common <wbr/>Issues</span></a></li><li><a href="#testing-tips"><span>Testing <wbr/>Tips</span></a></li></ul></li><li><a href="#contributing-guidelines"><span>Contributing <wbr/>Guidelines</span></a></li><li><a href="#additional-resources"><span>Additional <wbr/>Resources</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html">Kino Client Documentation - v1.0.0</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

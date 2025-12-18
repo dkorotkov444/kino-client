@@ -2,7 +2,7 @@
 
 This documentation describes the RESTful endpoints for the REEL Movie API.
 
-**Version:** 1.2.0 | **Last Updated:** December 10, 2025 | **Standard:** OpenAPI 3.0
+**Version:** 1.3.0 | **Last Updated:** December 10, 2025 | **Standard:** OpenAPI 3.0
 
 ## Base URL
 
