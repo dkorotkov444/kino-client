@@ -1,0 +1,19 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": ["./src"],
+    "entryPointStrategy": "expand",
+    "exclude": ["**/*.spec.ts", "**/main.ts"],
+    "out": "docs",
+    "name": "Kino Client Documentation",
+    "includeVersion": true,
+    "customTags": [
+      "file",
+      "fileoverview",
+      "author",
+      "copyright",
+      "route",
+      "method"
+    ],
+    "plugin": [],
+    "readme": "./README.md"
+  }
